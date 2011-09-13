@@ -276,11 +276,11 @@ vecJS.V3.prototype = {
   /**
   * Multiply the specified matrix with this vector and assign the result to this instance.
   *
-  * @param {!vecJS.Matrix34} m The matrix to multiply.
+  * @param {!vecJS.M34} m The matrix to multiply.
   *
   * @return {!vecJS.V3} This instance.
   */
-  multiplyMatrix34: function (m) {
+  multiplyM34: function (m) {
     var vx = this.x,
         vy = this.y,
         vz = this.z;
@@ -292,11 +292,11 @@ vecJS.V3.prototype = {
   /**
   * Multiply the specified matrix with this vector and assign the result to this instance.
   *
-  * @param {!vecJS.Matrix44} m The matrix to multiply.
+  * @param {!vecJS.M44} m The matrix to multiply.
   *
   * @return {!vecJS.V3} This instance.
   */
-  multiplyMatrix44: function (m) {
+  multiplyM44: function (m) {
     var vx = this.x,
         vy = this.y,
         vz = this.z,
