@@ -1,4 +1,5 @@
 /*
+ * vecJS vector and matrix math library
  * Copyright (c) 2011, Xavier Basty
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,7 +30,7 @@ var vecJS = {
 /**
  * Relinquish vecJS's control of the $V variable.
  *
- * @param {Boolean=) removeAll A Boolean indicating whether to remove all vecJS
+ * @param {Boolean=} removeAll A Boolean indicating whether to remove all vecJS
  * variables from the global scope (including jQuery itself).
  *
  * @return {!Object} The {@link vecJS} object.
@@ -45,6 +46,3 @@ vecJS.noConflict = function (removeAll) {
 
   return vecJS;
 };
-
-// Expose vecJS to the global object
-window.vecJS = window.$V = vecJS;

@@ -1,4 +1,5 @@
 /*
+ * vecJS vector and matrix math library
  * Copyright (c) 2011, Xavier Basty
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
