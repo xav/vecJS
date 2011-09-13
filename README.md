@@ -1,4 +1,5 @@
-# vecJS - fast and straightforward matrix and vector math
+# vecJS
+> fast and straightforward matrix and vector math
 
 ## Installing
 Just [download the package from GitHub](https://github.com/xav/vecJS/archives/master) and add it to you web pages.
