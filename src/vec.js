@@ -15,7 +15,9 @@
  */
 
 var _vecJS = window.vecJS,
-    _$V = window.$V;
+    _$V = window.$V,
+    cos = Math.cos,
+    sin = Math.sin;
 
 /**
 * @namespace The vecJS namespace.
