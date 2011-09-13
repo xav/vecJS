@@ -255,7 +255,7 @@ vecJS.V4.prototype = {
   * @return {!vecJS.V4} This instance.
   */
   normalize: function () {
-    var l = Math.sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+    var l = sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
     return l > 0 ? this.divideScalar(l) : this.set(0, 0, 0);
   },
 

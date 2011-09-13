@@ -399,6 +399,58 @@ vecJS.M44 = function M44(n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, 
       this.n41 = 0;     this.n42 = 0;     this.n43 = 0;     this.n44 = 1;
 
       return this;
+    },
+
+    /**
+     * Create a perspective projection matrix from a camera aspect parameters and assign it to this instance.
+    *
+    * @param {number} fov The field of view in degrees.
+    * @param {number} aspect The view aspect ratio (width / height).
+    * @param {number} near The z-position of the near clipping plane.
+    * @param {number} far The z-position of the far clipping plane.
+    *
+    * @returns {!vecJS.M44} This instance.
+    */
+    perspective: function (fov, aspect, near, far) {
+      var ymax = near * tan(fov * PI / 360),
+          ymin = -ymax,
+          xmin = ymin * aspect,
+          xmax = ymax * aspect,
+          w = xmax - xmin,
+          h = ymax - ymin,
+          d = far - near;
+
+      this.n11 = 2 * near / w;  this.n12 = 0;             this.n13 = (xmax + xmin) / w; this.n14 = 0;
+      this.n21 = 0;             this.n22 = 2 * near / h;  this.n23 = (ymax + ymin) / h; this.n24 = 0;
+      this.n31 = 0;             this.n32 = 0;             this.n33 = -(far + near) / d; this.n34 = -(2 * far * near) / d;
+      this.n41 = 0;             this.n42 = 0;             this.n43 = -1;                this.n44 = 0;
+
+      return this;
+    },
+
+    /**
+     * Create an orthogonal projection matrix with the given bounds and assign it to this instance.
+     *
+     * @param {number} left left bound of the frustum.
+     * @param {number} right right bound of the frustum.
+     * @param {number} bottom bottom bound of the frustum.
+     * @param {number} top top bound of the frustum.
+     * @param {number} near near bound of the frustum.
+     * @param {number} far far bound of the frustum.
+     *
+     * @returns {!vecJS.M44} This instance.
+     */
+    orthogonal: function (left, right, bottom, top, near, far) {
+      var rl = (right - left),
+          tb = (top - bottom),
+          fn = (far - near);
+
+      this.n11 = 2 / rl;                this.n12 = 0;                     this.n13 = 0;                   this.n14 = 0;
+      this.n21 = 0;                     this.n22 = 2 / tb;                this.n23 = 0;                   this.n24 = 0;
+      this.n31 = 0;                     this.n32 = 0;                     this.n33 = -2 / fn;             this.n34 = 0;
+      this.n41 = -(left + right) / rl;  this.n42 = -(top + bottom) / tb;  this.n43 = -(far + near) / fn;  this.n44 = 1;
+
+      return this;
     }
   };
 })();

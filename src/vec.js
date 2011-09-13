@@ -18,7 +18,10 @@
 var _vecJS = window.vecJS,
     _$V = window.$V,
     cos = Math.cos,
-    sin = Math.sin;
+    sin = Math.sin,
+    tan = Math.tan,
+    sqrt = Math.sqrt,
+    PI = Math.PI;
 
 /**
 * @namespace The vecJS namespace.
