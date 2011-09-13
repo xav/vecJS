@@ -246,18 +246,18 @@ vecJS.V3.prototype = {
     return this;
   },
   /**
-   * Performs a linear interpolation between the two specified vector and assign the result to this instance.
+   * Performs a linear interpolation between a and b and assign the result to this instance.
    *
-   * @param {!vecJS.V3} v1 The first vector.
-   * @param {!vecJS.V3} v2 The second vector.
+   * @param {!vecJS.V3} a The first vector.
+   * @param {!vecJS.V3} b The second vector.
    * @param {number} l The interpolation amount between the two vectors.
    *
    * @return {!vecJS.V3} This instance.
    */
-  assignLerp: function (v1, v2, l) {
-    this.x += v1.x + l * (v2.x - v1.x);
-    this.y += v1.y + l * (v2.y - v1.y);
-    this.z += v1.z + l * (v2.z - v1.z);
+  assignLerp: function (a, b, l) {
+    this.x += a.x + l * (b.x - a.x);
+    this.y += a.y + l * (b.y - a.y);
+    this.z += a.z + l * (b.z - a.z);
 
     return this;
   },
