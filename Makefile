@@ -41,6 +41,7 @@ ${VJS}: ${MODULES} | ${DIST_DIR}
 
 	@@cat ${MODULES} | \
 		sed 's/@DATE/'"${DATE}"'/' | \
+		sed '/@license/,/\*\// d' | \
 		${VER} > ${VJS};
 
 min: vjs ${VJS_MIN}

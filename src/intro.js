@@ -1,5 +1,4 @@
-/**
- * @license
+/** @preserve
  * vecJS vector and matrix math library v@VERSION
  * http://kenshodubs.com/
  *

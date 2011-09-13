@@ -1,4 +1,4 @@
-/*
+/** @license
  * vecJS vector and matrix math library
  * Copyright (c) 2011, Xavier Basty
  *
@@ -24,7 +24,7 @@ var _vecJS = window.vecJS,
 * @namespace The vecJS namespace.
 */
 var vecJS = {
-  version: '0.1.0'
+  version: '@VERSION'
 };
 
 /**
