@@ -1,6 +1,6 @@
 /** @preserve
  * vecJS vector and matrix math library v@VERSION
- * http://kenshodubs.com/
+ * https://github.com/xav/vecJS
  *
  * Copyright (c) 2011, Xavier Basty
  *
@@ -18,4 +18,4 @@
  *
  * Date: @DATE
  */
-(function( window, undefined ) {
+(function (window, undefined) {
