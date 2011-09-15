@@ -408,8 +408,8 @@ vecJS.V3.prototype = {
   */
   distance: function (v) {
     v = v.v;
-    var a = this.v;
-    var dx = a[0] - v[0],
+    var a = this.v,
+        dx = a[0] - v[0],
         dy = a[1] - v[1],
         dz = a[2] - v[2];
     return sqrt(dx*dx + dy*dy + dz*dz);
@@ -423,8 +423,8 @@ vecJS.V3.prototype = {
   */
   squaredDistance: function (v) {
     v = v.v;
-    var a = this.v;
-    var dx = a[0] - v[0],
+    var a = this.v,
+        dx = a[0] - v[0],
         dy = a[1] - v[1],
         dz = a[2] - v[2];
     return dx*dx + dy*dy + dz*dz;

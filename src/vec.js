@@ -24,7 +24,7 @@ var _vecJS = window.vecJS,
     sqrt = Math.sqrt,
     abs = Math.abs,
     PI = Math.PI,
-    GLMatrixArray = (typeof Float32Array != 'undefined') ? Float32Array : Array;
+    GLMatrixArray = (typeof Float32Array !== 'undefined') ? Float32Array : Array;
 
 /**
 * @namespace The vecJS namespace.
