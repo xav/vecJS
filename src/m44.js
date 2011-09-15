@@ -26,19 +26,19 @@
 *
 * @class An affine 4x4 matrix.
 *
-* @param {Array=} mat Array containing values to initialize with
+* @param {Array=} arr Array containing values to initialize with
 *
 * @property {GLMatrixArray} m the matrix values
 *
 * @constructor
 */
-vecJS.M44 = function M44(mat) {
+vecJS.M44 = function M44(arr) {
   var m = this.m = new GLMatrixArray(16);
-  if (mat) {
-    m[0]  = mat[0];  m[1]  = mat[1];  m[2]  = mat[2] ; m[3]  = mat[3];
-    m[4]  = mat[4];  m[5]  = mat[5];  m[6]  = mat[6] ; m[7]  = mat[7];
-    m[8]  = mat[8];  m[9]  = mat[9];  m[10] = mat[10]; m[11] = mat[11];
-    m[12] = mat[12]; m[13] = mat[13]; m[14] = mat[14]; m[15] = mat[15];
+  if (arr) {
+    m[0]  = arr[0];  m[1]  = arr[1];  m[2]  = arr[2] ; m[3]  = arr[3];
+    m[4]  = arr[4];  m[5]  = arr[5];  m[6]  = arr[6] ; m[7]  = arr[7];
+    m[8]  = arr[8];  m[9]  = arr[9];  m[10] = arr[10]; m[11] = arr[11];
+    m[12] = arr[12]; m[13] = arr[13]; m[14] = arr[14]; m[15] = arr[15];
   }
 };
 
@@ -86,7 +86,7 @@ vecJS.M44 = function M44(mat) {
     /**
     * Copy this matrix instance to the specified one.
     *
-    * @param {!vecJS.M44} a The target matrix.
+    * @param {!vecJS.M44} m The target matrix.
     *
     * @return {!vecJS.M44} This instance.
     */
@@ -129,21 +129,21 @@ vecJS.M44 = function M44(mat) {
     /**
     * Multiply this matrix with the specified one and assign the result to this instance.
     *
-    * @param {!vecJS.M44} b The matrix to multiply with this instance.
+    * @param {!vecJS.M44} m The matrix to multiply with this instance.
     *
     * @return {!vecJS.M44} This instance.
     */
-    mul: function (b) {
-    b = b.m;
+    mul: function (m) {
+    m = m.m;
     var a = this.m,
         a00 = a[0],  a01 = a[1],  a02 = a[2],  a03 = a[3],
         a10 = a[4],  a11 = a[5],  a12 = a[6],  a13 = a[7],
         a20 = a[8],  a21 = a[9],  a22 = a[10], a23 = a[11],
         a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15],
-        b00 = b[0],  b01 = b[1],  b02 = b[2],  b03 = b[3],
-        b10 = b[4],  b11 = b[5],  b12 = b[6],  b13 = b[7],
-        b20 = b[8],  b21 = b[9],  b22 = b[10], b23 = b[11],
-        b30 = b[12], b31 = b[13], b32 = b[14], b33 = b[15];
+        b00 = m[0],  b01 = m[1],  b02 = m[2],  b03 = m[3],
+        b10 = m[4],  b11 = m[5],  b12 = m[6],  b13 = m[7],
+        b20 = m[8],  b21 = m[9],  b22 = m[10], b23 = m[11],
+        b30 = m[12], b31 = m[13], b32 = m[14], b33 = m[15];
 
     a[0]  = b00*a00 + b01*a10 + b02*a20 + b03*a30;
     a[1]  = b00*a01 + b01*a11 + b02*a21 + b03*a31;
