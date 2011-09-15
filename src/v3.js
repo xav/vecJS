@@ -18,20 +18,19 @@
 /**
 * @class A 3 dimensional vector.
 *
-* @param {number=} x The X component.
-* @param {number=} y The Y component.
-* @param {number=} z The Z component.
+* @param {Array=} arr Array containing values to initialize with.
 *
-* @property {number} x The X component.
-* @property {number} y The Y component.
-* @property {number} z The Z component.
+* @property {GLMatrixArray} v the vector values.
 *
 * @constructor
 */
-vecJS.V3 = function V3(x, y, z) {
-  this.x = x || 0;
-  this.y = y || 0;
-  this.z = z || 0;
+vecJS.V3 = function V3(arr) {
+  var v = this.v = new GLMatrixArray(3);
+  if (arr) {
+    v[0] = arr[0];
+    v[1] = arr[1];
+    v[2] = arr[2];
+  }
 };
 
 vecJS.V3.prototype = {
@@ -40,16 +39,15 @@ vecJS.V3.prototype = {
   /**
   * Set the current instance values.
   *
-  * @param {number} x The X component.
-  * @param {number} y The Y component.
-  * @param {number} z The Z component.
+  * @param {!Array} arr The new values
   *
   * @return {!vecJS.V3} This instance.
   */
-  set: function (x, y, z) {
-    this.x = x;
-    this.y = y;
-    this.z = z;
+  set: function (arr) {
+    var v = this.v;
+    v[0] = arr[0];
+    v[1] = arr[1];
+    v[2] = arr[2];
     return this;
   },
   /**
@@ -59,10 +57,12 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  copy: function (v) {
-    this.x = v.x;
-    this.y = v.y;
-    this.z = v.z;
+  cpy: function (v) {
+    v = v.v;
+    var a = this.v;
+    a[0] = v[0];
+    a[1] = v[1];
+    a[2] = v[2];
     return this;
   },
   /**
@@ -72,10 +72,12 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  copyTo: function (v) {
-    v.x = this.x;
-    v.y = this.y;
-    v.z = this.z;
+  cpyTo: function (v) {
+    v = v.v;
+    var a = this.v;
+    v[0] = a[0];
+    v[1] = a[1];
+    v[2] = a[2];
     return this;
   },
   /**
@@ -83,8 +85,8 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} A new vector instance wich is a copy of this one.
   */
-  clone: function () {
-    return new vecJS.V3(this.x, this.y, this.z);
+  cln: function () {
+    return new vecJS.V3(this.v);
   },
 
   /**
@@ -95,9 +97,11 @@ vecJS.V3.prototype = {
   * @return {!vecJS.V3} This instance.
   */
   add: function (v) {
-    this.x += v.x;
-    this.y += v.y;
-    this.z += v.z;
+    v = v.v;
+    var a = this.v;
+    a[0] += v[0];
+    a[1] += v[1];
+    a[2] += v[2];
     return this;
   },
   /**
@@ -108,9 +112,11 @@ vecJS.V3.prototype = {
   * @return {!vecJS.V3} This instance.
   */
   sub: function (v) {
-    this.x -= v.x;
-    this.y -= v.y;
-    this.z -= v.z;
+    v = v.v;
+    var a = this.v;
+    a[0] -= v[0];
+    a[1] -= v[1];
+    a[2] -= v[2];
     return this;
   },
 
@@ -122,10 +128,12 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  assignAdd: function (a, b) {
-    this.x = a.x + b.x;
-    this.y = a.y + b.y;
-    this.z = a.z + b.z;
+  aadd: function (a, b) {
+    a = a.v; b = b.v;
+    var v = this.v;
+    v[0] = a[0] + b[0];
+    v[1] = a[1] + b[1];
+    v[2] = a[2] + b[2];
     return this;
   },
   /**
@@ -136,10 +144,12 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  assignSub: function (a, b) {
-    this.x = a.x - b.x;
-    this.y = a.y - b.y;
-    this.z = a.z - b.z;
+  asub: function (a, b) {
+    a = a.v; b = b.v;
+    var v = this.v;
+    v[0] = a[0] - b[0];
+    v[1] = a[1] - b[1];
+    v[2] = a[2] - b[2];
     return this;
   },
 
@@ -150,10 +160,11 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  addScalar: function (s) {
-    this.x += s;
-    this.y += s;
-    this.z += s;
+  adds: function (s) {
+    var v = this.v;
+    v[0] += s;
+    v[1] += s;
+    v[2] += s;
     return this;
   },
   /**
@@ -163,10 +174,11 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  subScalar: function (s) {
-    this.x -= s;
-    this.y -= s;
-    this.z -= s;
+  subs: function (s) {
+    var v = this.v;
+    v[0] -= s;
+    v[1] -= s;
+    v[2] -= s;
     return this;
   },
   /**
@@ -176,10 +188,11 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  multiplyScalar: function (s) {
-    this.x *= s;
-    this.y *= s;
-    this.z *= s;
+  muls: function (s) {
+    var v = this.v;
+    v[0] *= s;
+    v[1] *= s;
+    v[2] *= s;
     return this;
   },
   /**
@@ -189,10 +202,11 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  divideScalar: function (s) {
-    this.x /= s;
-    this.y /= s;
-    this.z /= s;
+  divs: function (s) {
+    var v = this.v;
+    v[0] /= s;
+    v[1] /= s;
+    v[2] /= s;
     return this;
   },
 
@@ -204,13 +218,14 @@ vecJS.V3.prototype = {
   * @return {!vecJS.V3} This instance.
   */
   cross: function (v) {
-    var tx = this.x,
-        ty = this.y,
-        tz = this.z;
+    v = v.v;
+    var a = this.v,
+        ax = a[0], ay = a[1], az = a[2],
+        bx = v[0], by = v[1], bz = v[2];
 
-    this.x = ty * v.z - tz * v.y;
-    this.y = tz * v.x - tx * v.z;
-    this.z = tx * v.y - ty * v.x;
+    a[0] = ay*bz - az*by;
+    a[1] = az*bx - ax*bz;
+    a[2] = ax*by - ay*bx;
 
     return this;
   },
@@ -223,11 +238,16 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  assignCross: function (a, b) {
-    this.x = a.y * b.z - a.z * b.y;
-    this.y = a.z * b.x - a.x * b.z;
-    this.z = a.x * b.y - a.y * b.x;
-    
+  across: function (a, b) {
+    a = a.v; b = b.v;
+    var v = this.v,
+        ax = a[0], ay = a[1], az = a[2],
+        bx = v[0], by = v[1], bz = v[2];
+
+    v[0] = ay*bz - az*by;
+    v[1] = az*bx - ax*bz;
+    v[2] = ax*by - ay*bx;
+
     return this;
   },
 
@@ -240,9 +260,11 @@ vecJS.V3.prototype = {
    * @return {!vecJS.V3} This instance.
    */
   lerp: function (v, l) {
-    this.x += l * (v.x - this.x);
-    this.y += l * (v.y - this.y);
-    this.z += l * (v.z - this.z);
+    v = v.v;
+    var a = this.v;
+    a[0] += l * (v[0] - a[0]);
+    a[1] += l * (v[1] - a[1]);
+    a[2] += l * (v[2] - a[2]);
 
     return this;
   },
@@ -255,10 +277,14 @@ vecJS.V3.prototype = {
    *
    * @return {!vecJS.V3} This instance.
    */
-  assignLerp: function (a, b, l) {
-    this.x += a.x + l * (b.x - a.x);
-    this.y += a.y + l * (b.y - a.y);
-    this.z += a.z + l * (b.z - a.z);
+  alerp: function (a, b, l) {
+    a = a.v; b = b.v;
+    var v = this.v,
+        ax = a[0], ay = a[1], az = a[2];
+    
+    v[0] = ax + l * (b[0] - ax);
+    v[1] = ay + l * (b[1] - ay);
+    v[2] = az + l * (b[2] - az);
 
     return this;
   },
@@ -271,7 +297,9 @@ vecJS.V3.prototype = {
   * @return {number} The result of the dot product.
   */
   dot: function (v) {
-    return this.x * v.x + this.y * v.y + this.z * v.z;
+    v = v.v;
+    var a = this.v;
+    return a[0]*v[0] + a[1]*v[1] + a[2]*v[2];
   },
 
   /**
@@ -281,13 +309,15 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  multiplyM34: function (m) {
-    var vx = this.x,
-        vy = this.y,
-        vz = this.z;
-    this.x = m.n11 * vx + m.n12 * vy + m.n13 * vz + m.n14;
-    this.y = m.n21 * vx + m.n22 * vy + m.n23 * vz + m.n24;
-    this.z = m.n31 * vx + m.n32 * vy + m.n33 * vz + m.n34;
+  mulM34: function (m) {
+    m = m.m;
+    var v = this.v,
+        vx = v[0], vy = v[1], vz = v[2];
+
+    v[0] = vx*m[0] + vy*m[1] + vz*m[2]  + m[3];
+    v[1] = vx*m[4] + vy*m[5] + vz*m[6]  + m[7];
+    v[2] = vx*m[8] + vy*m[9] + vz*m[10] + m[11];
+    
     return this;
   },
   /**
@@ -297,14 +327,15 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  multiplyM44: function (m) {
-    var vx = this.x,
-        vy = this.y,
-        vz = this.z,
-        d = 1 / (m.n41 * vx + m.n42 * vy + m.n43 * vz + m.n44);
-    this.x = (m.n11 * vx + m.n12 * vy + m.n13 * vz + m.n14) * d;
-    this.y = (m.n21 * vx + m.n22 * vy + m.n23 * vz + m.n24) * d;
-    this.z = (m.n31 * vx + m.n32 * vy + m.n33 * vz + m.n34) * d;
+  mulM44: function (m) {
+    m = m.m;
+    var v = this.v,
+        vx = v[0], vy = v[1], vz = v[2],
+        d = 1 / (m[12] * vx + m[13] * vy + m[14] * vz + m[15]);
+
+    v[0] = (vx*m[0] + vy*m[1] + vz*m[2]  + m[3] ) * d;
+    v[1] = (vx*m[4] + vy*m[5] + vz*m[6]  + m[7] ) * d;
+    v[2] = (vx*m[8] + vy*m[9] + vz*m[10] + m[11]) * d;
     return this;
   },
 
@@ -314,8 +345,11 @@ vecJS.V3.prototype = {
   * @return {!vecJS.V3} This instance.
   */
   normalize: function () {
-    var l = sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
-    return l > 0 ? this.divideScalar(l) : this.set(0, 0, 0);
+    var v = this.v,
+        vx = v[0], vy = v[1], vz = v[2],
+        l = sqrt(vx*vx + vy*vy + vz*vz);
+    
+    return l > 0 ? this.divideScalar(l) : this.set([0, 0, 0]);
   },
 
   /**
@@ -324,7 +358,9 @@ vecJS.V3.prototype = {
   * @return {number} The length of this vector.
   */
   length: function () {
-    return sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
+    var v = this.v,
+        vx = v[0], vy = v[1], vz = v[2];
+    return sqrt(vx*vx + vy*vy + vz*vz);
   },
   /**
   * Calculate the squared length of this vector.
@@ -332,7 +368,9 @@ vecJS.V3.prototype = {
   * @return {number} The squared length of this vector.
   */
   squaredLength: function () {
-    return this.x * this.x + this.y * this.y + this.z * this.z;
+    var v = this.v,
+        vx = v[0], vy = v[1], vz = v[2];
+    return vx*vx + vy*vy + vz*vz;
   },
 
   /**
@@ -343,10 +381,12 @@ vecJS.V3.prototype = {
   * @return {number} The distance between the tips of two vectors.
   */
   distance: function (v) {
-    var dx = this.x - v.x,
-        dy = this.y - v.y,
-        dz = this.z - v.z;
-    return sqrt(dx * dx + dy * dy + dz * dz);
+    v = v.v;
+    var a = this.v;
+    var dx = a[0] - v[0],
+        dy = a[1] - v[1],
+        dz = a[2] - v[2];
+    return sqrt(dx*dx + dy*dy + dz*dz);
   },
   /**
   * Calculate the squared distance between the tip of this vector and the tip of the specified one.
@@ -356,13 +396,16 @@ vecJS.V3.prototype = {
   * @return {number} The squared distance between the tips of two vectors.
   */
   squaredDistance: function (v) {
-    var dx = this.x - v.x,
-        dy = this.y - v.y,
-        dz = this.z - v.z;
-    return dx * dx + dy * dy + dz * dz;
+    v = v.v;
+    var a = this.v;
+    var dx = a[0] - v[0],
+        dy = a[1] - v[1],
+        dz = a[2] - v[2];
+    return dx*dx + dy*dy + dz*dz;
   },
 
   toString: function () {
-    return 'V3[' + this.x + ', ' + this.y + ', ' + this.z + ']';
+    var v = this.v;
+    return 'V3[' + v[0] + ', ' + v[1] + ', ' + v[2] + ']';
   }
 };
