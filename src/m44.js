@@ -16,74 +16,30 @@
  */
 
 /**
-* The matrix looks like this:
+* The matrix indexes are arranged like this:
 * <table>
-*   <tr><td>n11</td><td>n12</td><td>n13</td><td>n14</td></tr>
-*   <tr><td>n21</td><td>n22</td><td>n23</td><td>n24</td></tr>
-*   <tr><td>n31</td><td>n32</td><td>n33</td><td>n34</td></tr>
-*   <tr><td>n41</td><td>n42</td><td>n43</td><td>n44</td></tr>
+*   <tr><td> 0</td><td> 1</td><td> 2</td><td> 3</td></tr>
+*   <tr><td> 4</td><td> 5</td><td> 6</td><td> 7</td></tr>
+*   <tr><td> 8</td><td> 9</td><td>10</td><td>11</td></tr>
+*   <tr><td>12</td><td>13</td><td>14</td><td>15</td></tr>
 * </table>
 *
 * @class An affine 4x4 matrix.
 *
-* @param {number=} n11 The value for r1c1
-* @param {number=} n12 The value for r1c2
-* @param {number=} n13 The value for r1c3
-* @param {number=} n14 The value for r1c4
-* @param {number=} n21 The value for r2c1
-* @param {number=} n22 The value for r2c2
-* @param {number=} n23 The value for r2c3
-* @param {number=} n24 The value for r2c4
-* @param {number=} n31 The value for r3c1
-* @param {number=} n32 The value for r3c2
-* @param {number=} n33 The value for r3c3
-* @param {number=} n34 The value for r3c4
-* @param {number=} n41 The value for r4c1
-* @param {number=} n42 The value for r4c2
-* @param {number=} n43 The value for r4c3
-* @param {number=} n44 The value for r4c4
+* @param {Array=} mat Array containing values to initialize with
 *
-* @property {number} n11 The value for r1c1
-* @property {number} n12 The value for r1c2
-* @property {number} n13 The value for r1c3
-* @property {number} n14 The value for r1c4
-* @property {number} n21 The value for r2c1
-* @property {number} n22 The value for r2c2
-* @property {number} n23 The value for r2c3
-* @property {number} n24 The value for r2c4
-* @property {number} n31 The value for r3c1
-* @property {number} n32 The value for r3c2
-* @property {number} n33 The value for r3c3
-* @property {number} n34 The value for r3c4
-* @property {number} n41 The value for r4c1
-* @property {number} n42 The value for r4c2
-* @property {number} n43 The value for r4c3
-* @property {number} n44 The value for r4c4
+* @property {GLMatrixArray} m the matrix values
 *
 * @constructor
 */
-vecJS.M44 = function M44(n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, n34, n41, n42, n43, n44) {
-  this.n11 = n11 === undefined ? 1 : n11;
-  this.n12 = n12 || 0;
-  this.n13 = n13 || 0;
-  this.n14 = n14 || 0;
-
-  this.n21 = n21 || 0;
-  this.n22 = n22 === undefined ? 1 : n22;
-  this.n23 = n23 || 0;
-  this.n24 = n24 || 0;
-
-  this.n31 = n31 || 0;
-  this.n32 = n32 || 0;
-  this.n33 = n33 === undefined ? 1 : n33;
-  this.n34 = n34 || 0;
-
-  this.n41 = n41 || 0;
-  this.n42 = n42 || 0;
-  this.n43 = n43 || 0;
-  this.n44 = n44 === undefined ? 1 : n44;
-
-  this.flat = null;
+vecJS.M44 = function M44(mat) {
+  var m = this.m = new GLMatrixArray(16);
+  if (mat) {
+    m[0]  = mat[0];  m[1]  = mat[1];  m[2]  = mat[2] ; m[3]  = mat[3];
+    m[4]  = mat[4];  m[5]  = mat[5];  m[6]  = mat[6] ; m[7]  = mat[7];
+    m[8]  = mat[8];  m[9]  = mat[9];  m[10] = mat[10]; m[11] = mat[11];
+    m[12] = mat[12]; m[13] = mat[13]; m[14] = mat[14]; m[15] = mat[15];
+  }
 };
 
 (function () {
@@ -97,30 +53,16 @@ vecJS.M44 = function M44(n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, 
     /**
     * Set the current instance values.
     *
-    * @param {number} n11 The value for r1c1
-    * @param {number} n12 The value for r1c2
-    * @param {number} n13 The value for r1c3
-    * @param {number} n14 The value for r1c4
-    * @param {number} n21 The value for r2c1
-    * @param {number} n22 The value for r2c2
-    * @param {number} n23 The value for r2c3
-    * @param {number} n24 The value for r2c4
-    * @param {number} n31 The value for r3c1
-    * @param {number} n32 The value for r3c2
-    * @param {number} n33 The value for r3c3
-    * @param {number} n34 The value for r3c4
-    * @param {number} n41 The value for r4c1
-    * @param {number} n42 The value for r4c2
-    * @param {number} n43 The value for r4c3
-    * @param {number} n44 The value for r4c4
+    * @param {!Array} arr The new values
     *
-    * @return {!vecJS.M34} This instance.
+    * @return {!vecJS.M44} This instance.
     */
-    set: function (n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, n34, n41, n42, n43, n44) {
-      this.n11 = n11; this.n12 = n12; this.n13 = n13; this.n14 = n14;
-      this.n21 = n21; this.n22 = n22; this.n23 = n23; this.n24 = n24;
-      this.n31 = n31; this.n32 = n32; this.n33 = n33; this.n34 = n34;
-      this.n41 = n41; this.n42 = n42; this.n43 = n43; this.n44 = n44;
+    set: function (arr) {
+      var m = this.m;
+      m[0]  = arr[0];  m[1]  = arr[1];  m[2]  = arr[2] ; m[3]  = arr[3];
+      m[4]  = arr[4];  m[5]  = arr[5];  m[6]  = arr[6] ; m[7]  = arr[7];
+      m[8]  = arr[8];  m[9]  = arr[9];  m[10] = arr[10]; m[11] = arr[11];
+      m[12] = arr[12]; m[13] = arr[13]; m[14] = arr[14]; m[15] = arr[15];
       return this;
     },
     /**
@@ -130,25 +72,33 @@ vecJS.M44 = function M44(n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, 
     *
     * @return {!vecJS.M44} This instance.
     */
-    copy: function (m) {
-      this.n11 = m.n11; this.n12 = m.n12; this.n13 = m.n13; this.n14 = m.n14;
-      this.n21 = m.n21; this.n22 = m.n22; this.n23 = m.n23; this.n24 = m.n24;
-      this.n31 = m.n31; this.n32 = m.n32; this.n33 = m.n33; this.n34 = m.n34;
-      this.n41 = m.n41; this.n42 = m.n42; this.n43 = m.n43; this.n44 = m.n44;
+    cpy: function (m) {
+      var a = this.m;
+      m = m.m;
+
+      a[0]  = m[0];  a[1]  = m[1];  a[2]  = m[2] ; a[3]  = m[3];
+      a[4]  = m[4];  a[5]  = m[5];  a[6]  = m[6] ; a[7]  = m[7];
+      a[8]  = m[8];  a[9]  = m[9];  a[10] = m[10]; a[11] = m[11];
+      a[12] = m[12]; a[13] = m[13]; a[14] = m[14]; a[15] = m[15];
+      
       return this;
     },
     /**
     * Copy this matrix instance to the specified one.
     *
-    * @param {!vecJS.M44} m The target matrix.
+    * @param {!vecJS.M44} a The target matrix.
     *
     * @return {!vecJS.M44} This instance.
     */
-    copyTo: function (m) {
-      m.n11 = this.n11; m.n12 = this.n12; m.n13 = this.n13; m.n14 = this.n14;
-      m.n21 = this.n21; m.n22 = this.n22; m.n23 = this.n23; m.n24 = this.n24;
-      m.n31 = this.n31; m.n32 = this.n32; m.n33 = this.n33; m.n34 = this.n34;
-      m.n41 = this.n41; m.n43 = this.n42; m.n43 = this.n43; m.n44 = this.n44;
+    cpyto: function (m) {
+      var a = this.m;
+      m = m.m;
+
+      m[0]  = a[0];  m[1]  = a[1];  m[2]  = a[2] ; m[3]  = a[3];
+      m[4]  = a[4];  m[5]  = a[5];  m[6]  = a[6] ; m[7]  = a[7];
+      m[8]  = a[8];  m[9]  = a[9];  m[10] = a[10]; m[11] = a[11];
+      m[12] = a[12]; m[13] = a[13]; m[14] = a[14]; m[15] = a[15];
+
       return this;
     },
     /**
@@ -156,60 +106,8 @@ vecJS.M44 = function M44(n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, 
     *
     * @return {!vecJS.M44} A new matrix instance which is a copy of this one.
     */
-    clone: function () {
-      return new vecJS.M44(
-        this.n11, this.n12, this.n13, this.n14,
-        this.n21, this.n22, this.n23, this.n24,
-        this.n31, this.n32, this.n33, this.n34,
-        this.n41, this.n42, this.n43, this.n44
-      );
-    },
-    flatten: function() {
-      var flat = this.flat = this.flat || new Array(16);
-      flat[ 0] = this.n11;
-      flat[ 1] = this.n21;
-      flat[ 2] = this.n31;
-      flat[ 3] = this.n41;
-
-      flat[ 4] = this.n12;
-      flat[ 5] = this.n22;
-      flat[ 6] = this.n32;
-      flat[ 7] = this.n42;
-
-      flat[ 8] = this.n13;
-      flat[ 9] = this.n23;
-      flat[10] = this.n33;
-      flat[11] = this.n43;
-
-      flat[12] = this.n14;
-      flat[13] = this.n24;
-      flat[14] = this.n34;
-      flat[15] = this.n44;
-
-      return flat;
-    },
-    flattenTo: function(flat) {
-      flat[ 0] = this.n11;
-      flat[ 1] = this.n21;
-      flat[ 2] = this.n31;
-      flat[ 3] = this.n41;
-
-      flat[ 4] = this.n12;
-      flat[ 5] = this.n22;
-      flat[ 6] = this.n32;
-      flat[ 7] = this.n42;
-
-      flat[ 8] = this.n13;
-      flat[ 9] = this.n23;
-      flat[10] = this.n33;
-      flat[11] = this.n43;
-
-      flat[12] = this.n14;
-      flat[13] = this.n24;
-      flat[14] = this.n34;
-      flat[15] = this.n44;
-
-      return this;
+    cln: function () {
+      return new vecJS.M44(this.m);
     },
 
     /**
@@ -217,100 +115,99 @@ vecJS.M44 = function M44(n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, 
     *
     * @return {!vecJS.M44} This instance.
     */
-    identity: function () {
-      this.n11 = 1; this.n12 = 0; this.n13 = 0; this.n14 = 0;
-      this.n21 = 0; this.n22 = 1; this.n23 = 0; this.n24 = 0;
-      this.n31 = 0; this.n32 = 0; this.n33 = 1; this.n34 = 0;
-      this.n41 = 0; this.n42 = 0; this.n43 = 0; this.n44 = 1;
+    idt: function () {
+      var a = this.m;
+
+      a[0]  = 1; a[1]  = 0; a[2]  = 0; a[3]  = 0;
+      a[4]  = 0; a[5]  = 1; a[6]  = 0; a[7]  = 0;
+      a[8]  = 0; a[9]  = 0; a[10] = 1; a[11] = 0;
+      a[12] = 0; a[13] = 0; a[14] = 0; a[15] = 1;
+
       return this;
     },
 
     /**
     * Multiply this matrix with the specified one and assign the result to this instance.
     *
-    * @param {!(vecJS.M44|vecJS.M34)} m The matrix to multiply with this instance.
+    * @param {!vecJS.M44} b The matrix to multiply with this instance.
     *
     * @return {!vecJS.M44} This instance.
     */
-    multiply: function (m) {
-      var n11  = this.n11, n12  = this.n12, n13  = this.n13, n14  = this.n14,
-          n21  = this.n21, n22  = this.n22, n23  = this.n23, n24  = this.n24,
-          n31  = this.n31, n32  = this.n32, n33  = this.n33, n34  = this.n34,
-          n41  = this.n41, n42  = this.n42, n43  = this.n43, n44  = this.n44,
-          mn11 = m.n11,    mn12 = m.n12,    mn13 = m.n13,    mn14 = m.n14,
-          mn21 = m.n21,    mn22 = m.n22,    mn23 = m.n23,    mn24 = m.n24,
-          mn31 = m.n31,    mn32 = m.n32,    mn33 = m.n33,    mn34 = m.n34,
-          mn41 = m.n41 || 0,
-          mn42 = m.n42 || 0,
-          mn43 = m.n43 || 0,
-          mn44 = m.n44 === undefined ? 1 : m.n44;
+    mul: function (b) {
+    b = b.m;
+    var a = this.m,
+        a00 = a[0],  a01 = a[1],  a02 = a[2],  a03 = a[3],
+        a10 = a[4],  a11 = a[5],  a12 = a[6],  a13 = a[7],
+        a20 = a[8],  a21 = a[9],  a22 = a[10], a23 = a[11],
+        a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15],
+        b00 = b[0],  b01 = b[1],  b02 = b[2],  b03 = b[3],
+        b10 = b[4],  b11 = b[5],  b12 = b[6],  b13 = b[7],
+        b20 = b[8],  b21 = b[9],  b22 = b[10], b23 = b[11],
+        b30 = b[12], b31 = b[13], b32 = b[14], b33 = b[15];
 
-      this.n11 = n11 * mn11 + n12 * mn21 + n13 * mn31 + n14 * mn41;
-      this.n12 = n11 * mn12 + n12 * mn22 + n13 * mn32 + n14 * mn42;
-      this.n13 = n11 * mn13 + n12 * mn23 + n13 * mn33 + n14 * mn43;
-      this.n14 = n11 * mn14 + n12 * mn24 + n13 * mn34 + n14 * mn44;
+    a[0]  = b00*a00 + b01*a10 + b02*a20 + b03*a30;
+    a[1]  = b00*a01 + b01*a11 + b02*a21 + b03*a31;
+    a[2]  = b00*a02 + b01*a12 + b02*a22 + b03*a32;
+    a[3]  = b00*a03 + b01*a13 + b02*a23 + b03*a33;
 
-      this.n21 = n21 * mn11 + n22 * mn21 + n23 * mn31 + n24 * mn41;
-      this.n22 = n21 * mn12 + n22 * mn22 + n23 * mn32 + n24 * mn42;
-      this.n23 = n21 * mn13 + n22 * mn23 + n23 * mn33 + n24 * mn43;
-      this.n24 = n21 * mn14 + n22 * mn24 + n23 * mn34 + n24 * mn44;
+    a[4]  = b10*a00 + b11*a10 + b12*a20 + b13*a30;
+    a[5]  = b10*a01 + b11*a11 + b12*a21 + b13*a31;
+    a[6]  = b10*a02 + b11*a12 + b12*a22 + b13*a32;
+    a[7]  = b10*a03 + b11*a13 + b12*a23 + b13*a33;
 
-      this.n31 = n31 * mn11 + n32 * mn21 + n33 * mn31 + n34 * mn41;
-      this.n32 = n31 * mn12 + n32 * mn22 + n33 * mn32 + n34 * mn42;
-      this.n33 = n31 * mn13 + n32 * mn23 + n33 * mn33 + n34 * mn43;
-      this.n34 = n31 * mn14 + n32 * mn24 + n33 * mn34 + n34 * mn44;
+    a[8]  = b20*a00 + b21*a10 + b22*a20 + b23*a30;
+    a[9]  = b20*a01 + b21*a11 + b22*a21 + b23*a31;
+    a[10] = b20*a02 + b21*a12 + b22*a22 + b23*a32;
+    a[11] = b20*a03 + b21*a13 + b22*a23 + b23*a33;
 
-      this.n41 = n41 * mn11 + n42 * mn21 + n43 * mn31 + n44 * mn41;
-      this.n42 = n41 * mn12 + n42 * mn22 + n43 * mn32 + n44 * mn42;
-      this.n43 = n41 * mn13 + n42 * mn23 + n43 * mn33 + n44 * mn43;
-      this.n44 = n41 * mn14 + n42 * mn24 + n43 * mn34 + n44 * mn44;
+    a[12] = b30*a00 + b31*a10 + b32*a20 + b33*a30;
+    a[13] = b30*a01 + b31*a11 + b32*a21 + b33*a31;
+    a[14] = b30*a02 + b31*a12 + b32*a22 + b33*a32;
+    a[15] = b30*a03 + b31*a13 + b32*a23 + b33*a33;
 
-      return this;
-    },
+    return this;
+  },
 
     /**
     * Multiply a and b and assign the result to this instance.
     *
-    * @param {!(vecJS.M34|vecJS.M44)} a The first term of the multiplication.
-    * @param {!(vecJS.M34|vecJS.M44)} b The second term of the multiplication.
+    * @param {!vecJS.M44} a The first term of the multiplication.
+    * @param {!vecJS.M44} b The second term of the multiplication.
     *
     * @return {!vecJS.M44} This instance.
     */
-    assignMultiply: function (a, b) {
-      var a11 = a.n11, a12 = a.n12, a13 = a.n13, a14 = a.n14,
-          a21 = a.n21, a22 = a.n22, a23 = a.n23, a24 = a.n24,
-          a31 = a.n31, a32 = a.n32, a33 = a.n33, a34 = a.n34,
-          a41 = a.n41 || 0,
-          a42 = a.n42 || 0,
-          a43 = a.n43 || 0,
-          a44 = a.n44 === undefined ? 1 : a.n44,
-          b11 = b.n11, b12 = b.n12, b13 = b.n13, b14 = b.n14,
-          b21 = b.n21, b22 = b.n22, b23 = b.n23, b24 = b.n24,
-          b31 = b.n31, b32 = b.n32, b33 = b.n33, b34 = b.n34,
-          b41 = b.n41 || 0,
-          b42 = b.n42 || 0,
-          b43 = b.n43 || 0,
-          b44 = b.n44 === undefined ? 1 : b.n44;
+    amul: function (a, b) {
+      a = a.m;
+      b = b.m;
+      var m = this.m,
+          a00 = a[0],  a01 = a[1],  a02 = a[2],  a03 = a[3],
+          a10 = a[4],  a11 = a[5],  a12 = a[6],  a13 = a[7],
+          a20 = a[8],  a21 = a[9],  a22 = a[10], a23 = a[11],
+          a30 = a[12], a31 = a[13], a32 = a[14], a33 = a[15],
+          b00 = b[0],  b01 = b[1],  b02 = b[2],  b03 = b[3],
+          b10 = b[4],  b11 = b[5],  b12 = b[6],  b13 = b[7],
+          b20 = b[8],  b21 = b[9],  b22 = b[10], b23 = b[11],
+          b30 = b[12], b31 = b[13], b32 = b[14], b33 = b[15];
 
-      this.n11 = a11 * b11 + a12 * b21 + a13 * b31 + a14 * b41;
-      this.n12 = a11 * b12 + a12 * b22 + a13 * b32 + a14 * b42;
-      this.n13 = a11 * b13 + a12 * b23 + a13 * b33 + a14 * b43;
-      this.n14 = a11 * b14 + a12 * b24 + a13 * b34 + a14 * b44;
+      m[0]  = b00*a00 + b01*a10 + b02*a20 + b03*a30;
+      m[1]  = b00*a01 + b01*a11 + b02*a21 + b03*a31;
+      m[2]  = b00*a02 + b01*a12 + b02*a22 + b03*a32;
+      m[3]  = b00*a03 + b01*a13 + b02*a23 + b03*a33;
 
-      this.n21 = a21 * b11 + a22 * b21 + a23 * b31 + a24 * b41;
-      this.n22 = a21 * b12 + a22 * b22 + a23 * b32 + a24 * b42;
-      this.n23 = a21 * b13 + a22 * b23 + a23 * b33 + a24 * b43;
-      this.n24 = a21 * b14 + a22 * b24 + a23 * b34 + a24 * b44;
+      m[4]  = b10*a00 + b11*a10 + b12*a20 + b13*a30;
+      m[5]  = b10*a01 + b11*a11 + b12*a21 + b13*a31;
+      m[6]  = b10*a02 + b11*a12 + b12*a22 + b13*a32;
+      m[7]  = b10*a03 + b11*a13 + b12*a23 + b13*a33;
 
-      this.n31 = a31 * b11 + a32 * b21 + a33 * b31 + a34 * b41;
-      this.n32 = a31 * b12 + a32 * b22 + a33 * b32 + a34 * b42;
-      this.n33 = a31 * b13 + a32 * b23 + a33 * b33 + a34 * b43;
-      this.n34 = a31 * b14 + a32 * b24 + a33 * b34 + a34 * b44;
+      m[8]  = b20*a00 + b21*a10 + b22*a20 + b23*a30;
+      m[9]  = b20*a01 + b21*a11 + b22*a21 + b23*a31;
+      m[10] = b20*a02 + b21*a12 + b22*a22 + b23*a32;
+      m[11] = b20*a03 + b21*a13 + b22*a23 + b23*a33;
 
-      this.n41 = a41 * b11 + a42 * b21 + a43 * b31 + a44 * b41;
-      this.n42 = a41 * b12 + a42 * b22 + a43 * b32 + a44 * b42;
-      this.n43 = a41 * b13 + a42 * b23 + a43 * b33 + a44 * b43;
-      this.n44 = a41 * b14 + a42 * b24 + a43 * b34 + a44 * b44;
+      m[12] = b30*a00 + b31*a10 + b32*a20 + b33*a30;
+      m[13] = b30*a01 + b31*a11 + b32*a21 + b33*a31;
+      m[14] = b30*a02 + b31*a12 + b32*a22 + b33*a32;
+      m[15] = b30*a03 + b31*a13 + b32*a23 + b33*a33;
 
       return this;
     },
@@ -320,14 +217,16 @@ vecJS.M44 = function M44(n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, 
     *
     * @return {!vecJS.M44} This instance.
     */
-    transpose: function () {
-      var b;
-      b = this.n21; this.n21 = this.n12; this.n12 = b;
-      b = this.n31; this.n31 = this.n13; this.n13 = b;
-      b = this.n41; this.n41 = this.n14; this.n14 = b;
-      b = this.n32; this.n32 = this.n23; this.n23 = b;
-      b = this.n42; this.n42 = this.n24; this.n24 = b;
-      b = this.n43; this.n43 = this.n34; this.n34 = b;
+    trans: function () {
+      var b,
+          m = this.m;
+      
+      b = m[4];  m[4]  = m[1];  m[1]  = b;
+      b = m[8];  m[8]  = m[2];  m[2]  = b;
+      b = m[12]; m[12] = m[3];  m[3]  = b;
+      b = m[9];  m[9]  = m[6];  m[6]  = b;
+      b = m[13]; m[13] = m[7];  m[7]  = b;
+      b = m[14]; m[14] = m[11]; m[11] = b;
 
       return this;
     },
@@ -337,44 +236,46 @@ vecJS.M44 = function M44(n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, 
     *
     * @return {!vecJS.M44} This instance.
     */
-    invert: function () {
-      var a11 = this.n11, a12 = this.n12, a13 = this.n13, a14 = this.n14,
-          a21 = this.n21, a22 = this.n22, a23 = this.n23, a24 = this.n24,
-          a31 = this.n31, a32 = this.n32, a33 = this.n33, a34 = this.n34,
-          a41 = this.n41, a42 = this.n42, a43 = this.n43, a44 = this.n44,
-          b00 = a11 * a22 - a12 * a21,
-          b01 = a11 * a23 - a13 * a21,
-          b02 = a11 * a24 - a14 * a21,
-          b03 = a12 * a23 - a13 * a22,
-          b04 = a12 * a24 - a14 * a22,
-          b05 = a13 * a24 - a14 * a23,
-          b06 = a31 * a42 - a32 * a41,
-          b07 = a31 * a43 - a33 * a41,
-          b08 = a31 * a44 - a34 * a41,
-          b09 = a32 * a43 - a33 * a42,
-          b10 = a32 * a44 - a34 * a42,
-          b11 = a33 * a44 - a34 * a43,
+    inv: function () {
+      var m = this.m,
+          a00 = m[0],  a01 = m[1],  a02 = m[2],  a03 = m[3],
+          a10 = m[4],  a11 = m[5],  a12 = m[6],  a13 = m[7],
+          a20 = m[8],  a21 = m[9],  a22 = m[10], a23 = m[11],
+          a30 = m[12], a31 = m[13], a32 = m[14], a33 = m[15],
+      
+          b00 = a00 * a11 - a01 * a10,
+          b01 = a00 * a12 - a02 * a10,
+          b02 = a00 * a13 - a03 * a10,
+          b03 = a01 * a12 - a02 * a11,
+          b04 = a01 * a13 - a03 * a11,
+          b05 = a02 * a13 - a03 * a12,
+          b06 = a20 * a31 - a21 * a30,
+          b07 = a20 * a32 - a22 * a30,
+          b08 = a20 * a33 - a23 * a30,
+          b09 = a21 * a32 - a22 * a31,
+          b10 = a21 * a33 - a23 * a31,
+          b11 = a22 * a33 - a23 * a32,
           invDet = 1 / (b00 * b11 - b01 * b10 + b02 * b09 + b03 * b08 - b04 * b07 + b05 * b06);
 
-        this.n11 = ( a22 * b11 - a23 * b10 + a24 * b09) * invDet;
-        this.n12 = (-a12 * b11 + a13 * b10 - a14 * b09) * invDet;
-        this.n13 = ( a42 * b05 - a43 * b04 + a44 * b03) * invDet;
-        this.n14 = (-a32 * b05 + a33 * b04 - a34 * b03) * invDet;
+        m[0]  = ( a11 * b11 - a12 * b10 + a13 * b09) * invDet;
+        m[1]  = (-a01 * b11 + a02 * b10 - a03 * b09) * invDet;
+        m[2]  = ( a31 * b05 - a32 * b04 + a33 * b03) * invDet;
+        m[3]  = (-a21 * b05 + a22 * b04 - a23 * b03) * invDet;
 
-        this.n21 = (-a21 * b11 + a23 * b08 - a24 * b07) * invDet;
-        this.n22 = ( a11 * b11 - a13 * b08 + a14 * b07) * invDet;
-        this.n23 = (-a41 * b05 + a43 * b02 - a44 * b01) * invDet;
-        this.n24 = ( a31 * b05 - a33 * b02 + a34 * b01) * invDet;
+        m[4]  = (-a10 * b11 + a12 * b08 - a13 * b07) * invDet;
+        m[5]  = ( a00 * b11 - a02 * b08 + a03 * b07) * invDet;
+        m[6]  = (-a30 * b05 + a32 * b02 - a33 * b01) * invDet;
+        m[7]  = ( a20 * b05 - a22 * b02 + a23 * b01) * invDet;
 
-        this.n31 = ( a21 * b10 - a22 * b08 + a24 * b06) * invDet;
-        this.n32 = (-a11 * b10 + a12 * b08 - a14 * b06) * invDet;
-        this.n33 = ( a41 * b04 - a42 * b02 + a44 * b00) * invDet;
-        this.n34 = (-a31 * b04 + a32 * b02 - a34 * b00) * invDet;
+        m[8]  = ( a10 * b10 - a11 * b08 + a13 * b06) * invDet;
+        m[9]  = (-a00 * b10 + a01 * b08 - a03 * b06) * invDet;
+        m[10] = ( a30 * b04 - a31 * b02 + a33 * b00) * invDet;
+        m[11] = (-a20 * b04 + a21 * b02 - a23 * b00) * invDet;
 
-        this.n41 = (-a21 * b09 + a22 * b07 - a23 * b06) * invDet;
-        this.n42 = ( a11 * b09 - a12 * b07 + a13 * b06) * invDet;
-        this.n43 = (-a41 * b03 + a42 * b01 - a43 * b00) * invDet;
-        this.n44 = ( a31 * b03 - a32 * b01 + a33 * b00) * invDet;
+        m[12] = (-a10 * b09 + a11 * b07 - a12 * b06) * invDet;
+        m[13] = ( a00 * b09 - a01 * b07 + a02 * b06) * invDet;
+        m[14] = (-a30 * b03 + a31 * b01 - a32 * b00) * invDet;
+        m[15] = ( a20 * b03 - a21 * b01 + a22 * b00) * invDet;
 
         return this;
     },
@@ -389,14 +290,16 @@ vecJS.M44 = function M44(n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, 
     * @return {!vecJS.M44} This instance.
     */
     lookAt: function (eye, center, up) {
+      var m = this.m;
+      
       _vz.copy(eye).sub(center).normalize();
       _vx.copy(up).cross(_vz).normalize();
       _vy.copy(_vz).cross(_vx).normalize();
 
-      this.n11 = _vx.x; this.n12 = _vx.y; this.n13 = _vx.z; this.n14 = -_vx.dot(eye);
-      this.n21 = _vy.x; this.n22 = _vy.y; this.n23 = _vy.z; this.n24 = -_vy.dot(eye);
-      this.n31 = _vz.x; this.n32 = _vz.y; this.n33 = _vz.z; this.n34 = -_vz.dot(eye);
-      this.n41 = 0;     this.n42 = 0;     this.n43 = 0;     this.n44 = 1;
+      m[0]  = _vx.x; m[1]  = _vx.y; m[2]  = _vx.z; m[3]  = -_vx.dot(eye);
+      m[4]  = _vy.x; m[5]  = _vy.y; m[6]  = _vy.z; m[7]  = -_vy.dot(eye);
+      m[8]  = _vz.x; m[9]  = _vz.y; m[10] = _vz.z; m[11] = -_vz.dot(eye);
+      m[12] = 0;     m[13] = 0;     m[14] = 0;     m[15] = 1;
 
       return this;
     },
@@ -418,12 +321,13 @@ vecJS.M44 = function M44(n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, 
           xmax = ymax * aspect,
           w = xmax - xmin,
           h = ymax - ymin,
-          d = far - near;
+          d = far - near,
+          m = this.m;
 
-      this.n11 = 2 * near / w;  this.n12 = 0;             this.n13 = (xmax + xmin) / w; this.n14 = 0;
-      this.n21 = 0;             this.n22 = 2 * near / h;  this.n23 = (ymax + ymin) / h; this.n24 = 0;
-      this.n31 = 0;             this.n32 = 0;             this.n33 = -(far + near) / d; this.n34 = -(2 * far * near) / d;
-      this.n41 = 0;             this.n42 = 0;             this.n43 = -1;                this.n44 = 0;
+      m[0]  = 2 * near / w;  m[1]  = 0;             m[2]  = (xmax + xmin) / w; m[3]  = 0;
+      m[4]  = 0;             m[5]  = 2 * near / h;  m[6]  = (ymax + ymin) / h; m[7]  = 0;
+      m[8]  = 0;             m[9]  = 0;             m[10] = -(far + near) / d; m[11] = -(2 * far * near) / d;
+      m[12] = 0;             m[13] = 0;             m[14] = -1;                m[15] = 0;
 
       return this;
     },
@@ -443,12 +347,13 @@ vecJS.M44 = function M44(n11, n12, n13, n14, n21, n22, n23, n24, n31, n32, n33, 
     orthogonal: function (left, right, bottom, top, near, far) {
       var rl = (right - left),
           tb = (top - bottom),
-          fn = (far - near);
+          fn = (far - near),
+          m = this.m;
 
-      this.n11 = 2 / rl;                this.n12 = 0;                     this.n13 = 0;                   this.n14 = 0;
-      this.n21 = 0;                     this.n22 = 2 / tb;                this.n23 = 0;                   this.n24 = 0;
-      this.n31 = 0;                     this.n32 = 0;                     this.n33 = -2 / fn;             this.n34 = 0;
-      this.n41 = -(left + right) / rl;  this.n42 = -(top + bottom) / tb;  this.n43 = -(far + near) / fn;  this.n44 = 1;
+      m[0]  = 2 / rl;                m[1]  = 0;                     m[2]  = 0;                   m[3]  = 0;
+      m[4]  = 0;                     m[5]  = 2 / tb;                m[6]  = 0;                   m[7]  = 0;
+      m[8]  = 0;                     m[9]  = 0;                     m[10] = -2 / fn;             m[11] = 0;
+      m[12] = -(left + right) / rl;  m[13] = -(top + bottom) / tb;  m[14] = -(far + near) / fn;  m[15] = 1;
 
       return this;
     }

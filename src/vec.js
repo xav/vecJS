@@ -21,7 +21,8 @@ var _vecJS = window.vecJS,
     sin = Math.sin,
     tan = Math.tan,
     sqrt = Math.sqrt,
-    PI = Math.PI;
+    PI = Math.PI,
+    GLMatrixArray = (typeof Float32Array != 'undefined') ? Float32Array : Array;
 
 /**
 * @namespace The vecJS namespace.
