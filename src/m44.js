@@ -26,9 +26,9 @@
 *
 * @class An affine 4x4 matrix.
 *
-* @param {Array=} arr Array containing values to initialize with
+* @param {Array=} arr Array containing values to initialize with.
 *
-* @property {GLMatrixArray} m the matrix values
+* @property {GLMatrixArray} m the matrix values.
 *
 * @constructor
 */
@@ -53,7 +53,7 @@ vecJS.M44 = function M44(arr) {
     /**
     * Set the current instance values.
     *
-    * @param {!Array} arr The new values
+    * @param {!Array} arr The new values.
     *
     * @return {!vecJS.M44} This instance.
     */
@@ -356,6 +356,16 @@ vecJS.M44 = function M44(arr) {
       m[12] = -(left + right) / rl;  m[13] = -(top + bottom) / tb;  m[14] = -(far + near) / fn;  m[15] = 1;
 
       return this;
+    },
+
+    toString: function () {
+      var m = this.m;
+      return 'M44[\n' +
+        ' [' + m[0]  + ', ' + m[1]  + ', ' + m[2]  + ', ' + m[3]  + ']\n' +
+        ' [' + m[4]  + ', ' + m[5]  + ', ' + m[6]  + ', ' + m[7]  + ']\n' +
+        ' [' + m[8]  + ', ' + m[9]  + ', ' + m[10] + ', ' + m[11] + ']\n' +
+        ' [' + m[12] + ', ' + m[13] + ', ' + m[14] + ', ' + m[15] + ']\n' +
+        ']\n';
     }
   };
 })();
