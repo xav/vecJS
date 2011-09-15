@@ -18,9 +18,11 @@
 var _vecJS = window.vecJS,
     _$V = window.$V,
     cos = Math.cos,
+    acos = Math.acos,
     sin = Math.sin,
     tan = Math.tan,
     sqrt = Math.sqrt,
+    abs = Math.abs,
     PI = Math.PI,
     GLMatrixArray = (typeof Float32Array != 'undefined') ? Float32Array : Array;
 

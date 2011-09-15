@@ -16,7 +16,7 @@
  */
 
 /**
-* @class A 4 dimensional vector to use with homogenous coordinates.
+* @class A 4 dimensional vector to use with homogenous coordinates. Can also be used as a quaternion.
 *
  * @param {Array=} arr Array containing values to initialize with.
  *
@@ -93,6 +93,57 @@ vecJS.V4.prototype = {
     return new vecJS.V4(this.v);
   },
 
+/**
+  * Multiply all the components of this instance by the specified number.
+  *
+  * @param {number} s The multiplier.
+  *
+  * @return {!vecJS.V4} This instance.
+  */
+  muls: function (s) {
+    var v = this.v;
+    v[0] *= s;
+    v[1] *= s;
+    v[2] *= s;
+    v[3] *= s;
+    return this;
+  },
+  /**
+  * Divide all the components of this instance by the specified number.
+  *
+  * @param {number} s The divider.
+  *
+  * @return {!vecJS.V4} This instance.
+  */
+  divs: function (s) {
+    var v = this.v;
+    v[0] /= s;
+    v[1] /= s;
+    v[2] /= s;
+    v[3] /= s;
+    return this;
+  },
+
+  /**
+   * Perform a quaternion multiplication and assign the result to this instance.
+   *
+   * @param v
+   *
+   * @return {!vecJS.V4} This instance.
+   */
+  qmul: function (v) {
+    v = v.v;
+    var a = this.v,
+        ax = a[0], ay = a[1], az = a[2], aw = a[3],
+        bx = v[0], by = v[1], bz = v[2], bw = v[3];
+
+    a[0] = ax*bw + aw*bx + ay*bz - az*by;
+    a[1] = ay*bw + aw*by + az*bx - ax*bz;
+    a[2] = az*bw + aw*bz + ax*by - ay*bx;
+    a[3] = aw*bw - ax*bx - ay*by - az*bz;
+
+    return this;
+  },
 
   /**
   * Multiply the specified matrix with this vector and assign the result to this instance.
@@ -132,13 +183,57 @@ vecJS.V4.prototype = {
   },
 
   /**
+   * Performs a spherical linear interpolation and assign the result to this instance
+   *
+   * @param {!vecJS.V4} q The quaternion to interpolate with this one.
+   * @param {Number} l The interpolation amount between the two vectors.
+   */
+  slerp: function (q, l) {
+    var v = this.v,
+        ax = v[0], ay = v[1], az = v[2], aw = v[3],
+        bx = v[0], by = v[1], bz = v[2], bw = v[3],
+        halfTheta,
+        sinHalfTheta,
+        cosHalfTheta =  ax*bx + ay*by + az*bz + aw*bw,
+        ra, rb;
+
+    if (abs(cosHalfTheta) >= 1.0){
+      return this;
+    }
+
+    halfTheta = acos(cosHalfTheta);
+    sinHalfTheta = sqrt(1.0 - cosHalfTheta*cosHalfTheta);
+
+    if (abs(sinHalfTheta) < 0.001){
+      v[0] = (ax*0.5 + bx*0.5);
+      v[1] = (ay*0.5 + by*0.5);
+      v[2] = (az*0.5 + bz*0.5);
+      v[3] = (aw*0.5 + bw*0.5);
+      return this;
+    }
+
+    ra = sin((1 - l)*halfTheta) / sinHalfTheta;
+    rb = sin(l*halfTheta) / sinHalfTheta;
+
+    v[0] = (ax*ra + bx*rb);
+    v[1] = (ay*ra + by*rb);
+    v[2] = (az*ra + bz*rb);
+    v[3] = (aw*ra + bw*rb);
+
+    return this;
+  },
+
+
+  /**
   * Normalize this vector and assign the resulting unit vector to this instance.
   *
   * @return {!vecJS.V4} This instance.
   */
   normalize: function () {
-    var l = sqrt(this.x * this.x + this.y * this.y + this.z * this.z);
-    return l > 0 ? this.divideScalar(l) : this.set(0, 0, 0);
+    var v = this.v,
+        vx = v[0], vy = v[1], vz = v[2], vw = v[3],
+        l = sqrt(vx*vx + vy*vy + vz*vz);
+    return l > 0 ? this.muls(1/l) : this.set([0, 0, 0, 0]);
   },
 
   toString: function () {

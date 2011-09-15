@@ -111,6 +111,44 @@ vecJS.M44 = function M44(arr) {
     },
 
     /**
+     * Set the matrix values from the specified quaternion.
+     *
+     * @param {!vecJS.V4} q The source quaternion.
+     *
+    * @return {!vecJS.M44} This instance.
+     */
+    fromQuat: function (q) {
+      var x = q[0], y = q[1], z = q[2], w = q[3],
+          x2 = x + x, y2 = y + y, z2 = z + z,
+          xx = x*x2, xy = x*y2, xz = x*z2,
+          yy = y*y2, yz = y*z2, zz = z*z2,
+          wx = w*x2, wy = w*y2, wz = w*z2,
+          m = this.m;
+
+      m[0] = 1 - (yy + zz);
+      m[1] = xy - wz;
+      m[2] = xz + wy;
+      m[3] = 0;
+
+      m[4] = xy + wz;
+      m[5] = 1 - (xx + zz);
+      m[6] = yz - wx;
+      m[7] = 0;
+
+      m[8] = xz - wy;
+      m[9] = yz + wx;
+      m[10] = 1 - (xx + yy);
+      m[11] = 0;
+
+      m[12] = 0;
+      m[13] = 0;
+      m[14] = 0;
+      m[15] = 1;
+
+      return this;
+    },
+
+    /**
     * Set this instance to an identity matrix.
     *
     * @return {!vecJS.M44} This instance.

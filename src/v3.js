@@ -340,6 +340,32 @@ vecJS.V3.prototype = {
   },
 
   /**
+   * Multiply the specified quaternion with this vector and assign the result to this instance.
+   *
+   * @param {!vecJS.V4} q The quaternion to multiply.
+   *
+  * @return {!vecJS.V3} This instance.
+   */
+  qmul: function (q) {
+    var v = this.v,
+        vx = v[0], vy = v[1], vz = v[2],
+        qx = q[0], qy = q[1], qz = q[2], qw = q[3],
+
+        // quat * vec
+        ix =  qw*vx + qy*vz - qz*vy,
+        iy =  qw*vy + qz*vx - qx*vz,
+        iz =  qw*vz + qx*vy - qy*vx,
+        iw = -qx*vx - qy*vy - qz*vz;
+
+    // result * inverse quat
+    v[0] = ix*qw + iw*-qx + iy*-qz - iz*-qy;
+    v[1] = iy*qw + iw*-qy + iz*-qx - ix*-qz;
+    v[2] = iz*qw + iw*-qz + ix*-qy - iy*-qx;
+
+    return this;
+  },
+
+  /**
   * Normalize this vector and assign the resulting unit vector to this instance.
   *
   * @return {!vecJS.V3} This instance.
