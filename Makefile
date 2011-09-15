@@ -4,7 +4,7 @@ BUILD_DIR = build
 PREFIX = .
 DIST_DIR = ${PREFIX}/dist
 
-COMPILER = java -jar ${BUILD_DIR}/compiler.jar --js
+COMPILER = java -jar ${BUILD_DIR}/compiler.jar  --compilation_level SIMPLE_OPTIMIZATIONS --js
 
 BASE_FILES = ${SRC_DIR}/vec.js\
 	${SRC_DIR}/v3.js\
