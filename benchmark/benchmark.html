@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Math libraries benchmark</title>
+  <style>
+    th {
+      padding: 0 10px 0 0;
+    }
+    td {
+      padding: 0 10px 0 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="log">
+  </div>
+
+  <script src="js/handlebars.1.0.0.beta.3.js"></script>
+
+  <script id="entry-template" type="text/x-handlebars-template">
+    <h2>{{title}}</h2>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          {{#each times}}
+          <th>{{this.name}}</th>
+          {{/each}}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th>Avg</th>
+          {{#each times}}
+          <td><span>{{this.avg}}</span>ms</td>
+          {{/each}}
+        </tr>
+        <tr>
+          <th>Min</th>
+          {{#each times}}
+          <td><span>{{this.min}}</span>ms</td>
+          {{/each}}
+        </tr>
+        <tr>
+          <th>Max</th>
+          {{#each times}}
+          <td><span>{{this.max}}</span>ms</td>
+          {{/each}}
+        </tr>
+      </tbody>
+    </table>
+  </script>
+
+  <script src="js/glMatrix-min.js"></script>
+  <script src="js/CanvasMatrix.js"></script>
+  <script src="js/EWGL_math.js"></script>
+  <script src="js/mjs.js"></script>
+
+  <script src="../dist/vec.min.js"></script>
+
+  <script type="text/javascript">
+    (function () {
+      var matrixRandom = {
+        vecJS: function () {
+          return new vecJS.M44([
+              Math.random()*100, Math.random()*100, Math.random()*100, Math.random()*100,
+              Math.random()*100, Math.random()*100, Math.random()*100, Math.random()*100,
+              Math.random()*100, Math.random()*100, Math.random()*100, Math.random()*100,
+              Math.random()*100, Math.random()*100, Math.random()*100, Math.random()*100
+            ]);
+        },
+        glMatrix: function () {
+          return mat4.create([
+              Math.random()*100, Math.random()*100, Math.random()*100, Math.random()*100,
+              Math.random()*100, Math.random()*100, Math.random()*100, Math.random()*100,
+              Math.random()*100, Math.random()*100, Math.random()*100, Math.random()*100,
+              Math.random()*100, Math.random()*100, Math.random()*100, Math.random()*100
+            ]);
+        },
+        mjs: function () {
+          return new MJS_FLOAT_ARRAY_TYPE([
+              Math.random()*100, Math.random()*100, Math.random()*100, Math.random()*100,
+              Math.random()*100, Math.random()*100, Math.random()*100, Math.random()*100,
+              Math.random()*100, Math.random()*100, Math.random()*100, Math.random()*100,
+              Math.random()*100, Math.random()*100, Math.random()*100, Math.random()*100
+            ]);
+        },
+        canvasMatrix: function () {
+          return new CanvasMatrix4([
+              Math.random()*100, Math.random()*100, Math.random()*100, Math.random()*100,
+              Math.random()*100, Math.random()*100, Math.random()*100, Math.random()*100,
+              Math.random()*100, Math.random()*100, Math.random()*100, Math.random()*100,
+              Math.random()*100, Math.random()*100, Math.random()*100, Math.random()*100
+            ]);
+        },
+        ewgl: function () {
+          return m4x4.I().rand();
+        }
+      };
+
+
+      function roundNumber(rnum, rlength) {
+        return Math.round(rnum*Math.pow(10,rlength))/Math.pow(10,rlength);
+      }
+      function runTest(name, test) {
+        if (!test) {
+          return {name: name};
+        }
+
+        var runCount = 100,
+            internalRunCount = 30000,
+            totalTime = 0,
+            minTime = Number.MAX_VALUE,
+            maxTime = Number.MIN_VALUE,
+            time,
+            r;
+
+        for(r = 0; r < runCount; ++r) {
+          time = test(internalRunCount);
+          if(minTime > time) { minTime = time; }
+          if(maxTime < time) { maxTime = time; }
+          totalTime += time;
+        }
+
+        return {
+          name: name,
+          total: totalTime,
+          avg: roundNumber(totalTime / runCount, 3),
+          min: minTime,
+          max: maxTime
+        };
+      }
+
+      function runSet(name, tests) {
+        var t, tl,
+            set = {
+              title: name,
+              times: []
+          };
+        for (t = 0, tl = tests.length; t < tl; t++) {
+          set.times.push(runTest(tests[t].name, tests[t].test));
+        }
+
+        return set;
+      }
+
+      var src = document.getElementById('entry-template').innerHTML,
+          template = Handlebars.compile(src),
+          log = document.getElementById('log');
+
+      var data = runSet('Multiplication', [
+        {
+          name: 'vecJS',
+          test: function (count) {
+            var m1 = matrixRandom.vecJS(),
+                m2 = matrixRandom.vecJS(),
+                start = Date.now();
+            for (var i = 0; i < count; ++i) {
+              m1.mul(m2);
+            }
+            return Date.now() - start;
+          }
+        }, {
+          name: 'glMatrix',
+          test: function (count) {
+            var m1 = matrixRandom.glMatrix(),
+                m2 = matrixRandom.glMatrix(),
+                start = Date.now();
+            for (var i = 0; i < count; ++i) {
+              mat4.multiply(m1, m2);
+            }
+            return Date.now() - start;
+          }
+        }, {
+          name: 'mjs',
+          test: function (count) {
+            var m1 = matrixRandom.mjs(),
+                m2 = matrixRandom.mjs(),
+                res = matrixRandom.mjs(),
+                start = Date.now();
+            for (var i = 0; i < count; ++i) {
+              M4x4.mul(m1, m2, res);
+            }
+            return Date.now() - start;
+          }
+        }, {
+          name: 'CanvasMatrix',
+          test: function (count) {
+            var m1 = matrixRandom.canvasMatrix(),
+                m2 = matrixRandom.canvasMatrix(),
+                start = Date.now();
+            for (var i = 0; i < count; ++i) {
+              m1.multRight(m2);
+            }
+            return Date.now() - start;
+          }
+        }, {
+          name: 'EWGL',
+          test: function (count) {
+            var m1 = matrixRandom.ewgl(),
+                m2 = matrixRandom.ewgl(),
+                start = Date.now();
+            for (var i = 0; i < count; ++i) {
+              m1.x(m2);
+            }
+            return Date.now() - start;
+          }
+        }
+      ]);
+      log.innerHTML += template(data);
+    }) ();
+  </script>
+</body>
+</html>
