@@ -343,6 +343,30 @@ vecJS.M44 = function M44(arr) {
     },
 
     /**
+     * Create a frustum matrix with the given bounds and assign it to this instance.
+     *
+     * @param {number} left left bound of the frustum.
+     * @param {number} right right bound of the frustum.
+     * @param {number} bottom bottom bound of the frustum.
+     * @param {number} top top bound of the frustum.
+     * @param {number} near near bound of the frustum.
+     * @param {number} far far bound of the frustum.
+     */
+    frustum: function(left, right, bottom, top, near, far) {
+      var m = this.m,
+          rl = (right - left),
+          tb = (top - bottom),
+          fn = (far - near);
+
+      m[0] = (near*2) / rl;       m[1] = 0;                   m[2] = 0;                   m[3] = 0;
+      m[4] = 0;                   m[5] = (near*2) / tb;       m[6] = 0;                   m[7] = 0;
+      m[8] = (right + left) / rl; m[9] = (top + bottom) / tb; m[10] = -(far + near) / fn; m[11] = -1;
+      m[12] = 0;                  m[13] = 0;                  m[14] = -(far*near*2) / fn; m[15] = 0;
+
+      return this;
+    },
+
+    /**
      * Create a perspective projection matrix from a camera aspect parameters and assign it to this instance.
     *
     * @param {number} fov The field of view in degrees.
