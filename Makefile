@@ -31,7 +31,7 @@ VER = sed "s/@VERSION/${VJS_VER}/"
 
 DATE=$(shell git log -1 --pretty=format:%ad)
 
-all: core doc
+all: helpHint core doc
 
 core: vjs min
 	@@echo "vecJS build complete."
@@ -68,3 +68,13 @@ ${VJS_DOC}: ${VJS}
 clean:
 	@@echo "Removing Distribution directory:" ${DIST_DIR}
 	@@rm -rf ${DIST_DIR}
+
+helpHint:
+	@@echo "Try make help for a list of available targets"\
+
+help:
+	@@echo "Available targets:"
+	@@echo " - all: vecjJS, minified vecJS, documentation"
+	@@echo " - vjs: only vecJS"
+	@@echo " - min: vecJS and minified version"
+	@@echo " - doc: vecJS and documentation"
