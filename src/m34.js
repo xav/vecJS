@@ -352,6 +352,45 @@ vecJS.M34 = function M34(arr) {
       return this;
     },
     /**
+     * Rotate the current transformation matrix around an arbitrary axis.
+     * If rotating around a primary axis (X,Y,Z) one of the specialized rotation
+     * functions should be used instead for performance
+     * 
+     * @param {number} theta The rotation angle in radians.
+     * @param {!Array} arr The axis to rotate around (should be a unit vector)
+     *
+     * @return {!vecJS.M34} This instance.
+     */
+    rotate: function (theta, arr) {
+      var m = this.m,
+          vx = arr[0], vy = arr[1], vz = arr[2],
+          s = sin(theta), c = cos(theta),
+          t = 1 - c,
+          a00 = m[0], a01 = m[1], a02 = m[2],  a03 = m[3],
+          a10 = m[4], a11 = m[5], a12 = m[6],  a13 = m[7],
+          a20 = m[8], a21 = m[9], a22 = m[10], a23 = m[11],
+          b00 = vx*vx*t + c,    b01 = vy*vx*t + vz*s, b02 = vz*vx*t - vy*s,
+          b10 = vx*vy*t - vz*s, b11 = vy*vy*t + c,    b12 = vz*vy*t + vx*s,
+          b20 = vx*vz*t + vy*s, b21 = vy*vz*t - vx*s, b22 = vz*vz*t + c;
+
+      m[0]  = a00*b00 + a10*b01 + a20*b02;
+      m[1]  = a01*b00 + a11*b01 + a21*b02;
+      m[2]  = a02*b00 + a12*b01 + a22*b02;
+      m[3]  = a03*b00 + a13*b01 + a23*b02;
+
+      m[4]  = a00*b10 + a10*b11 + a20*b12;
+      m[5]  = a01*b10 + a11*b11 + a21*b12;
+      m[6]  = a02*b10 + a12*b11 + a22*b12;
+      m[7]  = a03*b10 + a13*b11 + a23*b12;
+
+      m[8]  = a00*b20 + a10*b21 + a20*b22;
+      m[9]  = a01*b20 + a11*b21 + a21*b22;
+      m[10] = a02*b20 + a12*b21 + a22*b22;
+      m[11] = a03*b20 + a13*b21 + a23*b22;
+
+      return this;
+    },
+    /**
     * Rotate the current transformation matrix around the X axis.
     *
     * This is equivalent to multiplying this matrix with a pure X-rotation matrix.

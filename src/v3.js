@@ -375,7 +375,7 @@ vecJS.V3.prototype = {
         vx = v[0], vy = v[1], vz = v[2],
         l = sqrt(vx*vx + vy*vy + vz*vz);
     
-    return l > 0 ? this.divideScalar(l) : this.set([0, 0, 0]);
+    return l > 0 ? this.muls(1/l) : this.set([0, 0, 0]);
   },
 
   /**
