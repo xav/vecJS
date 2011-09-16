@@ -72,7 +72,7 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  cpyTo: function (v) {
+  cpyto: function (v) {
     v = v.v;
     var a = this.v;
     v[0] = a[0];

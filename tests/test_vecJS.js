@@ -28,6 +28,27 @@ var vecJS_runtests = function() {
     equals(v1.v[2], 6, 'set third component');
   });
 
+  test('copy', function () {
+    var v1 = new vecJS.V3([1, 2, 3]),
+        v2a = new vecJS.V3(), v2b,
+        v3a = new vecJS.V3(), v3b;
+
+    v2b = v2a.cpy(v1);
+
+    notEqual(v1, v2a, 'cpy does not overwrite object');
+    equals(v2a, v2b, 'cpy return this');
+    equals(v1.v[0], v2a.v[0], 'cpy first component');
+    equals(v1.v[1], v2a.v[1], 'cpy second component');
+    equals(v1.v[2], v2a.v[2], 'cpy third component');
+
+    v3b = v1.cpyto(v3a);
+    notEqual(v3a, v3b, 'cpyto does not overwrite object');
+    equals(v1, v3b, 'cpyto return this');
+    equals(v1.v[0], v3a.v[0], 'cpyto first component');
+    equals(v1.v[1], v3a.v[1], 'cpyto second component');
+    equals(v1.v[2], v3a.v[2], 'cpyto third component');
+  });
+
   module('V4');
 
   module('M34');
