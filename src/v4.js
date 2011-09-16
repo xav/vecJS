@@ -197,14 +197,14 @@ vecJS.V4.prototype = {
         cosHalfTheta =  ax*bx + ay*by + az*bz + aw*bw,
         ra, rb;
 
-    if (abs(cosHalfTheta) >= 1.0){
+    if (Math.abs(cosHalfTheta) >= 1.0){
       return this;
     }
 
-    halfTheta = acos(cosHalfTheta);
-    sinHalfTheta = sqrt(1.0 - cosHalfTheta*cosHalfTheta);
+    halfTheta = Math.acos(cosHalfTheta);
+    sinHalfTheta = Math.sqrt(1.0 - cosHalfTheta*cosHalfTheta);
 
-    if (abs(sinHalfTheta) < 0.001){
+    if (Math.abs(sinHalfTheta) < 0.001){
       v[0] = (ax*0.5 + bx*0.5);
       v[1] = (ay*0.5 + by*0.5);
       v[2] = (az*0.5 + bz*0.5);
@@ -212,8 +212,8 @@ vecJS.V4.prototype = {
       return this;
     }
 
-    ra = sin((1 - l)*halfTheta) / sinHalfTheta;
-    rb = sin(l*halfTheta) / sinHalfTheta;
+    ra = Math.sin((1 - l)*halfTheta) / sinHalfTheta;
+    rb = Math.sin(l*halfTheta) / sinHalfTheta;
 
     v[0] = (ax*ra + bx*rb);
     v[1] = (ay*ra + by*rb);
@@ -232,7 +232,7 @@ vecJS.V4.prototype = {
   normalize: function () {
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2], vw = v[3],
-        l = sqrt(vx*vx + vy*vy + vz*vz);
+        l = Math.sqrt(vx*vx + vy*vy + vz*vz);
     return l > 0 ? this.muls(1/l) : this.set([0, 0, 0, 0]);
   },
 

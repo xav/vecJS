@@ -373,7 +373,7 @@ vecJS.V3.prototype = {
   normalize: function () {
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2],
-        l = sqrt(vx*vx + vy*vy + vz*vz);
+        l = Math.sqrt(vx*vx + vy*vy + vz*vz);
     
     return l > 0 ? this.muls(1/l) : this.set([0, 0, 0]);
   },
@@ -386,7 +386,7 @@ vecJS.V3.prototype = {
   length: function () {
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2];
-    return sqrt(vx*vx + vy*vy + vz*vz);
+    return Math.sqrt(vx*vx + vy*vy + vz*vz);
   },
   /**
   * Calculate the squared length of this vector.
@@ -412,7 +412,7 @@ vecJS.V3.prototype = {
         dx = a[0] - v[0],
         dy = a[1] - v[1],
         dz = a[2] - v[2];
-    return sqrt(dx*dx + dy*dy + dz*dz);
+    return Math.sqrt(dx*dx + dy*dy + dz*dz);
   },
   /**
   * Calculate the squared distance between the tip of this vector and the tip of the specified one.

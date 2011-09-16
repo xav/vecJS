@@ -377,7 +377,7 @@ vecJS.M44 = function M44(arr) {
     * @returns {!vecJS.M44} This instance.
     */
     perspective: function (fov, aspect, near, far) {
-      var ymax = near * tan(fov * PI / 360),
+      var ymax = near * Math.tan(fov * PI / 360),
           ymin = -ymax,
           xmin = ymin * aspect,
           xmax = ymax * aspect,

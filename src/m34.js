@@ -364,7 +364,7 @@ vecJS.M34 = function M34(arr) {
     rotate: function (theta, arr) {
       var m = this.m,
           vx = arr[0], vy = arr[1], vz = arr[2],
-          s = sin(theta), c = cos(theta),
+          s = Math.sin(theta), c = Math.cos(theta),
           t = 1 - c,
           a00 = m[0], a01 = m[1], a02 = m[2],  a03 = m[3],
           a10 = m[4], a11 = m[5], a12 = m[6],  a13 = m[7],
@@ -404,8 +404,8 @@ vecJS.M34 = function M34(arr) {
           a01  = m[1], a02  = m[2],
           a11  = m[5], a12  = m[6],
           a21  = m[9], a22  = m[10],
-          c = cos(theta),
-          s = sin(theta);
+          c = Math.cos(theta),
+          s = Math.sin(theta);
       m[1]  = a01*c + a02*s;
       m[2]  = a02*c - a01*s;
       m[5]  = a11*c + a12*s;
@@ -428,8 +428,8 @@ vecJS.M34 = function M34(arr) {
           a00  = m[0], a02  = m[2],
           a10  = m[4], a12  = m[6],
           a20  = m[8], a22  = m[10],
-          c = cos(theta),
-          s = sin(theta);
+          c = Math.cos(theta),
+          s = Math.sin(theta);
       m[0] = a00*c - a02*s;
       m[2] = a00*s + a02*c;
       m[4] = a10*c - a12*s;
@@ -452,8 +452,8 @@ vecJS.M34 = function M34(arr) {
           a00  = m[0], a01  = m[1],
           a10  = m[4], a11  = m[5],
           a20  = m[8], a21  = m[9],
-          c = cos(theta),
-          s = sin(theta);
+          c = Math.cos(theta),
+          s = Math.sin(theta);
 
       m[0] = a00*c + a01*s;
       m[1] = a01*c - a00*s;
@@ -500,8 +500,8 @@ vecJS.M34 = function M34(arr) {
     * @return {!vecJS.M34} This instance.
     */
     setRotateX: function (theta) {
-      var c = cos(theta),
-          s = sin(theta);
+      var c = Math.cos(theta),
+          s = Math.sin(theta);
       return this.set([
         1, 0,  0, 0,
         0, c, -s, 0,
@@ -516,8 +516,8 @@ vecJS.M34 = function M34(arr) {
     * @return {!vecJS.M34} This instance.
     */
     setRotateY: function (theta) {
-      var c = cos(theta),
-          s = sin(theta);
+      var c = Math.cos(theta),
+          s = Math.sin(theta);
       return this.set([
          c, 0, s, 0,
          0, 1, 0, 0,
@@ -532,8 +532,8 @@ vecJS.M34 = function M34(arr) {
     * @return {!vecJS.M34} This instance.
     */
     setRotateZ: function (theta) {
-      var c = cos(theta),
-          s = sin(theta);
+      var c = Math.cos(theta),
+          s = Math.sin(theta);
       return this.set([
         c, -s, 0, 0,
         s,  c, 0, 0,
