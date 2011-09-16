@@ -59,7 +59,7 @@ doc: vjs ${VJS_DOC}
 
 ${VJS_DOC}:
 	@@echo "Building documentation" ${VJS_DOC}
-	@@${JSDOC} -d=${DOC_DIR} ${PREFIX}/dist/vec.js
+	@@${JSDOC} -d=${DOC_DIR} -D="version:${VJS_VER}" ${PREFIX}/dist/vec.js
 
 ${VJS_DOC}: ${VJS}
   @@echo "Building documentation" ${VJS_DOC}; \
