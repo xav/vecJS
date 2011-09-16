@@ -12,6 +12,21 @@
   </style>
 </head>
 <body>
+  <form>
+    <h2>Select which tests you want to run</h2>
+    <ul>
+      <li><input type="checkbox" id="run_multiplication"        checked name="run_multiplication"><label for="run_multiplication">Multiplication</label> </li>
+      <li><input type="checkbox" id="run_translation"           checked name="run_translation"><label for="run_translation">Translation</label> </li>
+      <li><input type="checkbox" id="run_scaling"               checked name="run_scaling"><label for="run_scaling">Scaling</label> </li>
+      <li><input type="checkbox" id="run_arbitrary_rotation"    checked name="run_arbitrary_rotation"><label for="run_arbitrary_rotation">Rotation (Arbitrary axis)</label> </li>
+      <li><input type="checkbox" id="run_x_rotation"            checked name="run_x_rotation"><label for="run_x_rotation">Rotation (X axis)</label> </li>
+      <li><input type="checkbox" id="run_transpose"             checked name="run_transpose"><label for="run_transpose">Transpose</label> </li>
+      <li><input type="checkbox" id="run_inverse"               checked name="run_inverse"><label for="run_inverse">Inverse</label> </li>
+      <li><input type="checkbox" id="run_vector_transformation" checked name="run_vector_transformation"><label for="run_vector_transformation">Vector Transformation</label> </li>
+    </ul>
+    <input type="button" id="run_tests" value="Run Tests">
+    <input type="button" id="clear_log" value="Clear Log">
+  </form>
   <div id="log">
   </div>
 
@@ -62,8 +77,7 @@
     (function () {
       var matrixRandom = {
         vecJS: function () {
-          return new vecJS.M44([
-              Math.random()*100, Math.random()*100, Math.random()*100, Math.random()*100,
+          return new vecJS.M34([
               Math.random()*100, Math.random()*100, Math.random()*100, Math.random()*100,
               Math.random()*100, Math.random()*100, Math.random()*100, Math.random()*100,
               Math.random()*100, Math.random()*100, Math.random()*100, Math.random()*100
@@ -144,70 +158,456 @@
         return set;
       }
 
+      function renderResults (results) {
+        log.innerHTML += template(results);
+      }
+
       var src = document.getElementById('entry-template').innerHTML,
           template = Handlebars.compile(src),
           log = document.getElementById('log');
 
-      var data = runSet('Multiplication', [
-        {
-          name: 'vecJS',
-          test: function (count) {
-            var m1 = matrixRandom.vecJS(),
-                m2 = matrixRandom.vecJS(),
-                start = Date.now();
-            for (var i = 0; i < count; ++i) {
-              m1.mul(m2);
+      var run_multiplication = function () {
+        renderResults(runSet('Multiplication', [
+          {
+            name: 'vecJS (3x4)',
+            test: function (count) {
+              var m1 = matrixRandom.vecJS(),
+                  m2 = matrixRandom.vecJS(),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                m1.mul(m2);
+              }
+              return Date.now() - start;
             }
-            return Date.now() - start;
-          }
-        }, {
-          name: 'glMatrix',
-          test: function (count) {
-            var m1 = matrixRandom.glMatrix(),
-                m2 = matrixRandom.glMatrix(),
-                start = Date.now();
-            for (var i = 0; i < count; ++i) {
-              mat4.multiply(m1, m2);
+          }, {
+            name: 'glMatrix',
+            test: function (count) {
+              var m1 = matrixRandom.glMatrix(),
+                  m2 = matrixRandom.glMatrix(),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                mat4.multiply(m1, m2);
+              }
+              return Date.now() - start;
             }
-            return Date.now() - start;
-          }
-        }, {
-          name: 'mjs',
-          test: function (count) {
-            var m1 = matrixRandom.mjs(),
-                m2 = matrixRandom.mjs(),
-                res = matrixRandom.mjs(),
-                start = Date.now();
-            for (var i = 0; i < count; ++i) {
-              M4x4.mul(m1, m2, res);
+          }, {
+            name: 'mjs',
+            test: function (count) {
+              var m1 = matrixRandom.mjs(),
+                  m2 = matrixRandom.mjs(),
+                  res = matrixRandom.mjs(),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                M4x4.mul(m1, m2, res);
+              }
+              return Date.now() - start;
             }
-            return Date.now() - start;
-          }
-        }, {
-          name: 'CanvasMatrix',
-          test: function (count) {
-            var m1 = matrixRandom.canvasMatrix(),
-                m2 = matrixRandom.canvasMatrix(),
-                start = Date.now();
-            for (var i = 0; i < count; ++i) {
-              m1.multRight(m2);
+          }, {
+            name: 'CanvasMatrix',
+            test: function (count) {
+              var m1 = matrixRandom.canvasMatrix(),
+                  m2 = matrixRandom.canvasMatrix(),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                m1.multRight(m2);
+              }
+              return Date.now() - start;
             }
-            return Date.now() - start;
-          }
-        }, {
-          name: 'EWGL',
-          test: function (count) {
-            var m1 = matrixRandom.ewgl(),
-                m2 = matrixRandom.ewgl(),
-                start = Date.now();
-            for (var i = 0; i < count; ++i) {
-              m1.x(m2);
+          }, {
+            name: 'EWGL',
+            test: function (count) {
+              var m1 = matrixRandom.ewgl(),
+                  m2 = matrixRandom.ewgl(),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                m1.x(m2);
+              }
+              return Date.now() - start;
             }
-            return Date.now() - start;
           }
-        }
-      ]);
-      log.innerHTML += template(data);
+        ]));
+      }
+
+      var run_translation = function () {
+        renderResults(runSet('Translation', [
+          {
+            name: 'vecJS (3x4)',
+            test: function (count) {
+              var m1 = matrixRandom.vecJS(),
+                  v1 = new vecJS.V3([1, 2, 3]),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                m1.translate(v1.v);
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'glMatrix',
+            test: function (count) {
+              var m1 = matrixRandom.glMatrix(),
+                  v1 = [1, 2, 3],
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                mat4.translate(m1, v1);
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'mjs',
+            test: function (count) {
+              var m1 = matrixRandom.mjs(),
+                  v1 = [1, 2, 3],
+                  res = matrixRandom.mjs(),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                M4x4.translate(v1, m1, res);
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'CanvasMatrix',
+            test: function (count) {
+              var m1 = matrixRandom.canvasMatrix(),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                m1.translate(1, 2, 3);
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'EWGL',
+            test: function (count) {
+              var m1 = matrixRandom.ewgl(),
+                  v1 = v3.set([1, 2, 3]),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                m1.translate(v1);
+              }
+              return Date.now() - start;
+            }
+          }
+        ]));
+      };
+
+      var run_scaling = function () {
+        renderResults(runSet('Scaling', [
+          {
+            name: 'vecJS',
+            test: function (count) {
+              var m1 = matrixRandom.vecJS(),
+                  v1 = new vecJS.V3([1, 2, 3]),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                m1.scale(v1.v);
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'glMatrix',
+            test: function (count) {
+              var m1 = matrixRandom.glMatrix(),
+                  v1 = [1, 2, 3],
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                mat4.scale(m1, v1);
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'mjs',
+            test: function (count) {
+              var m1 = matrixRandom.mjs(),
+                  v1 = [1, 2, 3],
+                  res = matrixRandom.mjs(),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                M4x4.scale(v1, m1, res);
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'CanvasMatrix',
+            test: function (count) {
+              var m1 = matrixRandom.canvasMatrix(),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                m1.scale(1, 2, 3);
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'EWGL',
+            test: function (count) {
+              var m1 = matrixRandom.ewgl(),
+                  v1 = v3.set([1, 2, 3]),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                m1.scale(v1);
+              }
+              return Date.now() - start;
+            }
+          }
+        ]));
+      };
+
+      var run_arbitrary_rotation = function () {
+        renderResults(runSet('Rotation (arbitrary axis)', [
+          {
+            name: 'vecJS',
+            test: function (count) {
+              var m1 = matrixRandom.vecJS(),
+                  v1 = new vecJS.V3([1, 2, 3]).normalize(),
+                  a = Math.PI/2,
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                m1.rotate(a, v1.v);
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'glMatrix',
+            test: function (count) {
+              var m1 = matrixRandom.glMatrix(),
+                  v1 = [1, 2, 3],
+                  a = Math.PI/2,
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                mat4.rotate(m1, a, v1);
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'mjs',
+            test: function (count) {
+              var m1 = matrixRandom.mjs(),
+                  v1 = [1, 2, 3],
+                  a = Math.PI/2,
+                  res = matrixRandom.mjs(),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                M4x4.rotate(a, v1, m1, res);
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'CanvasMatrix',
+            test: function (count) {
+              var m1 = matrixRandom.canvasMatrix(),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                m1.rotate(90, 1, 2, 3);
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'EWGL',
+            test: function (count) {
+              var m1 = matrixRandom.ewgl(),
+                  v1 = v3.set([1, 2, 3]),
+                  a = Math.PI/2,
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                m1.rotate(a, v1);
+              }
+              return Date.now() - start;
+            }
+          }
+        ]));
+      };
+
+      var run_x_rotation = function () {
+        renderResults(runSet('Rotation (X axis)', [
+          {
+            name: 'vecJS',
+            test: function (count) {
+              var m1 = matrixRandom.vecJS(),
+                  a = Math.PI/2,
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                m1.rotateX(a);
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'glMatrix',
+            test: function (count) {
+              var m1 = matrixRandom.glMatrix(),
+                  a = Math.PI/2,
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                mat4.rotateX(m1, a);
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'mjs',
+            test: null
+          }, {
+            name: 'CanvasMatrix',
+            test: null
+          }, {
+            name: 'EWGL',
+            test: null
+          }
+        ]));
+      };
+
+      var run_transpose = function () {
+        renderResults(runSet('Transpose', [
+          {
+            name: 'vecJS',
+            test: function (count) {
+              var m1 = matrixRandom.vecJS(),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                m1.transpose();
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'glMatrix',
+            test: function (count) {
+              var m1 = matrixRandom.glMatrix(),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                mat4.transpose(m1);
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'mjs',
+            test: function (count) {
+              var m1 = matrixRandom.mjs(),
+                  res = matrixRandom.mjs(),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                M4x4.transpose(m1, res);
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'CanvasMatrix',
+            test: function (count) {
+              var m1 = matrixRandom.canvasMatrix(),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                m1.transpose();
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'EWGL',
+            test: function (count) {
+              var m1 = matrixRandom.ewgl(),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                m1.transpose();
+              }
+              return Date.now() - start;
+            }
+          }
+        ]));
+      };
+
+      var run_inverse = function () {
+        renderResults(runSet('Inverse', [
+          {
+            name: 'vecJS',
+            test: function (count) {
+              var m1 = matrixRandom.vecJS(),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                m1.invert();
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'glMatrix',
+            test: function (count) {
+              var m1 = matrixRandom.glMatrix(),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                mat4.inverse(m1);
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'mjs',
+            test: null
+          }, {
+            name: 'CanvasMatrix',
+            test: function (count) {
+              var m1 = matrixRandom.canvasMatrix(),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'EWGL',
+            test: function (count) {
+              var m1 = matrixRandom.ewgl(),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                m1.inverse();
+              }
+              return Date.now() - start;
+            }
+          }
+        ]));
+      };
+
+      var run_vector_transformation = function () {
+        renderResults(runSet('Vector transformation', [
+          {
+            name: 'vecJS',
+            test: function (count) {
+              var m1 = matrixRandom.vecJS(),
+                  v1 = new vecJS.V3([1, 2, 3]),
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                v1.mulM34(m1);
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'glMatrix',
+            test: function (count) {
+              var m1 = matrixRandom.glMatrix(),
+                  v1 = [1, 2, 3],
+                  start = Date.now();
+              for (var i = 0; i < count; ++i) {
+                mat4.multiplyVec3(m1, v1);
+              }
+              return Date.now() - start;
+            }
+          }, {
+            name: 'mjs',
+            test: null
+          }, {
+            name: 'CanvasMatrix',
+            test: null
+          }, {
+            name: 'EWGL',
+            test: null
+          }
+        ]));
+      };
+      
+      document.getElementById('run_tests').onclick = function () {
+        if (document.getElementById('run_multiplication').checked) { setTimeout(run_multiplication, 1); }
+        if (document.getElementById('run_translation').checked) { setTimeout(run_translation, 1); }
+        if (document.getElementById('run_scaling').checked) { setTimeout(run_scaling, 1); }
+        if (document.getElementById('run_arbitrary_rotation').checked) { setTimeout(run_arbitrary_rotation, 1); }
+        if (document.getElementById('run_x_rotation').checked) { setTimeout(run_x_rotation, 1); }
+        if (document.getElementById('run_transpose').checked) { setTimeout(run_transpose, 1); }
+        if (document.getElementById('run_inverse').checked) { setTimeout(run_inverse, 1); }
+        if (document.getElementById('run_vector_transformation').checked) { setTimeout(run_vector_transformation, 1); }
+      };
+
+      document.getElementById('clear_log').onclick = function () {
+        log.innerHTML = '';
+      }
     }) ();
   </script>
 </body>
