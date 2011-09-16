@@ -15,7 +15,8 @@
  * limitations under the License.
  */
 
-var _vecJS = window.vecJS,
+var vecJS,
+    _vecJS = window.vecJS,
     _$V = window.$V,
     cos = Math.cos,
     acos = Math.acos,
@@ -28,8 +29,10 @@ var _vecJS = window.vecJS,
 
 /**
 * @namespace The vecJS namespace.
+*
+* @property {string} version the library version.
 */
-var vecJS = {
+vecJS = {
   version: '@VERSION'
 };
 
