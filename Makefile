@@ -11,7 +11,7 @@ JSDOC = java -jar ${BUILD_DIR}/jsrun.jar  ${BUILD_DIR}/app/run.js -a -t=${BUILD_
 
 BASE_FILES = ${SRC_DIR}/vec.js\
 	${SRC_DIR}/v3.js\
-	${SRC_DIR}/v4.js\
+	${SRC_DIR}/q.js\
 	${SRC_DIR}/m34.js\
 	${SRC_DIR}/m44.js
 

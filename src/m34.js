@@ -100,7 +100,7 @@ vecJS.M34 = function M34(arr) {
     /**
      * Set the matrix values from the specified quaternion.
      *
-     * @param {!vecJS.V4} q The source quaternion.
+     * @param {!vecJS.Q} q The source quaternion.
      *
     * @return {!vecJS.M34} This instance.
      */

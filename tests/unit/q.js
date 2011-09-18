@@ -1,15 +1,15 @@
-module('V4');
+module('Q');
 
 test('constructor', function () {
-  var v1 = new vecJS.V4();
-  ok(v1, 'V3 constructor');
+  var v1 = new vecJS.Q();
+  ok(v1, 'Q constructor');
 
   equals(v1.v[0], 0, 'first component 0');
   equals(v1.v[1], 0, 'second component 0');
   equals(v1.v[2], 0, 'third component 0');
   equals(v1.v[3], 0, 'fourth component 0');
 
-  var v2 = new vecJS.V4([1, 2, 3, 4]);
+  var v2 = new vecJS.Q([1, 2, 3, 4]);
   equals(v2.v[0], 1, 'set first component in constructor');
   equals(v2.v[1], 2, 'set second component in constructor');
   equals(v2.v[2], 3, 'set third component in constructor');
@@ -17,7 +17,7 @@ test('constructor', function () {
 });
 
 test('set', function () {
-  var v1 = new vecJS.V4();
+  var v1 = new vecJS.Q();
   v1.set([4, 5, 6, 7]);
   equals(v1.v[0], 4, 'set first component');
   equals(v1.v[1], 5, 'set second component');
@@ -26,8 +26,8 @@ test('set', function () {
 });
 
 test('copyTo', function () {
-  var v1 = new vecJS.V4([1, 2, 3, 4]), v1b,
-      v2 = new vecJS.V4();
+  var v1 = new vecJS.Q([1, 2, 3, 4]), v1b,
+      v2 = new vecJS.Q();
 
   v1b = v1.copyTo(v2);
 
@@ -46,7 +46,7 @@ test('copyTo', function () {
 });
 
 test('clone', function () {
-  var v1 = new vecJS.V4([1, 2, 3, 4]),
+  var v1 = new vecJS.Q([1, 2, 3, 4]),
       v2 = v1.clone();
 
   notEqual(v1, v2, 'clone does not return this');
@@ -64,7 +64,7 @@ test('clone', function () {
 });
 
 test('mulScalar', function () {
-  var v1 = new vecJS.V4([10, 20, 30, 40]), v1b;
+  var v1 = new vecJS.Q([10, 20, 30, 40]), v1b;
 
   v1b = v1.mulScalar(10);
   equals(v1, v1b, 'mulScalar return this');
@@ -75,7 +75,7 @@ test('mulScalar', function () {
 });
 
 test('divScalar', function () {
-  var v1 = new vecJS.V4([10, 20, 30, 40]), v1b;
+  var v1 = new vecJS.Q([10, 20, 30, 40]), v1b;
 
   v1b = v1.divScalar(10);
   equals(v1, v1b, 'divScalar return this');
@@ -93,7 +93,7 @@ test('mulM44', function () {
   //TODO: mulM44
 });
 
-test('mulQuat', function () {
+test('mul', function () {
   //TODO: mulQuat
 });
 

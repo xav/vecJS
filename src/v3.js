@@ -235,7 +235,7 @@ vecJS.V3.prototype = {
   /**
    * Multiply the specified quaternion with this vector and assign the result to this instance.
    *
-   * @param {!vecJS.V4} q The quaternion to multiply.
+   * @param {!vecJS.Q} q The quaternion to multiply.
    *
   * @return {!vecJS.V3} This instance.
    */
@@ -358,9 +358,11 @@ vecJS.V3.prototype = {
   normalize: function () {
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2],
-        l = Math.sqrt(vx*vx + vy*vy + vz*vz);
-    
-    return l > 0 ? this.mulScalar(1/l) : this.set([0, 0, 0]);
+        l = vx*vx + vy*vy + vz*vz;
+    if (l == 1) {
+      return this;
+    }
+    return l ? this.mulScalar(1 / Math.sqrt(l)) : this.set([0, 0, 0]);
   },
 
   /**
