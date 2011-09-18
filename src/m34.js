@@ -78,7 +78,7 @@ vecJS.M34 = function M34(arr) {
     *
     * @return {!vecJS.M34} This instance.
     */
-    cpy: function (m) {
+    copy: function (m) {
       var a = this.m;
       m = m.m;
 
@@ -95,7 +95,7 @@ vecJS.M34 = function M34(arr) {
     *
     * @return {!vecJS.M34} This instance.
     */
-    cpyto: function (m) {
+    copyTo: function (m) {
       var a = this.m;
       m = m.m;
 
@@ -110,7 +110,7 @@ vecJS.M34 = function M34(arr) {
     *
     * @return {!vecJS.M34} A new matrix instance which is a copy of this one.
     */
-    cln: function () {
+    clone: function () {
       return new vecJS.M34(this.m);
     },
 
@@ -151,7 +151,7 @@ vecJS.M34 = function M34(arr) {
     *
     * @return {!vecJS.M34} This instance.
     */
-    idt: function () {
+    identity: function () {
       var a = this.m;
 
       a[0]  = 1; a[1]  = 0; a[2]  = 0; a[3]  = 0;
@@ -164,7 +164,7 @@ vecJS.M34 = function M34(arr) {
     /**
     * Multiply this matrix with the specified one and assign the result to this instance.
     *
-    * @param {!vecJS.M34} m The matrix to multiply with this instance.
+    * @param {!(vecJS.M34|vecJS.M44)} m The matrix to multiply with this instance.
     *
     * @return {!vecJS.M34} This instance.
     */
@@ -204,7 +204,7 @@ vecJS.M34 = function M34(arr) {
     *
     * @return {!vecJS.M34} This instance.
     */
-    amul: function (a, b) {
+    assignMul: function (a, b) {
       a = a.m; b = b.m;
       var m = this.m,
           a00 = a[0], a01 = a[1], a02 = a[2],  a03 = a[3],
@@ -325,9 +325,7 @@ vecJS.M34 = function M34(arr) {
     *
     * This is equivalent to multiplying this matrix with a pure scaling matrix.
     *
-    * @param {number} sx The x scaling factor.
-    * @param {number} sy The y scaling factor.
-    * @param {number} sz The z scaling factor.
+    * @param {number} arr The x,y,z scaling factors.
     *
     * @return {!vecJS.M34} This instance.
     */
