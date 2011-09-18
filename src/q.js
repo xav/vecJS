@@ -16,7 +16,7 @@
  */
 
 /**
-* @class A 4 dimensional vector to represent a quaternion.
+* @class A 4 dimensional vector representing a quaternion.
 *
  * @param {Array=} arr Array containing the [x,y,z,w] values to initialize with.
  *
@@ -53,7 +53,7 @@ vecJS.Q.prototype = {
     return this;
   },
   /**
-  * Copy this quaternion instance to the specified one.
+  * Copy this quaternion to the specified one.
   *
   * @param {!vecJS.Q} q The target quaternion.
   *
@@ -69,7 +69,7 @@ vecJS.Q.prototype = {
     return this;
   },
   /**
-  * Create a clone of the quaternion instance.
+  * Create a clone of this instance.
   *
   * @return {!vecJS.Q} A new quaternion instance which is a copy of this one.
   */
@@ -78,7 +78,7 @@ vecJS.Q.prototype = {
   },
 
   /**
-   * Set the quaternion values from the specified 3x4 matrix.
+   * Set the quaternion values from the specified matrix (3x4 or 4x4).
    * 
    * @param {!(vecJS.M34|vecJS.M44)}m The source quaternion
    *
@@ -335,6 +335,17 @@ vecJS.Q.prototype = {
     a[3] = (aw*ra + bw*rb);
 
     return this;
+  },
+
+  /**
+   * Calculate the length (norm) of this quaternion.
+   *
+   * @return {number} The length of this quaternion.
+   */
+  length: function () {
+    var q = this.q,
+        qx = q[0], qy = q[1], qz = q[2], qw = q[3];
+    return Math.sqrt(qx*qx + qy*qy + qz*qz + qw*qw);
   },
 
   /**
