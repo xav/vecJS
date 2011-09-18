@@ -22,24 +22,6 @@ test('set', function () {
   equals(v1.v[2], 6, 'set third component');
 });
 
-test('copy', function () {
-  var v1 = new vecJS.V3(), v1b,
-      v2 = new vecJS.V3([1, 2, 3]);
-
-  v1b = v1.copy(v2);
-
-  notEqual(v1, v2, 'copy does not overwrite object');
-  equals(v1, v1b, 'copy return this');
-
-  equals(v1.v[0], 1, 'copy first component');
-  equals(v1.v[1], 2, 'copy second component');
-  equals(v1.v[2], 3, 'copy third component');
-
-  equals(v2.v[0], 1, 'copy does not modify parameter - first component');
-  equals(v2.v[1], 2, 'copy does not modify parameter - second component');
-  equals(v2.v[2], 3, 'copy does not modify parameter - third component');
-});
-
 test('copyTo', function () {
   var v1 = new vecJS.V3([1, 2, 3]), v1b,
       v2 = new vecJS.V3();
@@ -62,7 +44,8 @@ test('clone', function () {
   var v1 = new vecJS.V3([1, 2, 3]),
       v2 = v1.clone();
 
-  notEqual(v1, v2, 'clone does not return the same object');
+  notEqual(v1, v2, 'clone does not return this');
+  notEqual(v1.v, v2.v, 'clone does not return the same object');
 
   equals(v2.v[0], 1, 'clone first component');
   equals(v2.v[1], 2, 'clone second component');

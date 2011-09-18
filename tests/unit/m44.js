@@ -7,8 +7,23 @@ test("constructor",function () {
   ok(m1, 'M44 constructor');
 });
 
-test("constructor",function () {
-  var m1 = new vecJS.M44().idt();
+test('set', function () {
+});
+
+test('copy', function () {
+});
+
+test('copyTo', function () {
+});
+
+test('clone', function () {
+});
+
+test('fromQuat', function () {
+});
+
+test("identity",function () {
+  var m1 = new vecJS.M44().identity();
   function testIdentity(m) {
     for (var i = 0 ; i < 4 ; i++) {
       for (var j = 0 ; j < 4 ; j++) {
@@ -20,4 +35,28 @@ test("constructor",function () {
   }
 
   ok(testIdentity(m1), 'identity matrix');
+});
+
+test('mul', function () {
+});
+
+test('assignMul', function () {
+});
+
+test('transpose', function () {
+});
+
+test('invert', function () {
+});
+
+test('lookAt', function () {
+});
+
+test('frustum', function () {
+});
+
+test('perspective', function () {
+});
+
+test('orthogonal', function () {
 });
