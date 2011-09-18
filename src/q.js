@@ -77,6 +77,121 @@ vecJS.Q.prototype = {
     return new vecJS.Q(this.q);
   },
 
+  /**
+   * Set the quaternion values from the specified 3x4 matrix.
+   * 
+   * @param {!(vecJS.M34|vecJS.M44)}m The source quaternion
+   *
+   * @return {!vecJS.Q} This instance.
+   */
+  fromMatrix: function (m) {
+    m=m.m;
+    var q = this.q,
+        m00 = m[0], m01 = m[1], m02 = m[2],
+        m10 = m[4], m11 = m[5], m12 = m[6],
+        m20 = m[8], m21 = m[9], m22 = m[10],
+        d = m00 + m11 + m22 + 1,
+        s;
+
+    if (d > 0) {
+      s = Math.sqrt(d) * 2;
+      q[0] = (m21 - m12) / s;
+      q[1] = (m02 - m20) / s;
+      q[2] = (m10 - m01) / s;
+      q[3] = 0.25 * s;
+    } else {
+      if (m00 > m11 && m00 > m22) {
+        // 1st element of diagonal is the greatest value.
+        // Find scale according to 1st element, and double it
+        s = Math.sqrt(1 + m00 - m11 - m22) * 2;
+
+        q[0] = 0.25 * s;
+        q[1] = (m01 + m10) / s;
+        q[2] = (m20 + m02) / s;
+        q[3] = (m21 - m12) / s;
+      } else if (m11 > m22) {
+        // 2nd element of diagonal is the greatest value.
+        // Find scale according to 2nd element, and double it
+        s = Math.sqrt(1 + m11 - m00 - m22) * 2;
+
+        q[0] = (m01 + m10) / s;
+        q[1] = 0.25 * s;
+        q[2] = (m12 + m21) / s;
+        q[3] = (m02 - m20) / s;
+      } else {
+        // 3rd element of diagonal is the greatest value
+        // Find scale according to 3rd element, and double it
+        s = Math.sqrt(1 + m22 - m00 - m11) * 2;
+
+        q[0] = (m02 + m20) / s;
+        q[1] = (m12 + m21) / s;
+        q[2] = 0.25 * s;
+        q[3] = (m10 - m01) / s;
+      }
+    }
+
+    return this.normalize();
+  },
+
+  /**
+   * Set the quaternion values from the specified Euler angles.
+   * 
+   * @param {!Array} arr The values of the [x,y,z] angles in radians.
+   *
+   * @return {!vecJS.Q} This instance.
+   */
+  fromEuler: function (arr) {
+    var q = this.q,
+
+        ax = arr[0] * 0.5, ay = arr[1] * 0.5, az = arr[2] * 0.5,
+        sr = Math.sin(ax), cr = Math.cos(ax),
+        sp = Math.sin(ay), cp = Math.cos(ay),
+        sy = Math.sin(az), cy = Math.cos(az),
+        cpcy = cp * cy,
+        spcy = sp * cy,
+        cpsy = cp * sy,
+        spsy = sp * sy;
+
+    q[0] = sr*cpcy - cr*spsy;
+    q[1] = cr*spcy + sr*cpsy;
+    q[2] = cr*cpsy - sr*spcy;
+    q[3] = cr*cpcy + sr*spsy;
+
+    return this.normalize();
+  },
+
+  /**
+  * Add the specified quaternion to this one and assign the result to this instance.
+  *
+  * @param {!vecJS.Q} q The quaternion to add to this instance.
+  *
+  * @return {!vecJS.Q} This instance.
+  */
+  add: function (q) {
+    q = q.q;
+    var a = this.q;
+    a[0] += q[0];
+    a[1] += q[1];
+    a[2] += q[2];
+    a[3] += q[3];
+    return this;
+  },
+  /**
+  * Subtract the specified quaternion from this one and assign the result to this instance.
+  *
+  * @param {!vecJS.Q} q The quaternion to subtract from this instance.
+  *
+  * @return {!vecJS.Q} This instance.
+  */
+  sub: function (q) {
+    q = q.q;
+    var a = this.q;
+    a[0] -= q[0];
+    a[1] -= q[1];
+    a[2] -= q[2];
+    return this;
+  },
+
 /**
   * Multiply all the components of this instance by the specified number.
   *
@@ -168,6 +283,19 @@ vecJS.Q.prototype = {
   },
 
   /**
+  * Calculate the dot product of this quaternion and the specified one.
+  *
+  * @param {!vecJS.Q} q The second term of the dot product.
+  *
+  * @return {number} The result of the dot product.
+  */
+  dot: function (q) {
+    q = q.q;
+    var a = this.q;
+    return a[0]*q[0] + a[1]*q[1] + a[2]*q[2] + a[3]*q[3];
+  },
+
+  /**
    * Performs a spherical linear interpolation and assign the result to this instance
    *
    * @param {!vecJS.Q} q The quaternion to interpolate with this one.
@@ -190,11 +318,11 @@ vecJS.Q.prototype = {
     halfTheta = Math.acos(cosHalfTheta);
     sinHalfTheta = Math.sqrt(1.0 - cosHalfTheta*cosHalfTheta);
 
-    if (Math.abs(sinHalfTheta) < 0.001){
-      a[0] = (ax*0.5 + bx*0.5);
-      a[1] = (ay*0.5 + by*0.5);
-      a[2] = (az*0.5 + bz*0.5);
-      a[3] = (aw*0.5 + bw*0.5);
+    if (Math.abs(sinHalfTheta) < 1e-3){
+      a[0] = (ax + bx) * 0.5;
+      a[1] = (ay + by) * 0.5;
+      a[2] = (az + bz) * 0.5;
+      a[3] = (aw + bw) * 0.5;
       return this;
     }
 
@@ -208,7 +336,6 @@ vecJS.Q.prototype = {
 
     return this;
   },
-
 
   /**
   * Normalize this quaternion and assign the resulting unit quaternion to this instance.
