@@ -59,7 +59,7 @@ vecJS.V4.prototype = {
    *
    * @return {!vecJS.V4} This instance.
    */
-  cpy: function (v) {
+  copy: function (v) {
     v = v.v;
     var a = this.v;
     a[0] = v[0];
@@ -75,7 +75,7 @@ vecJS.V4.prototype = {
   *
   * @return {!vecJS.V4} This instance.
   */
-  cpyto: function (v) {
+  copyTo: function (v) {
     v = v.v;
     var a = this.v;
     v[0] = a[0];
@@ -89,7 +89,7 @@ vecJS.V4.prototype = {
   *
   * @return {!vecJS.V4} A new vector instance which is a copy of this one.
   */
-  cln: function () {
+  clone: function () {
     return new vecJS.V4(this.v);
   },
 
@@ -100,7 +100,7 @@ vecJS.V4.prototype = {
   *
   * @return {!vecJS.V4} This instance.
   */
-  muls: function (s) {
+  mulScalar: function (s) {
     var v = this.v;
     v[0] *= s;
     v[1] *= s;
@@ -115,33 +115,12 @@ vecJS.V4.prototype = {
   *
   * @return {!vecJS.V4} This instance.
   */
-  divs: function (s) {
+  divScalar: function (s) {
     var v = this.v;
     v[0] /= s;
     v[1] /= s;
     v[2] /= s;
     v[3] /= s;
-    return this;
-  },
-
-  /**
-   * Perform a quaternion multiplication and assign the result to this instance.
-   *
-   * @param v
-   *
-   * @return {!vecJS.V4} This instance.
-   */
-  qmul: function (v) {
-    v = v.v;
-    var a = this.v,
-        ax = a[0], ay = a[1], az = a[2], aw = a[3],
-        bx = v[0], by = v[1], bz = v[2], bw = v[3];
-
-    a[0] = ax*bw + aw*bx + ay*bz - az*by;
-    a[1] = ay*bw + aw*by + az*bx - ax*bz;
-    a[2] = az*bw + aw*bz + ax*by - ay*bx;
-    a[3] = aw*bw - ax*bx - ay*by - az*bz;
-
     return this;
   },
 
@@ -179,6 +158,27 @@ vecJS.V4.prototype = {
     this.z = m.n31 * vx + m.n32 * vy + m.n33 * vz + m.n34 * vw;
     this.w = m.n41 * vx + m.n42 * vy + m.n43 * vz + m.n44 * vw;
     
+    return this;
+  },
+
+  /**
+   * Perform a quaternion multiplication and assign the result to this instance.
+   *
+   * @param v
+   *
+   * @return {!vecJS.V4} This instance.
+   */
+  mulQuat: function (v) {
+    v = v.v;
+    var a = this.v,
+        ax = a[0], ay = a[1], az = a[2], aw = a[3],
+        bx = v[0], by = v[1], bz = v[2], bw = v[3];
+
+    a[0] = ax*bw + aw*bx + ay*bz - az*by;
+    a[1] = ay*bw + aw*by + az*bx - ax*bz;
+    a[2] = az*bw + aw*bz + ax*by - ay*bx;
+    a[3] = aw*bw - ax*bx - ay*by - az*bz;
+
     return this;
   },
 
@@ -233,7 +233,7 @@ vecJS.V4.prototype = {
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2], vw = v[3],
         l = Math.sqrt(vx*vx + vy*vy + vz*vz);
-    return l > 0 ? this.muls(1/l) : this.set([0, 0, 0, 0]);
+    return l > 0 ? this.mulScalar(1/l) : this.set([0, 0, 0, 0]);
   },
 
   toString: function () {

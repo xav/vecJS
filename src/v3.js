@@ -57,7 +57,7 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  cpy: function (v) {
+  copy: function (v) {
     v = v.v;
     var a = this.v;
     a[0] = v[0];
@@ -72,7 +72,7 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  cpyto: function (v) {
+  copyTo: function (v) {
     v = v.v;
     var a = this.v;
     v[0] = a[0];
@@ -85,7 +85,7 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} A new vector instance wich is a copy of this one.
   */
-  cln: function () {
+  clone: function () {
     return new vecJS.V3(this.v);
   },
 
@@ -128,7 +128,7 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  aadd: function (a, b) {
+  assignAdd: function (a, b) {
     a = a.v; b = b.v;
     var v = this.v;
     v[0] = a[0] + b[0];
@@ -144,7 +144,7 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  asub: function (a, b) {
+  assignSub: function (a, b) {
     a = a.v; b = b.v;
     var v = this.v;
     v[0] = a[0] - b[0];
@@ -160,7 +160,7 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  adds: function (s) {
+  addScalar: function (s) {
     var v = this.v;
     v[0] += s;
     v[1] += s;
@@ -174,7 +174,7 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  subs: function (s) {
+  subScalar: function (s) {
     var v = this.v;
     v[0] -= s;
     v[1] -= s;
@@ -188,7 +188,7 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  muls: function (s) {
+  mulScalar: function (s) {
     var v = this.v;
     v[0] *= s;
     v[1] *= s;
@@ -202,104 +202,12 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  divs: function (s) {
+  divScalar: function (s) {
     var v = this.v;
     v[0] /= s;
     v[1] /= s;
     v[2] /= s;
     return this;
-  },
-
-  /**
-  * Calculate the cross product of this vector and the specified one and assign the result to this instance.
-  *
-  * @param {!vecJS.V3} v The second term of the cross product.
-  *
-  * @return {!vecJS.V3} This instance.
-  */
-  cross: function (v) {
-    v = v.v;
-    var a = this.v,
-        ax = a[0], ay = a[1], az = a[2],
-        bx = v[0], by = v[1], bz = v[2];
-
-    a[0] = ay*bz - az*by;
-    a[1] = az*bx - ax*bz;
-    a[2] = ax*by - ay*bx;
-
-    return this;
-  },
-
-  /**
-  * Calculate the cross product of the two specified vectors and assign the result to this instance.
-  *
-  * @param {!vecJS.V3} a The first term of the cross product.
-  * @param {!vecJS.V3} b The second term of the cross product.
-  *
-  * @return {!vecJS.V3} This instance.
-  */
-  across: function (a, b) {
-    a = a.v; b = b.v;
-    var v = this.v,
-        ax = a[0], ay = a[1], az = a[2],
-        bx = v[0], by = v[1], bz = v[2];
-
-    v[0] = ay*bz - az*by;
-    v[1] = az*bx - ax*bz;
-    v[2] = ax*by - ay*bx;
-
-    return this;
-  },
-
-  /**
-   * Performs a linear interpolation between this vector and the specified one.
-   *
-   * @param {!vecJS.V3} v The vector to interpolate with this one.
-   * @param {Number} l The interpolation amount between the two vectors.
-   *
-   * @return {!vecJS.V3} This instance.
-   */
-  lerp: function (v, l) {
-    v = v.v;
-    var a = this.v;
-    a[0] += l * (v[0] - a[0]);
-    a[1] += l * (v[1] - a[1]);
-    a[2] += l * (v[2] - a[2]);
-
-    return this;
-  },
-  /**
-   * Performs a linear interpolation between a and b and assign the result to this instance.
-   *
-   * @param {!vecJS.V3} a The first vector.
-   * @param {!vecJS.V3} b The second vector.
-   * @param {number} l The interpolation amount between the two vectors.
-   *
-   * @return {!vecJS.V3} This instance.
-   */
-  alerp: function (a, b, l) {
-    a = a.v; b = b.v;
-    var v = this.v,
-        ax = a[0], ay = a[1], az = a[2];
-    
-    v[0] = ax + l * (b[0] - ax);
-    v[1] = ay + l * (b[1] - ay);
-    v[2] = az + l * (b[2] - az);
-
-    return this;
-  },
-
-  /**
-  * Calculate the dot product of this vector and the specified one.
-  *
-  * @param {!vecJS.V3} v The second term of the dot product.
-  *
-  * @return {number} The result of the dot product.
-  */
-  dot: function (v) {
-    v = v.v;
-    var a = this.v;
-    return a[0]*v[0] + a[1]*v[1] + a[2]*v[2];
   },
 
   /**
@@ -346,7 +254,7 @@ vecJS.V3.prototype = {
    *
   * @return {!vecJS.V3} This instance.
    */
-  qmul: function (q) {
+  mulQuat: function (q) {
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2],
         qx = q[0], qy = q[1], qz = q[2], qw = q[3],
@@ -366,6 +274,98 @@ vecJS.V3.prototype = {
   },
 
   /**
+  * Calculate the cross product of this vector and the specified one and assign the result to this instance.
+  *
+  * @param {!vecJS.V3} v The second term of the cross product.
+  *
+  * @return {!vecJS.V3} This instance.
+  */
+  cross: function (v) {
+    v = v.v;
+    var a = this.v,
+        ax = a[0], ay = a[1], az = a[2],
+        bx = v[0], by = v[1], bz = v[2];
+
+    a[0] = ay*bz - az*by;
+    a[1] = az*bx - ax*bz;
+    a[2] = ax*by - ay*bx;
+
+    return this;
+  },
+
+  /**
+  * Calculate the cross product of the two specified vectors and assign the result to this instance.
+  *
+  * @param {!vecJS.V3} a The first term of the cross product.
+  * @param {!vecJS.V3} b The second term of the cross product.
+  *
+  * @return {!vecJS.V3} This instance.
+  */
+  assignCross: function (a, b) {
+    a = a.v; b = b.v;
+    var v = this.v,
+        ax = a[0], ay = a[1], az = a[2],
+        bx = v[0], by = v[1], bz = v[2];
+
+    v[0] = ay*bz - az*by;
+    v[1] = az*bx - ax*bz;
+    v[2] = ax*by - ay*bx;
+
+    return this;
+  },
+
+  /**
+  * Calculate the dot product of this vector and the specified one.
+  *
+  * @param {!vecJS.V3} v The second term of the dot product.
+  *
+  * @return {number} The result of the dot product.
+  */
+  dot: function (v) {
+    v = v.v;
+    var a = this.v;
+    return a[0]*v[0] + a[1]*v[1] + a[2]*v[2];
+  },
+
+  /**
+   * Performs a linear interpolation between this vector and the specified one.
+   *
+   * @param {!vecJS.V3} v The vector to interpolate with this one.
+   * @param {Number} l The interpolation amount between the two vectors.
+   *
+   * @return {!vecJS.V3} This instance.
+   */
+  lerp: function (v, l) {
+    v = v.v;
+    var a = this.v;
+    a[0] += l * (v[0] - a[0]);
+    a[1] += l * (v[1] - a[1]);
+    a[2] += l * (v[2] - a[2]);
+
+    return this;
+  },
+  /**
+   * Performs a linear interpolation between a and b and assign the result to this instance.
+   *
+   * @param {!vecJS.V3} a The first vector.
+   * @param {!vecJS.V3} b The second vector.
+   * @param {number} l The interpolation amount between the two vectors.
+   *
+   * @return {!vecJS.V3} This instance.
+   */
+  assignLerp: function (a, b, l) {
+    a = a.v; b = b.v;
+    var v = this.v,
+        ax = a[0], ay = a[1], az = a[2];
+
+    v[0] = ax + l * (b[0] - ax);
+    v[1] = ay + l * (b[1] - ay);
+    v[2] = az + l * (b[2] - az);
+
+    return this;
+  },
+
+  /**
   * Normalize this vector and assign the resulting unit vector to this instance.
   *
   * @return {!vecJS.V3} This instance.
@@ -375,7 +375,7 @@ vecJS.V3.prototype = {
         vx = v[0], vy = v[1], vz = v[2],
         l = Math.sqrt(vx*vx + vy*vy + vz*vz);
     
-    return l > 0 ? this.muls(1/l) : this.set([0, 0, 0]);
+    return l > 0 ? this.mulScalar(1/l) : this.set([0, 0, 0]);
   },
 
   /**
