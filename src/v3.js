@@ -305,7 +305,7 @@ vecJS.V3.prototype = {
     a = a.v; b = b.v;
     var v = this.v,
         ax = a[0], ay = a[1], az = a[2],
-        bx = v[0], by = v[1], bz = v[2];
+        bx = b[0], by = b[1], bz = b[2];
 
     v[0] = ay*bz - az*by;
     v[1] = az*bx - ax*bz;
