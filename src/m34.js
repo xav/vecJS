@@ -72,23 +72,6 @@ vecJS.M34 = function M34(arr) {
       return this;
     },
     /**
-    * Copy the specified matrix to this instance.
-    *
-    * @param {!vecJS.M34} m The source matrix.
-    *
-    * @return {!vecJS.M34} This instance.
-    */
-    copy: function (m) {
-      var a = this.m;
-      m = m.m;
-
-      a[0]  = m[0];  a[1]  = m[1];  a[2]  = m[2] ; a[3]  = m[3];
-      a[4]  = m[4];  a[5]  = m[5];  a[6]  = m[6] ; a[7]  = m[7];
-      a[8]  = m[8];  a[9]  = m[9];  a[10] = m[10]; a[11] = m[11];
-
-      return this;
-    },
-    /**
     * Copy this matrix instance to the specified one.
     *
     * @param {!vecJS.M34} m The target matrix.

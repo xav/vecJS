@@ -51,21 +51,6 @@ vecJS.V3.prototype = {
     return this;
   },
   /**
-  * Copy the specified vector to this instance.
-  *
-  * @param {!vecJS.V3} v The source vector.
-  *
-  * @return {!vecJS.V3} This instance.
-  */
-  copy: function (v) {
-    v = v.v;
-    var a = this.v;
-    a[0] = v[0];
-    a[1] = v[1];
-    a[2] = v[2];
-    return this;
-  },
-  /**
   * Copy this vector instance to the specified one.
   *
   * @param {!vecJS.V3} v The target vector.
