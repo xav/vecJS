@@ -224,44 +224,6 @@ vecJS.Q.prototype = {
   },
 
   /**
-  * Multiply the specified matrix with this quaternion and assign the result to this instance.
-  *
-  * @param {!vecJS.M34} m The matrix to multiply.
-  *
-  * @return {!vecJS.Q} This instance.
-  */
-  mulM34: function (m) {
-    m = m.m;
-    var q = this.q,
-        qx = q[0], qy = q[1], qz = q[2], qw = q[3];
-
-    q[0] = qx*m[0] + qy*m[1] + qz*m[2]  + qw*m[3];
-    q[1] = qx*m[4] + qy*m[5] + qz*m[6]  + qw*m[7];
-    q[2] = qx*m[8] + qy*m[9] + qz*m[10] + qw*m[11];
-
-    return this;
-  },
-  /**
-  * Multiply the specified matrix with this quaternion and assign the result to this instance.
-  *
-  * @param {!vecJS.M44} m The matrix to multiply.
-  *
-  * @return {!vecJS.Q} This instance.
-  */
-  mulM44: function (m) {
-    m = m.m;
-    var q = this.q,
-        qx = q[0], qy = q[1], qz = q[2], qw = q[3];
-
-    q[0] = qx*m[0]  + qy*m[1]  + qz*m[2]  + qw*m[3];
-    q[1] = qx*m[4]  + qy*m[5]  + qz*m[6]  + qw*m[7];
-    q[2] = qx*m[8]  + qy*m[9]  + qz*m[10] + qw*m[11];
-    q[3] = qx*m[12] + qy*m[13] + qz*m[14] + qw*m[15];
-    
-    return this;
-  },
-
-  /**
    * Perform a quaternion multiplication and assign the result to this instance.
    *
    * @param q
