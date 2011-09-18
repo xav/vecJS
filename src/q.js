@@ -259,47 +259,6 @@ vecJS.Q = function Q(arr) {
     },
 
     /**
-     * Performs a spherical linear interpolation and assign the result to this instance
-     *
-     * @param {!vecJS.Q} q The quaternion to interpolate with this one.
-     * @param {Number} t The interpolation amount between the two quaternions (between 0 and 1).
-     * @param {Boolean} shortest When true, the slerp interpolation will always use the "shortest path"
-     * between the Quaternions' orientations, by "flipping" the source Quaternion if needed
-     */
-    slerp: function (q, t, shortest) {
-      q = q.q;
-      var a = this.q,
-          ax = a[0], ay = a[1], az = a[2], aw = a[3],
-          bx = q[0], by = q[1], bz = q[2], bw = q[3],
-          cosAngle =  ax*bx + ay*by + az*bz + aw*bw,
-          angle, sinAngle,
-          c1, c2;
-
-      if ((1 - Math.abs(cosAngle)) < 0.01) {
-        c1 = 1 - t;
-        c2 = t;
-      } else {
-        // Spherical interpolation
-        angle = Math.acos(cosAngle);
-        sinAngle = Math.sin(angle);
-        c1 = Math.sin(angle * (1 - t)) / sinAngle;
-        c2 = Math.sin(angle * t) / sinAngle;
-      }
-
-      // Use the shortest path
-      if (shortest && (cosAngle < 0.0)) {
-        c1 = -c1;
-      }
-
-      a[0] = c1*ax + c2*bx;
-      a[1] = c1*ay + c2*by;
-      a[2] = c1*az + c2*az;
-      a[3] = c1*aw + c2*aw;
-
-      return this;
-    },
-
-    /**
      * Perform a spherical linear interpolation between a & b and assign the result to this instance
      *
      * @param {!vecJS.Q} a The start quaternion.
@@ -308,7 +267,7 @@ vecJS.Q = function Q(arr) {
      * @param {Boolean} shortest When true, the slerp interpolation will always use the "shortest path"
      * between the Quaternions' orientations, by "flipping" the source Quaternion if needed
      */
-    assignSlerp: function (a, b, t, shortest) {
+    slerp: function (a, b, t, shortest) {
       a = a.q;
       b = b.q;
       var q = this.q,
@@ -346,7 +305,7 @@ vecJS.Q = function Q(arr) {
      * Perform a slerp interpolation of the two Quaternions a & b, at time t,
      * using tangents tgA and tgB and assign the result to this instance.
      *
-     * Use {@link vecJS.Q#assignSquadTangent} to define the Quaternion tangents tgA and tgB.
+     * Use {@link vecJS.Q#squadTangent} to define the Quaternion tangents tgA and tgB.
      *
      * @param {!vecJS.Q} a The start quaternion.
      * @param {!vecJS.Q} tgA The first tangent.
@@ -354,22 +313,22 @@ vecJS.Q = function Q(arr) {
      * @param {!vecJS.Q} b The end quaternion.
      * @param {Number} t
      */
-    assignSquad: function (a, tgA, tgB, b, t) {
-      q1.assignSlerp(a, b, t, true);
-      q2.assignSlerp(tgA, tgB, t, false);
-      this.assignSlerp(q1, q2, 2*t*(1-t), false);
+    squad: function (a, tgA, tgB, b, t) {
+      q1.slerp(a, b, t, true);
+      q2.slerp(tgA, tgB, t, false);
+      this.slerp(q1, q2, 2*t*(1-t), false);
     },
 
     /**
      * Calculate a tangent Quaternion for center, defined by before and after Quaternions.
      *
-     * Useful for smooth spline interpolation of Quaternion with squad and slerp.
+     * Useful for smooth spline interpolation of Quaternion with {@link vecJS.Q#squad} and {@link vecJS.Q#slerp}.
      *
      * @param before
      * @param center
      * @param after
      */
-    assignSquadTangent: function(before, center, after) {
+    squadTangent: function(before, center, after) {
       var q = this.q,
           a = q1.q, b = q2.q;
       
