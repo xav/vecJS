@@ -24,10 +24,14 @@ var vecJS,
 /**
 * @namespace The vecJS namespace.
 *
-* @property {string} version the library version.
+* @property {string} version The library version.
+* @property {number} precision The precision used in floating point comparisons.
+ * Note that the library doesn't use this property, it is only here if you need to sync your code with the lib
+ * (in plain english, modifying it won't change the library behavior).
 */
 vecJS = {
-  version: '@VERSION'
+  version: '@VERSION',
+  precision: @PRECISION
 };
 
 /**
