@@ -94,7 +94,7 @@ vecJS.Q = function Q(arr) {
           d = m00 + m11 + m22 + 1,
           s;
 
-      if (d > 0) {
+      if (d > @PRECISION) {
         s = Math.sqrt(d) * 2;
         q[0] = (m21 - m12) / s;
         q[1] = (m02 - m20) / s;
@@ -157,24 +157,6 @@ vecJS.Q = function Q(arr) {
           cysz = cy * sz,
           sysz = sy * sz;
 
-/*
-      console.group('ax', ax, 'ay', ay, 'az', az);
-      console.debug('qx = sin(', ax, ')*cos(', ay, ')*cos(', az, ') - cos(', ax, ')*sin(', ay, ')*sin(', az, ')');
-      console.debug('qy = cos(', ax, ')*sin(', ay, ')*cos(', az, ') + sin(', ax, ')*cos(', ay, ')*sin(', az, ')');
-      console.debug('qz = cos(', ax, ')*cos(', ay, ')*sin(', az, ') - sin(', ax, ')*sin(', ay, ')*cos(', az, ')');
-      console.debug('qw = cos(', ax, ')*cos(', ay, ')*cos(', az, ') + sin(', ax, ')*sin(', ay, ')*sin(', az, ')');
-
-      console.debug('cycz = ', cy, '*', cz, '=', cycz);
-      console.debug('sycz = ', sy, '*', cz, '=', sycz);
-      console.debug('cysz = ', cy, '*', sz, '=', cysz);
-      console.debug('sysz = ', sy, '*', sz, '=', sysz);
-
-      console.debug(sx, '*', cycz, ' - ', cx, '*', sysz);
-      console.debug(cx, '*', sycz, ' + ', sx, '*', cysz);
-      console.debug(cx, '*', cysz, ' - ', sx, '*', sycz);
-      console.debug(cx, '*', cycz, ' + ', sx, '*', sysz);
-      console.groupEnd();
-*/
       q[0] = sx*cycz - cx*sysz;
       q[1] = cx*sycz + sx*cysz;
       q[2] = cx*cysz - sx*sycz;
@@ -311,7 +293,7 @@ vecJS.Q = function Q(arr) {
       }
 
       // Use the shortest path
-      if (shortest && (cosAngle < 0.0)) {
+      if (shortest && (cosAngle < 0)) {
         c1 = -c1;
       }
 
@@ -378,7 +360,7 @@ vecJS.Q = function Q(arr) {
           l = qx*qx + qy*qy + qz*qz + qw*qw,
           c;
 
-      if (l < 1e-6) {
+      if (l < @PRECISION) {
         q[3] = 0;
         return this;
       }
@@ -401,20 +383,20 @@ vecJS.Q = function Q(arr) {
     exp: function() {
       var q = this.q,
           qx = q[0], qy = q[1], qz = q[2], qw = q[3],
-          t = qx*qx + qy*qy + qz*qz + qw*qw,
+          l = qx*qx + qy*qy + qz*qz + qw*qw,
           c;
 
-      if (l < 1e-6) {
+      if (l < @PRECISION) {
         q[3] = 1;
         return this;
       }
 
-      t = Math.sqrt(t);
-      c = Math.sin(t) / t;
+      l = Math.sqrt(l);
+      c = Math.sin(l) / l;
       q[0] *= c;
       q[1] *= c;
       q[2] *= c;
-      q[3] = Math.cos(t);
+      q[3] = Math.cos(l);
 
       return this;
     },
