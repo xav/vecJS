@@ -313,23 +313,6 @@ vecJS.V3.prototype = {
   },
 
   /**
-   * Performs a linear interpolation between this vector and the specified one.
-   *
-   * @param {!vecJS.V3} v The vector to interpolate with this one.
-   * @param {Number} l The interpolation amount between the two vectors.
-   *
-   * @return {!vecJS.V3} This instance.
-   */
-  lerp: function (v, l) {
-    v = v.v;
-    var a = this.v;
-    a[0] += l * (v[0] - a[0]);
-    a[1] += l * (v[1] - a[1]);
-    a[2] += l * (v[2] - a[2]);
-
-    return this;
-  },
-  /**
    * Performs a linear interpolation between a and b and assign the result to this instance.
    *
    * @param {!vecJS.V3} a The first vector.
@@ -338,7 +321,7 @@ vecJS.V3.prototype = {
    *
    * @return {!vecJS.V3} This instance.
    */
-  assignLerp: function (a, b, l) {
+  lerp: function (a, b, l) {
     a = a.v; b = b.v;
     var v = this.v,
         ax = a[0], ay = a[1], az = a[2];
