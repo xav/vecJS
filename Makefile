@@ -1,3 +1,5 @@
+PRECISION = 1e-6
+
 SRC_DIR = src
 BUILD_DIR = build
 
@@ -27,6 +29,7 @@ VJS_DOC = ${DOC_DIR}/index.html
 VJS_VER = $(shell cat version.txt)
 
 VJS_VER = $(shell cat version.txt)
+
 VER = sed "s/@VERSION/${VJS_VER}/"
 
 DATE=$(shell git log -1 --pretty=format:%ad)
@@ -43,9 +46,11 @@ vjs: ${VJS}
 
 ${VJS}: ${MODULES} | ${DIST_DIR}
 	@@echo "Building" ${VJS}
+	@@echo "Precision:" ${PRECISION}
 
 	@@cat ${MODULES} | \
 		sed 's/@DATE/'"${DATE}"'/' | \
+		sed 's/@PRECISION/${PRECISION}/' | \
 		sed '/@license/,/\*\// d' | \
 		${VER} > ${VJS};
 

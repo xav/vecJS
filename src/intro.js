@@ -17,5 +17,6 @@
  * limitations under the License.
  *
  * Date: @DATE
+ * Precision: @PRECISION
  */
 (function (window, undefined) {
