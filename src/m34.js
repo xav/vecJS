@@ -41,7 +41,7 @@
 * @constructor
 */
 vecJS.M34 = function M34(arr) {
-  var m = this.m = new GLMatrixArray(16);
+  var m = this.m = new GLMatrixArray(12);
   if (arr) {
     m[0]  = arr[0];  m[1]  = arr[1];  m[2]  = arr[2] ; m[3]  = arr[3];
     m[4]  = arr[4];  m[5]  = arr[5];  m[6]  = arr[6] ; m[7]  = arr[7];
@@ -546,11 +546,10 @@ vecJS.M34 = function M34(arr) {
 
     toString: function () {
       var m = this.m;
-      return 'M34[\n' +
-        ' [' + m[0]  + ', ' + m[1]  + ', ' + m[2]  + ', ' + m[3]  + ']\n' +
-        ' [' + m[4]  + ', ' + m[5]  + ', ' + m[6]  + ', ' + m[7]  + ']\n' +
-        ' [' + m[8]  + ', ' + m[9]  + ', ' + m[10] + ', ' + m[11] + ']\n' +
-        ']\n';
+      return 'M34\n' +
+        m[0]  + '  ' + m[1]  + '  ' + m[2]  + '  ' + m[3]  + '\n' +
+        m[4]  + '  ' + m[5]  + '  ' + m[6]  + '  ' + m[7]  + '\n' +
+        m[8]  + '  ' + m[9]  + '  ' + m[10] + '  ' + m[11];
     }
   };
 })();
