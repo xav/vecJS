@@ -136,7 +136,15 @@ var v3_tests = {
   },
 
   'mulQuat': function () {
-    //TODO: mulQuat
+    var q1 = new vecJS.Q().fromEuler([90*(Math.PI/180), 0, 0]),
+        q2 = q1.clone(),
+        v1 = new vecJS.V3([1, 2, 3]), v1b;
+
+    v1b = v1.mulQuat(q1);
+
+    equals(v1, v1b, 'mulQuat return this');
+    mequals(q1.q, q2.q, 'mulQuat does not modify parameter');
+    mfequals(v1.v, [1, -3, 2], 'mulQuat with 90deg around X');
   },
 
   'cross': function () {
@@ -241,6 +249,11 @@ var v3_tests = {
 
     v1.normalize();
     ok(v1.isUnit(), 'isUnit on normalized vector');
+  },
+
+  'toString': function () {
+    var v1 = new vecJS.V3([1, 2, 3]);
+    equals(v1.toString(), 'V3[1, 2, 3]', 'arbitrary vector');
   }
 };
 

@@ -42,6 +42,7 @@ var q_tests = {
   },
 
   'fromMatrix': function () {
+    //TODO: fromMatrix
   },
 
   'fromEuler': function () {
@@ -76,9 +77,11 @@ var q_tests = {
   },
 
   'add': function () {
+    //TODO: add
   },
 
   'sub': function () {
+    //TODO: sub
   },
   
   'mulScalar': function () {
@@ -98,24 +101,31 @@ var q_tests = {
   },
 
   'mul': function () {
+    //TODO: mul
   },
 
   'dot': function () {
+    //TODO: dot
   },
 
   'slerp': function () {
+    //TODO: slerp
   },
 
   'squad': function () {
+    //TODO: squad
   },
 
   'squadTangent': function () {
+    //TODO: squadTangent
   },
 
   'log': function () {
+    //TODO: log
   },
 
   'exp': function () {
+    //TODO: exp
   },
 
   'length': function () {
@@ -145,7 +155,7 @@ var q_tests = {
 
   'toString': function () {
     var q = new vecJS.Q([1, 2, 3, 4]);
-    equals(q.toString(), 'Q[1, 2, 3, 4]', 'arbitrary quaternion string');
+    equals(q.toString(), 'Q[1, 2, 3, 4]', 'arbitrary quaternion');
   }
 };
 
