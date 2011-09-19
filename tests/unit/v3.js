@@ -319,6 +319,14 @@ var v3_tests = {
     equals(v2.v[0], 20, 'squaredDistance does not modify parameter - first component');
     equals(v2.v[1], 21, 'squaredDistance does not modify parameter - second component');
     equals(v2.v[2], 22, 'squaredDistance does not modify parameter - third component');
+  },
+
+  'isUnit': function () {
+    var v1 = new vecJS.V3([1, 2, 3]);
+    ok(!v1.isUnit(), 'isUnit returns false on non-unit vector');
+
+    v1.normalize();
+    ok(v1.isUnit(), 'isUnit on normalized vector');
   }
 };
 

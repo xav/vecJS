@@ -400,6 +400,21 @@ vecJS.V3.prototype = {
     return dx*dx + dy*dy + dz*dz;
   },
 
+  /**
+   * Check if this instance is a unit-length vector.
+   * 
+   * Should be a bit faster than checking if length == 1, since there is no square root.
+   * vecJC Precision (@PRECISION) is used, so the vector length does not have to be exactly 1,
+   * but something close enough.
+   *
+   * @return {boolean} True if this instance is a unit-length vector; otherwise, false.
+   */
+  isUnit: function () {
+    var v = this.v,
+        vx = v[0], vy = v[1], vz = v[2];
+    return Math.abs(1 - (vx*vx + vy*vy + vz*vz)) < @PRECISION;
+  },
+
   toString: function () {
     var v = this.v;
     return 'V3[' + v[0] + ', ' + v[1] + ', ' + v[2] + ']';

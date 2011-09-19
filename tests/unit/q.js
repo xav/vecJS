@@ -141,6 +141,14 @@ var q_tests = {
     fequals(q1.length(), 1, 'normalize makes unit quaternion');
   },
 
+  'isUnit': function () {
+    var q1 = new vecJS.V3([1, 2, 3]);
+    ok(!q1.isUnit(), 'isUnit returns false on non-unit quaternion');
+
+    q1.normalize();
+    ok(q1.isUnit(), 'isUnit on normalized quaternion');
+  },
+
   'toString': function () {
     var q = new vecJS.Q([1, 2, 3, 4]);
     equals(q.toString(), 'Q[1, 2, 3, 4]', 'arbitrary quaternion string');

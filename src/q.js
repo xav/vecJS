@@ -428,6 +428,21 @@ vecJS.Q = function Q(arr) {
       return l ? this.mulScalar(1 / Math.sqrt(l)) : this.set([0, 0, 0, 0]);
     },
 
+    /**
+     * Check if this instance is a unit-length quaternion.
+     *
+     * Should be a bit faster than checking if length == 1, since there is no square root.
+     * vecJC Precision (@PRECISION) is used, so the quaternion length does not have to be exactly 1,
+     * but something close enough.
+     *
+     * @return {boolean} True if this instance is a unit-length quaternion; otherwise, false.
+     */
+    isUnit: function () {
+      var q = this.q,
+          qx = q[0], qy = q[1], qz = q[2], qw = q[3];
+      return Math.abs(1 - (qx*qx + qy*qy + qz*qz + qw*qw)) < @PRECISION;
+    },
+
     toString: function () {
       var q = this.q;
       return 'Q[' + q[0] + ', ' + q[1] + ', ' + q[2] + ', ' + q[3] + ']';
