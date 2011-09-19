@@ -45,6 +45,7 @@ var m44_tests = {
   },
 
   'fromQuat': function () {
+    //TODO: fromQuat
   },
 
   'identity': function () {
@@ -64,27 +65,40 @@ var m44_tests = {
   },
 
   'mul': function () {
+    //TODO: mul
   },
 
   'assignMul': function () {
+    //TODO: assignMul
   },
 
   'transpose': function () {
+    //TODO: transpose
   },
 
   'invert': function () {
+    //TODO: invert
   },
 
   'lookAt': function () {
+    //TODO: lookAt
   },
 
   'frustum': function () {
+    //TODO: frustum
   },
 
   'perspective': function () {
+    //TODO: perspective
   },
 
   'orthogonal': function () {
+    //TODO: orthogonal
+  },
+
+  'toString': function () {
+    var m = new vecJS.M44([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]);
+    equals(m.toString(), 'M44\n1  2  3  4\n5  6  7  8\n9  10  11  12\n13  14  15  16', 'arbitrary matrix');
   }
 };
 
