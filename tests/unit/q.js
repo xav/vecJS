@@ -5,105 +5,145 @@ var q_tests = {
     var q1 = new vecJS.Q();
     ok(q1, 'Q constructor');
 
-    equals(q1.q[0], 0, 'first component 0');
-    equals(q1.q[1], 0, 'second component 0');
-    equals(q1.q[2], 0, 'third component 0');
-    equals(q1.q[3], 0, 'fourth component 0');
+    mequals(q1.q, [0, 0, 0, 0], 'empty constructor');
 
     var q2 = new vecJS.Q([1, 2, 3, 4]);
-    equals(q2.q[0], 1, 'set first component in constructor');
-    equals(q2.q[1], 2, 'set second component in constructor');
-    equals(q2.q[2], 3, 'set third component in constructor');
-    equals(q2.q[3], 4, 'set fourth component in constructor');
+    mequals(q2.q, [1, 2, 3, 4], 'constructor');
   },
 
   'set': function () {
-    var v1 = new vecJS.Q();
-    v1.set([4, 5, 6, 7]);
-    equals(v1.q[0], 4, 'set first component');
-    equals(v1.q[1], 5, 'set second component');
-    equals(v1.q[2], 6, 'set third component');
-    equals(v1.q[3], 7, 'set fourth component');
+    var q1 = new vecJS.Q();
+    q1.set([4, 5, 6, 7]);
+    mequals(q1.q, [4, 5, 6, 7], 'set values');
   },
   
   'copyTo': function () {
-    var v1 = new vecJS.Q([1, 2, 3, 4]), v1b,
-      v2 = new vecJS.Q();
+    var q1 = new vecJS.Q([1, 2, 3, 4]), q1b,
+      q2 = new vecJS.Q();
 
-    v1b = v1.copyTo(v2);
+    q1b = q1.copyTo(q2);
 
-    notEqual(v1, v2, 'copyTo does not overwrite object');
-    equals(v1, v1b, 'copyTo return this');
+    notEqual(q1, q2, 'copyTo does not overwrite object');
+    equals(q1, q1b, 'copyTo return this');
 
-    equals(v2.q[0], 1, 'copyTo first component');
-    equals(v2.q[1], 2, 'copyTo second component');
-    equals(v2.q[2], 3, 'copyTo third component');
-    equals(v2.q[3], 4, 'copyTo fourth component');
-
-    equals(v1.q[0], 1, 'copy does not modify self - first component');
-    equals(v1.q[1], 2, 'copy does not modify self - second component');
-    equals(v1.q[2], 3, 'copy does not modify self - third component');
-    equals(v1.q[3], 4, 'copy does not modify self - fourth component');
+    mequals(q1.q, [1, 2, 3, 4], 'copy does not modify self');
+    mequals(q2.q, [1, 2, 3, 4], 'copyTo values');
   },
 
   'clone': function () {
-    var v1 = new vecJS.Q([1, 2, 3, 4]),
-      v2 = v1.clone();
+    var q1 = new vecJS.Q([1, 2, 3, 4]),
+      q2 = q1.clone();
 
-    notEqual(v1, v2, 'clone does not return this');
-    notEqual(v1.q, v2.q, 'clone does not return the same object');
+    notEqual(q1, q2, 'clone does not return this');
+    notEqual(q1.q, q2.q, 'clone does not return the same object');
 
-    equals(v2.q[0], 1, 'clone first component');
-    equals(v2.q[1], 2, 'clone second component');
-    equals(v2.q[2], 3, 'clone third component');
-    equals(v2.q[3], 4, 'clone fourth component');
-
-    equals(v1.q[0], 1, 'copy does not modify object - first component');
-    equals(v1.q[1], 2, 'copy does not modify object - second component');
-    equals(v1.q[2], 3, 'copy does not modify object - third component');
-    equals(v1.q[3], 4, 'copy does not modify object - fourth component');
+    mequals(q1.q, [1, 2, 3, 4], 'clone does not modify object');
+    mequals(q2.q, [1, 2, 3, 4], 'clone values');
   },
 
-  'mulScalar': function () {
-    var v1 = new vecJS.Q([10, 20, 30, 40]), v1b;
+  'fromMatrix': function () {
+  },
 
-    v1b = v1.mulScalar(10);
-    equals(v1, v1b, 'mulScalar return this');
-    equals(v1.q[0], 100, 'mulScalar first component');
-    equals(v1.q[1], 200, 'mulScalar second component');
-    equals(v1.q[2], 300, 'mulScalar third component');
-    equals(v1.q[3], 400, 'mulScalar fourth component');
+  'fromEuler': function () {
+    var q1 = new vecJS.Q(), q1b,
+        c = Math.PI/180;
+
+    q1b = q1.fromEuler([0, 0, 0]);
+    equals(q1, q1b, 'fromEuler return this');
+    mequals(q1.q, [0, 0, 0, 1], 'fromEuler reference orientation');
+
+    q1b = q1.fromEuler([90*c, 0, 0]);
+    mfequals(q1.q, [0.707106, 0, 0, 0.707106], 'fromEuler 90deg around X');
+    q1b = q1.fromEuler([180*c, 0, 0]);
+    mfequals(q1.q, [1, 0, 0, 0], 'fromEuler 180deg around X');
+
+    q1b = q1.fromEuler([0, 90*c, 0]);
+    mfequals(q1.q, [0, 0.707106, 0, 0.707106], 'fromEuler 90deg around Y');
+    q1b = q1.fromEuler([0, 180*c, 0]);
+    mfequals(q1.q, [0, 1, 0, 0], 'fromEuler 180deg around Y');
+
+    q1b = q1.fromEuler([0, 0, 90*c]);
+    mfequals(q1.q, [0, 0, 0.707106, 0.707106], 'fromEuler 90deg around Z');
+    q1b = q1.fromEuler([0, 0, 180*c]);
+    mfequals(q1.q, [0, 0, 1, 0], 'fromEuler 180deg around Z');
+
+    q1b = q1.fromEuler([180*c, 180*c, 0]);
+    mfequals(q1.q, [0, 0, -1, 0], 'fromEuler 180deg around X&Y');
+    q1b = q1.fromEuler([0, 180*c, 180*c]);
+    mfequals(q1.q, [-1, 0, 0, 0], 'fromEuler 180deg around Y&Z');
+    q1b = q1.fromEuler([180*c, 0, 180*c]);
+    mfequals(q1.q, [0, 1, 0, 0], 'fromEuler 180deg around X&Z');
+  },
+
+  'add': function () {
+  },
+
+  'sub': function () {
+  },
+  
+  'mulScalar': function () {
+    var q1 = new vecJS.Q([10, 20, 30, 40]), q1b;
+
+    q1b = q1.mulScalar(10);
+    equals(q1, q1b, 'mulScalar return this');
+    equals(q1.q[0], 100, 'mulScalar first component');
+    equals(q1.q[1], 200, 'mulScalar second component');
+    equals(q1.q[2], 300, 'mulScalar third component');
+    equals(q1.q[3], 400, 'mulScalar fourth component');
   },
 
   'divScalar': function () {
-    var v1 = new vecJS.Q([10, 20, 30, 40]), v1b;
+    var q1 = new vecJS.Q([10, 20, 30, 40]), q1b;
 
-    v1b = v1.divScalar(10);
-    equals(v1, v1b, 'divScalar return this');
-    equals(v1.q[0], 1, 'divScalar first component');
-    equals(v1.q[1], 2, 'divScalar second component');
-    equals(v1.q[2], 3, 'divScalar third component');
-    equals(v1.q[3], 4, 'divScalar fourth component');
-  },
-
-  'mulM34': function () {
-    //TODO: mulM34
-  },
-
-  'mulM44': function () {
-    //TODO: mulM44
+    q1b = q1.divScalar(10);
+    equals(q1, q1b, 'divScalar return this');
+    equals(q1.q[0], 1, 'divScalar first component');
+    equals(q1.q[1], 2, 'divScalar second component');
+    equals(q1.q[2], 3, 'divScalar third component');
+    equals(q1.q[3], 4, 'divScalar fourth component');
   },
 
   'mul': function () {
-    //TODO: mulQuat
+  },
+
+  'dot': function () {
   },
 
   'slerp': function () {
-    //TODO: slerp
+  },
+
+  'squad': function () {
+  },
+
+  'squadTangent': function () {
+  },
+
+  'log': function () {
+  },
+
+  'exp': function () {
+  },
+
+  'length': function () {
+    equals(new vecJS.Q().length(), 0, 'null quaternion length');
+    equals(new vecJS.Q([10, 0, 0, 0]).length(), 10, 'x quaternion length');
+    equals(new vecJS.Q([0, 10, 0, 0]).length(), 10, 'y quaternion length');
+    equals(new vecJS.Q([0, 0, 10, 0]).length(), 10, 'z quaternion length');
+    equals(new vecJS.Q([0, 0, 0, 10]).length(), 10, 'w quaternion length');
+    equals(new vecJS.Q([10, 10, 10, 10]).length(), Math.sqrt(400), 'arbitrary quaternion length');
   },
 
   'normalize': function () {
-    //TODO: normalize
+    var q1 = new vecJS.Q([1, 2, 3, 4]), q1b;
+
+    q1b = q1.normalize();
+    equals(q1, q1b, 'normalize return this');
+    fequals(q1.length(), 1, 'normalize makes unit quaternion');
+  },
+
+  'toString': function () {
+    var q = new vecJS.Q([1, 2, 3, 4]);
+    equals(q.toString(), 'Q[1, 2, 3, 4]', 'arbitrary quaternion string');
   }
 };
 

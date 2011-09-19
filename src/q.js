@@ -18,9 +18,9 @@
 /**
 * @class A 4 dimensional vector representing a quaternion.
 *
- * @param {Array=} arr Array containing the [x,y,z,w] values to initialize with.
- *
- * @property {GLMatrixArray} q the quaternion [x,y,z,w] values.
+* @param {Array=} arr Array containing the [x,y,z,w] values to initialize with.
+*
+* @property {GLMatrixArray} q the quaternion [x,y,z,w] values.
 *
 * @constructor
 */
@@ -135,28 +135,50 @@ vecJS.Q = function Q(arr) {
     },
 
     /**
-     * Set the quaternion values from the specified Euler angles.
+     * Set the quaternion values from 3 orthonormal local axes.
      *
      * @param {!Array} arr The values of the [x,y,z] angles in radians.
      *
      * @return {!vecJS.Q} This instance.
      */
     fromEuler: function (arr) {
+      // qx = sin(x/2)*cos(y/2)*cos(z/2) - cos(x/2)*sin(y/2)*sin(z/2)
+      // qy = cos(x/2)*sin(y/2)*cos(z/2) + sin(x/2)*cos(y/2)*sin(z/2)
+      // qz = cos(x/2)*cos(y/2)*sin(z/2) - sin(x/2)*sin(y/2)*cos(z/2)
+      // qw = cos(x/2)*cos(y/2)*cos(z/2) + sin(x/2)*sin(y/2)*sin(z/2)
       var q = this.q,
 
-          ax = arr[0] * 0.5, ay = arr[1] * 0.5, az = arr[2] * 0.5,
-          sr = Math.sin(ax), cr = Math.cos(ax),
-          sp = Math.sin(ay), cp = Math.cos(ay),
-          sy = Math.sin(az), cy = Math.cos(az),
-          cpcy = cp * cy,
-          spcy = sp * cy,
-          cpsy = cp * sy,
-          spsy = sp * sy;
+          ax = arr[0]*0.5, ay = arr[1]*0.5, az = arr[2]*0.5,
+          sx = Math.sin(ax), cx = Math.cos(ax),
+          sy = Math.sin(ay), cy = Math.cos(ay),
+          sz = Math.sin(az), cz = Math.cos(az),
+          cycz = cy * cz,
+          sycz = sy * cz,
+          cysz = cy * sz,
+          sysz = sy * sz;
 
-      q[0] = sr*cpcy - cr*spsy;
-      q[1] = cr*spcy + sr*cpsy;
-      q[2] = cr*cpsy - sr*spcy;
-      q[3] = cr*cpcy + sr*spsy;
+/*
+      console.group('ax', ax, 'ay', ay, 'az', az);
+      console.debug('qx = sin(', ax, ')*cos(', ay, ')*cos(', az, ') - cos(', ax, ')*sin(', ay, ')*sin(', az, ')');
+      console.debug('qy = cos(', ax, ')*sin(', ay, ')*cos(', az, ') + sin(', ax, ')*cos(', ay, ')*sin(', az, ')');
+      console.debug('qz = cos(', ax, ')*cos(', ay, ')*sin(', az, ') - sin(', ax, ')*sin(', ay, ')*cos(', az, ')');
+      console.debug('qw = cos(', ax, ')*cos(', ay, ')*cos(', az, ') + sin(', ax, ')*sin(', ay, ')*sin(', az, ')');
+
+      console.debug('cycz = ', cy, '*', cz, '=', cycz);
+      console.debug('sycz = ', sy, '*', cz, '=', sycz);
+      console.debug('cysz = ', cy, '*', sz, '=', cysz);
+      console.debug('sysz = ', sy, '*', sz, '=', sysz);
+
+      console.debug(sx, '*', cycz, ' - ', cx, '*', sysz);
+      console.debug(cx, '*', sycz, ' + ', sx, '*', cysz);
+      console.debug(cx, '*', cysz, ' - ', sx, '*', sycz);
+      console.debug(cx, '*', cycz, ' + ', sx, '*', sysz);
+      console.groupEnd();
+*/
+      q[0] = sx*cycz - cx*sysz;
+      q[1] = cx*sycz + sx*cysz;
+      q[2] = cx*cysz - sx*sycz;
+      q[3] = cx*cycz + sx*sysz;
 
       return this.normalize();
     },
