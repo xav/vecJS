@@ -12,8 +12,10 @@ var q_tests = {
   },
 
   'set': function () {
-    var q1 = new vecJS.Q();
-    q1.set([4, 5, 6, 7]);
+    var q1 = new vecJS.Q(), q1b;
+    q1b = q1.set([4, 5, 6, 7]);
+
+    equals(q1, q1b, 'set return this');
     mequals(q1.q, [4, 5, 6, 7], 'set values');
   },
   

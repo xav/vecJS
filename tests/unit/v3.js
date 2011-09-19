@@ -12,8 +12,9 @@ var v3_tests = {
   },
 
   'set': function () {
-    var v1 = new vecJS.V3();
-    v1.set([4,5,6]);
+    var v1 = new vecJS.V3(), v1b;
+    v1b = v1.set([4,5,6]);
+    equals(v1, v1b, 'set return this');
     mequals(v1.v, [4, 5, 6], 'set values');
   },
 
