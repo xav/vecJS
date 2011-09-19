@@ -8,7 +8,7 @@ var q_tests = {
     mequals(q1.q, [0, 0, 0, 0], 'empty constructor');
 
     var q2 = new vecJS.Q([1, 2, 3, 4]);
-    mequals(q2.q, [1, 2, 3, 4], 'constructor');
+    mequals(q2.q, [1, 2, 3, 4], 'values in constructor');
   },
 
   'set': function () {
@@ -86,10 +86,7 @@ var q_tests = {
 
     q1b = q1.mulScalar(10);
     equals(q1, q1b, 'mulScalar return this');
-    equals(q1.q[0], 100, 'mulScalar first component');
-    equals(q1.q[1], 200, 'mulScalar second component');
-    equals(q1.q[2], 300, 'mulScalar third component');
-    equals(q1.q[3], 400, 'mulScalar fourth component');
+    mequals(q1.q, [100, 200, 300, 400], 'mulScalar values');
   },
 
   'divScalar': function () {
@@ -97,10 +94,7 @@ var q_tests = {
 
     q1b = q1.divScalar(10);
     equals(q1, q1b, 'divScalar return this');
-    equals(q1.q[0], 1, 'divScalar first component');
-    equals(q1.q[1], 2, 'divScalar second component');
-    equals(q1.q[2], 3, 'divScalar third component');
-    equals(q1.q[3], 4, 'divScalar fourth component');
+    mequals(q1.q, [1, 2, 3, 4], 'divScalar values');
   },
 
   'mul': function () {
