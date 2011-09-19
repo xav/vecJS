@@ -1,73 +1,77 @@
 module('M34');
 
-test('constructor', function () {
-});
+var m34_tests = {
+  'constructor': function () {
+  },
 
-test('set', function () {
-});
+  'set': function () {
+  },
 
-test('copy', function () {
-});
+  'copy': function () {
+  },
 
-test('copyTo', function () {
-});
+  'copyTo': function () {
+  },
 
-test('clone', function () {
-});
+  'clone': function () {
+  },
 
-test('fromQuat', function () {
-});
+  'fromQuat': function () {
+  },
 
-test('identity', function () {
-});
+  'identity': function () {
+  },
 
-test('mul', function () {
-});
+  'mul': function () {
+  },
 
-test('assignMul', function () {
-});
+  'assignMul': function () {
+  },
 
-test('det', function () {
-});
+  'det': function () {
+  },
 
-test('transpose', function () {
-});
+  'transpose': function () {
+  },
 
-test('invert', function () {
-});
+  'invert': function () {
+  },
 
-test('translate', function () {
-});
+  'translate': function () {
+  },
 
-test('scale', function () {
-});
+  'scale': function () {
+  },
 
-test('rotate', function () {
-});
+  'rotate': function () {
+  },
 
-test('rotateX', function () {
-});
+  'rotateX': function () {
+  },
 
-test('rotateY', function () {
-});
+  'rotateY': function () {
+  },
 
-test('rotateZ', function () {
-});
+  'rotateZ': function () {
+  },
 
-test('setTranslate', function () {
-});
+  'setTranslate': function () {
+  },
 
-test('setScale', function () {
-});
+  'setScale': function () {
+  },
 
-test('setRotateX', function () {
-});
+  'setRotateX': function () {
+  },
 
-test('setRotateY', function () {
-});
+  'setRotateY': function () {
+  },
 
-test('setRotateZ', function () {
-});
+  'setRotateZ': function () {
+  },
 
-test('lookAt', function () {
-});
+  'lookAt': function () {
+  }
+};
+
+run_test_set(m34_tests);
