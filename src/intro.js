@@ -20,3 +20,4 @@
  * Precision: @PRECISION
  */
 (function (window, undefined) {
+'use strict';
