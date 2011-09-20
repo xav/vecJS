@@ -115,6 +115,12 @@ var m34_tests = {
     //TODO: setScale
   },
 
+  'setRotate': function () {
+    var m1 = new vecJS.M34(), m1b;
+    m1b = m1.setRotate(90*(Math.PI/180), [1, 0, 0]);
+    console.debug(m1.toString());
+  },
+
   'setRotateX': function () {
     //TODO: setRotateX
   },

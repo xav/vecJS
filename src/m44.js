@@ -403,12 +403,31 @@ vecJS.M44 = function M44(arr) {
     },
 
     toString: function () {
-      var m = this.m;
+      var m = this.m,
+          p = function(n) {
+            return Math.round(n/@PRECISION) * @PRECISION;
+          };
+
       return 'M44\n' +
-        m[0]  + '  ' + m[1]  + '  ' + m[2]  + '  ' + m[3]  + '\n' +
-        m[4]  + '  ' + m[5]  + '  ' + m[6]  + '  ' + m[7]  + '\n' +
-        m[8]  + '  ' + m[9]  + '  ' + m[10] + '  ' + m[11]  + '\n' +
-        m[12] + '  ' + m[13] + '  ' + m[14] + '  ' + m[15];
+        p(m[0])  + '  ' +
+        p(m[1])  + '  ' +
+        p(m[2])  + '  ' +
+        p(m[3])  + '\n' +
+
+        p(m[4])  + '  ' +
+        p(m[5])  + '  ' +
+        p(m[6])  + '  ' +
+        p(m[7])  + '\n' +
+
+        p(m[8])  + '  ' +
+        p(m[9])  + '  ' +
+        p(m[10]) + '  ' +
+        p(m[11])  + '\n' +
+
+        p(m[12]) + '  ' +
+        p(m[13]) + '  ' +
+        p(m[14]) + '  ' +
+        p(m[15]);
     }
   };
 })();

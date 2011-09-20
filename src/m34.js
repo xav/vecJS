@@ -474,6 +474,39 @@ vecJS.M34 = function M34(arr) {
       ]);
     },
     /**
+     * Set this matrix to  rotation around an arbitrary axis.
+     * If rotating around a primary axis (X,Y,Z) one of the specialized rotation
+     * functions should be used instead for performance
+     *
+     * @param {number} theta The rotation angle in radians.
+     * @param {!Array} arr The axis to rotate around (assumed to be a unit vector)
+     *
+     * @return {!vecJS.M34} This instance.
+     */
+    setRotate: function (theta, arr) {
+      var m = this.m,
+          vx = arr[0], vy = arr[1], vz = arr[2],
+          s = Math.sin(theta), c = Math.cos(theta),
+          t = 1 - c;
+      
+      m[0]  = vx * vx * t + c;
+      m[1]  = vy * vx * t + vz * s;
+      m[2]  = vz * vx * t - vy * s;
+      m[3]  = 0;
+
+      m[4]  = vx * vy * t - vz * s;
+      m[5]  = vy * vy * t + c;
+      m[6]  = vz * vy * t + vx * s;
+      m[7]  = 0;
+
+      m[8]  = vx * vz * t + vy * s;
+      m[9]  = vy * vz * t - vx * s;
+      m[10] = vz * vz * t + c;
+      m[11] = 0;
+
+      return this;
+    },
+    /**
     * Set this matrix to a pure X-rotation matrix.
     *
     * @param {number} theta The rotation angle in radians.
@@ -545,11 +578,25 @@ vecJS.M34 = function M34(arr) {
     },
 
     toString: function () {
-      var m = this.m;
+      var m = this.m,
+          p = function(n) {
+            return Math.round(n/@PRECISION) * @PRECISION;
+          };
       return 'M34\n' +
-        m[0]  + '  ' + m[1]  + '  ' + m[2]  + '  ' + m[3]  + '\n' +
-        m[4]  + '  ' + m[5]  + '  ' + m[6]  + '  ' + m[7]  + '\n' +
-        m[8]  + '  ' + m[9]  + '  ' + m[10] + '  ' + m[11];
+        p(m[0])  + '  ' +
+        p(m[1])  + '  ' +
+        p(m[2])  + '  ' +
+        p(m[3])  + '\n' +
+
+        p(m[4])  + '  ' +
+        p(m[5])  + '  ' +
+        p(m[6])  + '  ' +
+        p(m[7])  + '\n' +
+
+        p(m[8])  + '  ' +
+        p(m[9])  + '  ' +
+        p(m[10]) + '  ' +
+        p(m[11]);
     }
   };
 })();
