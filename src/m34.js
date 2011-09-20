@@ -484,24 +484,25 @@ vecJS.M34 = function M34(arr) {
      * @return {!vecJS.M34} This instance.
      */
     setRotate: function (theta, arr) {
+      // From http://en.wikipedia.org/wiki/Rotation_matrix#Rotation_matrix_from_axis_and_angle
       var m = this.m,
           vx = arr[0], vy = arr[1], vz = arr[2],
           s = Math.sin(theta), c = Math.cos(theta),
           t = 1 - c;
-      
-      m[0]  = vx * vx * t + c;
-      m[1]  = vy * vx * t + vz * s;
-      m[2]  = vz * vx * t - vy * s;
+
+      m[0]  = c + vx*vx*t;
+      m[1]  = vx*vy*t - vz*s;
+      m[2]  = vx*vz*t + vy*s;
       m[3]  = 0;
 
-      m[4]  = vx * vy * t - vz * s;
-      m[5]  = vy * vy * t + c;
-      m[6]  = vz * vy * t + vx * s;
+      m[4]  = vx*vy*t + vz*s;
+      m[5]  = c + vy*vy*t;
+      m[6]  = vy*vz*t - vx*s;
       m[7]  = 0;
 
-      m[8]  = vx * vz * t + vy * s;
-      m[9]  = vy * vz * t - vx * s;
-      m[10] = vz * vz * t + c;
+      m[8]  = vx*vz*t - vy*s;
+      m[9]  = vy*vx*t + vx*s;
+      m[10] = c + vz*vz*t;
       m[11] = 0;
 
       return this;
