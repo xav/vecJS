@@ -580,7 +580,7 @@ vecJS.M34 = function M34(arr) {
     toString: function () {
       var m = this.m,
           p = function(n) {
-            return Math.round(n/@PRECISION) * @PRECISION;
+            return Math.round(n*@INV_PRECISION) * @PRECISION;
           };
       return 'M34\n' +
         p(m[0])  + '  ' +

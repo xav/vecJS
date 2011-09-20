@@ -405,7 +405,7 @@ vecJS.M44 = function M44(arr) {
     toString: function () {
       var m = this.m,
           p = function(n) {
-            return Math.round(n/@PRECISION) * @PRECISION;
+            return Math.round(n*@INV_PRECISION) * @PRECISION;
           };
 
       return 'M44\n' +
