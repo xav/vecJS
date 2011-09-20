@@ -19,7 +19,16 @@ var vecJS,
     _vecJS = window.vecJS,
     _$V = window.$V,
     PI = Math.PI,
-    GLMatrixArray = (typeof Float32Array !== 'undefined') ? Float32Array : Array;
+  /**
+   * Type of the arrays used internally in objects.
+   *
+   * Float32Array if available, otherwise, fallback to regular Array.
+   */
+    GLMatrixArray = (typeof Float32Array !== 'undefined') ? Float32Array : Array,
+  /**
+   * @ignore
+   */
+    disp_f = function(n) { return Math.round(n*@INV_PRECISION) * @PRECISION; };
 
 /**
 * @namespace The vecJS namespace.

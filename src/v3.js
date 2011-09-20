@@ -418,6 +418,6 @@ vecJS.V3.prototype = {
 
   toString: function () {
     var v = this.v;
-    return 'V3[' + v[0] + ', ' + v[1] + ', ' + v[2] + ']';
+    return 'V3[' + disp_f(v[0]) + ', ' + disp_f(v[1]) + ', ' + disp_f(v[2]) + ']';
   }
 };

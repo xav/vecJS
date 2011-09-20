@@ -578,25 +578,22 @@ vecJS.M34 = function M34(arr) {
     },
 
     toString: function () {
-      var m = this.m,
-          p = function(n) {
-            return Math.round(n*@INV_PRECISION) * @PRECISION;
-          };
+      var m = this.m;
       return 'M34\n' +
-        p(m[0])  + '  ' +
-        p(m[1])  + '  ' +
-        p(m[2])  + '  ' +
-        p(m[3])  + '\n' +
+        disp_f(m[0])  + '  ' +
+        disp_f(m[1])  + '  ' +
+        disp_f(m[2])  + '  ' +
+        disp_f(m[3])  + '\n' +
 
-        p(m[4])  + '  ' +
-        p(m[5])  + '  ' +
-        p(m[6])  + '  ' +
-        p(m[7])  + '\n' +
+        disp_f(m[4])  + '  ' +
+        disp_f(m[5])  + '  ' +
+        disp_f(m[6])  + '  ' +
+        disp_f(m[7])  + '\n' +
 
-        p(m[8])  + '  ' +
-        p(m[9])  + '  ' +
-        p(m[10]) + '  ' +
-        p(m[11]);
+        disp_f(m[8])  + '  ' +
+        disp_f(m[9])  + '  ' +
+        disp_f(m[10]) + '  ' +
+        disp_f(m[11]);
     }
   };
 })();

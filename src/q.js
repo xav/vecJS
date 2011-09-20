@@ -445,7 +445,7 @@ vecJS.Q = function Q(arr) {
 
     toString: function () {
       var q = this.q;
-      return 'Q[' + q[0] + ', ' + q[1] + ', ' + q[2] + ', ' + q[3] + ']';
+      return 'Q[' + disp_f(q[0]) + ', ' + disp_f(q[1]) + ', ' + disp_f(q[2]) + ', ' + disp_f(q[3]) + ']';
     }
   };
 
