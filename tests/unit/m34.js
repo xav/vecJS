@@ -148,14 +148,23 @@ var m34_tests = {
       0,  0, 1, 0
     ], '90deg around Z');
 
-
-    var v1 = new vecJS.V3([1, 1, 1]).normalize();
+    var v1 = new vecJS.V3([1, 1, 1]).normalize(),
+        v2 = v1.clone();
+    mequals(v1.v, v2.v, 'setRotate does not change parameter');
     m1.setRotate(90*c, v1.v);
     mfequals(m1.m, [
        0.333333, -0.244017,  0.910684, 0,
        0.910684,  0.333333, -0.244017, 0,
       -0.244017,  0.910684,  0.333333, 0
     ], '90deg around arbitrary vector.');
+
+    // even permutation
+    m1.setRotate(120*c, v1.v);
+    mfequals(m1.m, [
+      0, 0, 1, 0,
+      1, 0, 0, 0,
+      0, 1, 0, 0
+    ], '120deg around vector x=y=z.');
   },
 
   'setRotateX': function () {
@@ -193,11 +202,71 @@ var m34_tests = {
   },
 
   'setRotateY': function () {
-    //TODO: setRotateY
+    var m1 = new vecJS.M34(), m1b,
+        c = Math.PI/180;
+
+    m1b = m1.setRotateY(0);
+    equal(m1, m1b, 'setRotateY returns this');
+    mfequals(m1.m, [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0
+    ], 'no rotation values');
+
+    m1.setRotateY(90*c);
+    mfequals(m1.m, [
+       0, 0, 1, 0,
+       0, 1, 0, 0,
+      -1, 0, 0, 0
+    ], '90deg around Y');
+
+    m1.setRotateY(180*c);
+    mfequals(m1.m, [
+      -1, 0,  0, 0,
+       0, 1,  0, 0,
+       0, 0, -1, 0
+    ], '180deg around Y');
+
+    m1.setRotateY(360*c);
+    mfequals(m1.m, [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0
+    ], '360deg around Y');
   },
 
   'setRotateZ': function () {
-    //TODO: setRotateZ
+    var m1 = new vecJS.M34(), m1b,
+        c = Math.PI/180;
+
+    m1b = m1.setRotateZ(0);
+    equal(m1, m1b, 'setRotateZ returns this');
+    mfequals(m1.m, [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0
+    ], 'no rotation values');
+
+    m1.setRotateZ(90*c);
+    mfequals(m1.m, [
+      0, -1, 0, 0,
+      1,  0, 0, 0,
+      0,  0, 1, 0
+    ], '90deg around Z');
+
+    m1.setRotateZ(180*c);
+    mfequals(m1.m, [
+      -1,  0, 0, 0,
+       0, -1, 0, 0,
+       0,  0, 1, 0
+    ], '180deg around Z');
+
+    m1.setRotateZ(360*c);
+    mfequals(m1.m, [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0
+    ], '360deg around Z');
   },
 
   'lookAt': function () {
