@@ -116,13 +116,80 @@ var m34_tests = {
   },
 
   'setRotate': function () {
-    var m1 = new vecJS.M34(), m1b;
-    m1b = m1.setRotate(90*(Math.PI/180), [1, 0, 0]);
-    console.debug(m1.toString());
+    var m1 = new vecJS.M34(), m1b,
+        c = Math.PI/180;
+
+    m1b = m1.setRotate(0, [1, 0, 0]);
+    equal(m1, m1b, 'setRotate returns this');
+    mfequals(m1.m, [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0
+    ], 'no rotation values');
+
+    m1.setRotate(90*c, [1, 0, 0]);
+    mfequals(m1.m, [
+      1, 0,  0, 0,
+      0, 0, -1, 0,
+      0, 1,  0, 0
+    ], '90deg around X');
+
+    m1.setRotate(90*c, [0, 1, 0]);
+    mfequals(m1.m, [
+       0, 0, 1, 0,
+       0, 1, 0, 0,
+      -1, 0, 0, 0
+    ], '90deg around Y');
+
+    m1.setRotate(90*c, [0, 0, 1]);
+    mfequals(m1.m, [
+      0, -1, 0, 0,
+      1,  0, 0, 0,
+      0,  0, 1, 0
+    ], '90deg around Z');
+
+
+    var v1 = new vecJS.V3([1, 1, 1]).normalize();
+    m1.setRotate(90*c, v1.v);
+    mfequals(m1.m, [
+       0.333333, -0.244017,  0.910684, 0,
+       0.910684,  0.333333, -0.244017, 0,
+      -0.244017,  0.910684,  0.333333, 0
+    ], '90deg around arbitrary vector.');
   },
 
   'setRotateX': function () {
-    //TODO: setRotateX
+    var m1 = new vecJS.M34(), m1b,
+        c = Math.PI/180;
+
+    m1b = m1.setRotateX(0);
+    equal(m1, m1b, 'setRotateX returns this');
+    mfequals(m1.m, [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0
+    ], 'no rotation values');
+
+    m1.setRotateX(90*c);
+    mfequals(m1.m, [
+      1, 0,  0, 0,
+      0, 0, -1, 0,
+      0, 1,  0, 0
+    ], '90deg around X');
+
+    m1.setRotateX(180*c);
+    mfequals(m1.m, [
+      1,  0,  0, 0,
+      0, -1,  0, 0,
+      0,  0, -1, 0
+    ], '180deg around X');
+
+    m1.setRotateX(360*c);
+    mfequals(m1.m, [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0
+    ], '360deg around X');
   },
 
   'setRotateY': function () {
