@@ -49,8 +49,8 @@ ${VJS}: ${MODULES} | ${DIST_DIR}
 	@@echo "Precision:" ${PRECISION}
 
 	@@cat ${MODULES} | \
-		sed 's/@DATE/'"${DATE}"'/' | \
-		sed 's/@PRECISION/${PRECISION}/' | \
+		sed 's/@DATE/'"${DATE}"'/g' | \
+		sed 's/@PRECISION/${PRECISION}/g' | \
 		sed '/@license/,/\*\// d' | \
 		${VER} > ${VJS};
 
