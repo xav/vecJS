@@ -1,5 +1,5 @@
 PRECISION = 1e-6
-INV_PRECISION = $(shell echo 'scale=15;p=1/1e-6;scale=0;p/1' | sed 's/1e/10^/' | bc)
+INV_PRECISION = $(shell echo 'scale=15;p=1/${PRECISION};scale=0;p/1' | sed 's/1e/10^/' | bc)
 
 SRC_DIR = src
 BUILD_DIR = build
