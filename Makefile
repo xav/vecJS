@@ -10,7 +10,7 @@ DOC_DIR = ${DIST_DIR}/doc
 
 COMPILER = java -jar ${BUILD_DIR}/compiler.jar  --compilation_level SIMPLE_OPTIMIZATIONS --js
 
-JSDOC = java -jar ${BUILD_DIR}/jsrun.jar  ${BUILD_DIR}/app/run.js -a -t=${BUILD_DIR}/templates/jsdoc
+JSDOC = java -jar ${BUILD_DIR}/jsrun.jar  ${BUILD_DIR}/app/run.js -t=${BUILD_DIR}/templates/jsdoc
 
 BASE_FILES = ${SRC_DIR}/vec.js\
 	${SRC_DIR}/v3.js\
@@ -66,11 +66,7 @@ doc: vjs ${VJS_DOC}
 
 ${VJS_DOC}:
 	@@echo "Building documentation" ${VJS_DOC}
-	@@${JSDOC} -d=${DOC_DIR} -D="version:${VJS_VER}" ${PREFIX}/dist/vec.js
-
-${VJS_DOC}: ${VJS}
-  @@echo "Building documentation" ${VJS_DOC}; \
-  ${JSDOC} -d=${DOC_DIR} ${VJS_DOC}; \
+	@@${JSDOC} -d=${DOC_DIR} -D="version:${VJS_VER}" ${VJS}
 
 clean:
 	@@echo "Removing Distribution directory:" ${DIST_DIR}
