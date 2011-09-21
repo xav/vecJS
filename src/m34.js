@@ -252,39 +252,40 @@ vecJS.M34 = function M34(arr) {
     },
 
     /**
-    * Set this matrix to its inverse
+    * Set this matrix to its inverse (it is assumed that the matrix is invertible).
+    *
+    * You can check that the matrix is invertible by verifying that
+    * the determinant is not 0.
+    *
+    * @param {number=} d The matrix determinant if you already calculated it.
+    * If not specified, it will be calculated.
     *
     * @return {!vecJS.M34} This instance.
     */
-    invert: function () {
+    invert: function (d) {
       var m = this.m,
-          a00 = m[0], a01 = m[1], a02 = m[2],  a03 = m[3],
-          a10 = m[4], a11 = m[5], a12 = m[6],  a13 = m[7],
-          a20 = m[8], a21 = m[9], a22 = m[10], a23 = m[11],
-          b00 = a00*a11 - a01*a10,
-          b01 = a00*a12 - a02*a10,
-          b02 = a00*a13 - a03*a10,
-          b03 = a01*a12 - a02*a11,
-          b04 = a01*a13 - a03*a11,
-          b05 = a02*a13 - a03*a12,
-          invDet = 1 / (b00*a22 - b01*a21 + b03*a20);
+          m00 = m[0], m01 = m[1], m02 = m[2],  m03 = m[3],
+          m10 = m[4], m11 = m[5], m12 = m[6],  m13 = m[7],
+          m20 = m[8], m21 = m[9], m22 = m[10], m23 = m[11];
+      d = 1 / (d || this.det());
 
-        m[0]  = ( a11*b01 - a12*a21) * invDet;
-        m[1]  = (-a01*b01 + a02*a21) * invDet;
-        m[2]  = b03 * invDet;
-        m[3]  = (-a21*b05 + a22*b04 - a23*b03) * invDet;
+      // based on http://www.euclideanspace.com/maths/algebra/matrix/functions/inverse/fourD/index.htm
+      m[0]  = d * (m11*m22 - m12*m21);
+      m[1]  = d * (m02*m21 - m01*m22);
+      m[2]  = d * (m01*m12 - m02*m11);
+      m[3]  = d * (m03*m12*m21 - m02*m13*m21 - m03*m11*m22 + m01*m13*m22 + m02*m11*m23 - m01*m12*m23);
 
-        m[4]  = (-a10*b01 + a12*a20) * invDet;
-        m[5]  = ( a00*b01 - a02*a20) * invDet;
-        m[6]  = (-b01) * invDet;
-        m[7]  = ( a20*b05 - a22*b02 + a23*b01) * invDet;
+      m[4]  = d * (m12*m20 - m10*m22);
+      m[5]  = d * (m00*m22 - m02*m20);
+      m[6]  = d * (m02*m10 - m00*m12);
+      m[7]  = d * (m02*m13*m20 - m03*m12*m20 + m03*m10*m22 - m00*m13*m22 - m02*m10*m23 + m00*m12*m23);
+      
+      m[8]  = d * (m10*m21 - m11*m20);
+      m[9]  = d * (m01*m20 - m00*m21);
+      m[10] = d * (m00*m11 - m01*m10);
+      m[11] = d * (m03*m11*m20 - m01*m13*m20 - m03*m10*m21 + m00*m13*m21 + m01*m10*m23 - m00*m11*m23);
 
-        m[8]  = ( a10*a21 - a11*a20) * invDet;
-        m[9]  = (-a00*a21 + a01*a20) * invDet;
-        m[10] = b00 * invDet;
-        m[11] = (-a20*b04 + a21*b02 - a23*b00) * invDet;
-
-        return this;
+      return this;
     },
 
     /**

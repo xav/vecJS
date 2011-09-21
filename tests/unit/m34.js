@@ -161,19 +161,53 @@ var m34_tests = {
 
   'det': function () {
     var m1 = new vecJS.M34([
-      1, 3,  8, 5,
-      1, 3,  6, 1,
-      1, 1,  1, 0
+      1, 3, 8, 5,
+      1, 3, 6, 1,
+      1, 1, 1, 0
     ]);
+
     equals(m1.det(), -4, 'det');
+    mequals(m1.m, [
+      1, 3, 8, 5,
+      1, 3, 6, 1,
+      1, 1, 1, 0
+    ], 'det does no modify object');
   },
 
   'transpose': function () {
-    //TODO: transpose
+    var m1 = new vecJS.M34([
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ]), m1b;
+
+    m1b = m1.transpose();
+
+    equals(m1, m1b, 'transpose return this');
+    mequals(m1.m, [
+      1, 5,  9, 0,
+      2, 6, 10, 0,
+      3, 7, 11, 0
+    ], 'transpose values');
   },
 
   'invert': function () {
-    //TODO: invert
+    var m1 = new vecJS.M34([
+      1, 2,  1, 0,
+      3, 4, 10, 1,
+      5, 2,  8, 0
+    ]), m1b;
+
+    m1b = m1.invert();
+    equals(m1, m1b, 'invert return this');
+    mfequals(m1.m, [
+       0.24, -0.28,  0.32,  0.28,
+       0.52,  0.06, -0.14, -0.06,
+      -0.28,  0.16, -0.04, -0.16
+    ], 'invert values');
+
+    console.debug(m1.toString());
+    //TODO: check that m1*inv(m1) = identity
   },
 
   'translate': function () {

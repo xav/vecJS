@@ -76,6 +76,16 @@ var m44_tests = {
     //TODO: transpose
   },
 
+  'det': function () {
+    var m1 = new vecJS.M44([
+      1, 3,  8, 5,
+      1, 3,  6, 1,
+      1, 1,  1, 0,
+      7, 3, 10, 2
+    ]);
+    //TODO: equals(m1.det(), 88, 'det');
+  },
+
   'invert': function () {
     //TODO: invert
   },
