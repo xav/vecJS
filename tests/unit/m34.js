@@ -196,7 +196,8 @@ var m34_tests = {
       1, 2,  1, 0,
       3, 4, 10, 1,
       5, 2,  8, 0
-    ]), m1b;
+    ]), m1b,
+    m2 = m1.clone();
 
     m1b = m1.invert();
     equals(m1, m1b, 'invert return this');
@@ -206,8 +207,12 @@ var m34_tests = {
       -0.28,  0.16, -0.04, -0.16
     ], 'invert values');
 
-    console.debug(m1.toString());
-    //TODO: check that m1*inv(m1) = identity
+    m1.mul(m2);
+    mfequals(m1.m, [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0
+    ], 'm*inv(m) = identity');
   },
 
   'translate': function () {
