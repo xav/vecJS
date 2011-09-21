@@ -100,11 +100,12 @@ vecJS.M34 = function M34(arr) {
     /**
      * Set the matrix values from the specified quaternion.
      *
-     * @param {!vecJS.Q} q The source quaternion.
+     * @param {!vecJS.Q} q The source quaternion (assumed to be unit).
      *
     * @return {!vecJS.M34} This instance.
      */
     fromQuat: function (q) {
+      q = q.q;
       var x = q[0], y = q[1], z = q[2], w = q[3],
           x2 = x + x, y2 = y + y, z2 = z + z,
           xx = x*x2, xy = x*y2, xz = x*z2,

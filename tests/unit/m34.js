@@ -44,7 +44,42 @@ var m34_tests = {
   },
 
   'fromQuat': function () {
-    //TODO: fromQuat
+    var q1 = new vecJS.Q([1, 2, 3, 4]),
+        q2 = q1.clone(),
+        m1 = new vecJS.M34(), m1b,
+        c = Math.PI / 180;
+
+    m1b = m1.fromQuat(q1);
+    equals(m1, m1b, 'fromQuat return this');
+    mequals(q1.q, q2.q, 'fromQuat does no modify parameter');
+
+    m1.fromQuat(q1.set([0, 0, 0, 1]));
+    mfequals(m1.m, [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0
+    ], 'identity quaternion');
+
+    m1.fromQuat(q1.fromEuler([90*c, 0, 0]));
+    mfequals(m1.m, [
+      1, 0,  0, 0,
+      0, 0, -1, 0,
+      0, 1,  0, 0
+    ], '90deg around X');
+
+    m1.fromQuat(q1.fromEuler([0, 90*c, 0]));
+    mfequals(m1.m, [
+       0, 0, 1, 0,
+       0, 1, 0, 0,
+      -1, 0, 0, 0
+    ], '90deg around Y');
+
+    m1.fromQuat(q1.fromEuler([0, 0, 90*c]));
+    mfequals(m1.m, [
+      0, -1, 0, 0,
+      1,  0, 0, 0,
+      0,  0, 1, 0
+    ], '90deg around Z');
   },
 
   'identity': function () {
