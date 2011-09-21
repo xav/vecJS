@@ -216,7 +216,19 @@ var m34_tests = {
   },
 
   'translate': function () {
-    //TODO: translate
+    var m1 = new vecJS.M34([
+      0, 0, 1, 0,
+      1, 0, 0, 0,
+      0, 1, 0, 0
+    ]), m1b;
+
+    m1b = m1.translate([10, 20, 30]);
+    equals(m1, m1b, 'translate return this');
+    mfequals(m1.m, [
+      0, 0, 1, 31,
+      1, 0, 0, 12,
+      0, 1, 0, 23
+    ], 'translate values');
   },
 
   'scale': function () {
