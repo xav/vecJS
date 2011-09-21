@@ -62,9 +62,9 @@ ${VJS_MIN}: ${VJS}
 	@@echo "Minifying vecJS" ${VJS_MIN}; \
 	${COMPILER} ${VJS} > ${VJS_MIN}; \
 
-doc: vjs ${VJS_DOC}
+doc: ${VJS_DOC}
 
-${VJS_DOC}:
+${VJS_DOC}: vjs
 	@@echo "Building documentation" ${VJS_DOC}
 	@@${JSDOC} -d=${DOC_DIR} -D="version:${VJS_VER}" ${VJS}
 
