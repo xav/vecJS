@@ -99,11 +99,64 @@ var m34_tests = {
   },
 
   'mul': function () {
-    //TODO: mull
+    var m1 = new vecJS.M34([
+          12, 11, 10, 9,
+          8,  7,  6, 5,
+          4,  3,  2, 1
+        ]),
+        m1b,
+        m2 = new vecJS.M34([
+          1,  2,  3,  4,
+          5,  6,  7,  8,
+          9, 10, 11, 12
+        ]);
+
+    m1b = m1.mul(m2);
+    equals(m1, m1b, 'mul return this');
+    mequals(m2.m, [
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ], 'mul does no modify parameter');
+
+    mfequals(m1.m, [
+      157, 190, 223, 265,
+       97, 118, 139, 165,
+       37,  46,  55, 65
+    ], 'mul values');
   },
 
   'assignMul': function () {
-    //TODO: assignMul
+    var m1 = new vecJS.M34(), m1b,
+        m2 = new vecJS.M34([
+          12, 11, 10, 9,
+          8,  7,  6, 5,
+          4,  3,  2, 1
+        ]),
+        m3 = new vecJS.M34([
+          1,  2,  3,  4,
+          5,  6,  7,  8,
+          9, 10, 11, 12
+        ]);
+
+    m1b = m1.assignMul(m2, m3);
+    equals(m1, m1b, 'assignMul return this');
+    mequals(m2.m, [
+      12, 11, 10, 9,
+      8,  7,  6, 5,
+      4,  3,  2, 1
+    ], 'mul does no modify parameter 1');
+    mequals(m3.m, [
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ], 'mul does no modify parameter 2');
+
+    mfequals(m1.m, [
+      157, 190, 223, 265,
+       97, 118, 139, 165,
+       37,  46,  55, 65
+    ], 'mul values');
   },
 
   'det': function () {
