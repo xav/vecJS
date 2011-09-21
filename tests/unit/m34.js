@@ -160,7 +160,12 @@ var m34_tests = {
   },
 
   'det': function () {
-    //TODO: det
+    var m1 = new vecJS.M34([
+      1, 3,  8, 5,
+      1, 3,  6, 1,
+      1, 1,  1, 0
+    ]);
+    equals(m1.det(), -4, 'det');
   },
 
   'transpose': function () {

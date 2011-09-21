@@ -222,16 +222,18 @@ vecJS.M34 = function M34(arr) {
     * @return {number} The matrix determinant.
     */
     det: function () {
-    // based on http://www.euclideanspace.com/maths/algebra/matrix/functions/inverse/fourD/index.htm
-      var m = this.m;
-      return (
-        - m[2] * m[5] * m[8]
-        + m[1] * m[6] * m[8]
-        + m[2] * m[4] * m[9]
-        - m[0] * m[6] * m[9]
-        - m[1] * m[4] * m[10]
-        + m[0] * m[5] * m[10]
-      );
+    // based on http://www.euclideanspace.com/maths/algebra/matrix/functions/determinant/fourD/index.htm
+      var m = this.m,
+        m00 = m[0], m01 = m[1], m02 = m[2],
+        m10 = m[4], m11 = m[5], m12 = m[6],
+        m20 = m[8], m21 = m[9], m22 = m[10];
+
+      return - m02 * m11 * m20
+             + m01 * m12 * m20
+             + m02 * m10 * m21
+             - m00 * m12 * m21
+             - m01 * m10 * m22
+             + m00 * m11 * m22;
     },
     /**
     * Set this instance to its transpose matrix.
