@@ -217,9 +217,9 @@ var m34_tests = {
 
   'translate': function () {
     var m1 = new vecJS.M34([
-      0, 0, 1, 0,
-      1, 0, 0, 0,
-      0, 1, 0, 0
+      0, 0, 1, 1,
+      1, 0, 0, 2,
+      0, 1, 0, 3
     ]), m1b;
 
     m1b = m1.translate([10, 20, 30]);
