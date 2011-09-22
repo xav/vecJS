@@ -232,7 +232,19 @@ var m34_tests = {
   },
 
   'scale': function () {
-    //TODO: scale
+    var m1 = new vecJS.M34([
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ]), m1b;
+
+    m1b = m1.scale([2, 4, 6]);
+    equals(m1, m1b, 'scale return this');
+    mfequals(m1.m, [
+       2,  8, 18,  4,
+      10, 24, 42,  8,
+      18, 40, 66, 12
+    ], 'scale values');
   },
 
   'rotate': function () {
