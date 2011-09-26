@@ -5,18 +5,18 @@ var m34_tests = {
     var m1 = new vecJS.M34();
     ok(m1, 'M34 constructor');
 
-    mequals(m1.m, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'empty constructor');
+    mequal(m1.m, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'empty constructor');
 
     var m2 = new vecJS.M34([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
-    mequals(m2.m, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 'values in constructor');
+    mequal(m2.m, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 'values in constructor');
   },
 
   'set': function () {
     var m1 = new vecJS.M34(), m1b;
     m1b = m1.set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
 
-    equals(m1, m1b, 'set return this');
-    mequals(m1.m, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 'set values');
+    equal(m1, m1b, 'set return this');
+    mequal(m1.m, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 'set values');
   },
 
   'copyTo': function () {
@@ -26,10 +26,10 @@ var m34_tests = {
     m1b = m1.copyTo(m2);
 
     notEqual(m1, m2, 'copyTo does not overwrite object');
-    equals(m1, m1b, 'copyTo return this');
+    equal(m1, m1b, 'copyTo return this');
 
-    mequals(m1.m, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 'copy does not modify self');
-    mequals(m2.m, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 'copyTo values');
+    mequal(m1.m, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 'copy does not modify self');
+    mequal(m2.m, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 'copyTo values');
   },
 
   'clone': function () {
@@ -39,8 +39,8 @@ var m34_tests = {
     notEqual(m1, m2, 'clone does not return this');
     notEqual(m1.m, m2.m, 'clone does not return the same object');
 
-    mequals(m1.m, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 'clone does not modify object');
-    mequals(m2.m, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 'clone values');
+    mequal(m1.m, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 'clone does not modify object');
+    mequal(m2.m, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 'clone values');
   },
 
   'fromQuat': function () {
@@ -50,32 +50,32 @@ var m34_tests = {
         c = Math.PI / 180;
 
     m1b = m1.fromQuat(q1);
-    equals(m1, m1b, 'fromQuat return this');
-    mequals(q1.q, q2.q, 'fromQuat does no modify parameter');
+    equal(m1, m1b, 'fromQuat return this');
+    mequal(q1.q, q2.q, 'fromQuat does no modify parameter');
 
     m1.fromQuat(q1.set([0, 0, 0, 1]));
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       1, 0, 0, 0,
       0, 1, 0, 0,
       0, 0, 1, 0
     ], 'identity quaternion');
 
     m1.fromQuat(q1.fromEuler([90*c, 0, 0]));
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       1, 0,  0, 0,
       0, 0, -1, 0,
       0, 1,  0, 0
     ], '90deg around X');
 
     m1.fromQuat(q1.fromEuler([0, 90*c, 0]));
-    mfequals(m1.m, [
+    mfequal(m1.m, [
        0, 0, 1, 0,
        0, 1, 0, 0,
       -1, 0, 0, 0
     ], '90deg around Y');
 
     m1.fromQuat(q1.fromEuler([0, 0, 90*c]));
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       0, -1, 0, 0,
       1,  0, 0, 0,
       0,  0, 1, 0
@@ -112,14 +112,14 @@ var m34_tests = {
         ]);
 
     m1b = m1.mul(m2);
-    equals(m1, m1b, 'mul return this');
-    mequals(m2.m, [
+    equal(m1, m1b, 'mul return this');
+    mequal(m2.m, [
       1,  2,  3,  4,
       5,  6,  7,  8,
       9, 10, 11, 12
     ], 'mul does no modify parameter');
 
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       157, 190, 223, 265,
        97, 118, 139, 165,
        37,  46,  55, 65
@@ -140,19 +140,19 @@ var m34_tests = {
         ]);
 
     m1b = m1.assignMul(m2, m3);
-    equals(m1, m1b, 'assignMul return this');
-    mequals(m2.m, [
+    equal(m1, m1b, 'assignMul return this');
+    mequal(m2.m, [
       12, 11, 10, 9,
       8,  7,  6, 5,
       4,  3,  2, 1
     ], 'mul does no modify parameter 1');
-    mequals(m3.m, [
+    mequal(m3.m, [
       1,  2,  3,  4,
       5,  6,  7,  8,
       9, 10, 11, 12
     ], 'mul does no modify parameter 2');
 
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       157, 190, 223, 265,
        97, 118, 139, 165,
        37,  46,  55, 65
@@ -166,8 +166,8 @@ var m34_tests = {
       1, 1, 1, 0
     ]);
 
-    equals(m1.det(), -4, 'det');
-    mequals(m1.m, [
+    equal(m1.det(), -4, 'det');
+    mequal(m1.m, [
       1, 3, 8, 5,
       1, 3, 6, 1,
       1, 1, 1, 0
@@ -183,8 +183,8 @@ var m34_tests = {
 
     m1b = m1.transpose();
 
-    equals(m1, m1b, 'transpose return this');
-    mequals(m1.m, [
+    equal(m1, m1b, 'transpose return this');
+    mequal(m1.m, [
       1, 5,  9, 0,
       2, 6, 10, 0,
       3, 7, 11, 0
@@ -200,15 +200,15 @@ var m34_tests = {
     m2 = m1.clone();
 
     m1b = m1.invert();
-    equals(m1, m1b, 'invert return this');
-    mfequals(m1.m, [
+    equal(m1, m1b, 'invert return this');
+    mfequal(m1.m, [
        0.24, -0.28,  0.32,  0.28,
        0.52,  0.06, -0.14, -0.06,
       -0.28,  0.16, -0.04, -0.16
     ], 'invert values');
 
     m1.mul(m2);
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       1, 0, 0, 0,
       0, 1, 0, 0,
       0, 0, 1, 0
@@ -223,8 +223,8 @@ var m34_tests = {
     ]), m1b;
 
     m1b = m1.translate([10, 20, 30]);
-    equals(m1, m1b, 'translate return this');
-    mfequals(m1.m, [
+    equal(m1, m1b, 'translate return this');
+    mfequal(m1.m, [
       0, 0, 1, 31,
       1, 0, 0, 12,
       0, 1, 0, 23
@@ -239,8 +239,8 @@ var m34_tests = {
     ]), m1b;
 
     m1b = m1.scale([2, 4, 6]);
-    equals(m1, m1b, 'scale return this');
-    mfequals(m1.m, [
+    equal(m1, m1b, 'scale return this');
+    mfequal(m1.m, [
        2,  8, 18,  4,
       10, 24, 42,  8,
       18, 40, 66, 12
@@ -277,28 +277,28 @@ var m34_tests = {
 
     m1b = m1.setRotate(0, [1, 0, 0]);
     equal(m1, m1b, 'setRotate returns this');
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       1, 0, 0, 0,
       0, 1, 0, 0,
       0, 0, 1, 0
     ], 'no rotation values');
 
     m1.setRotate(90*c, [1, 0, 0]);
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       1, 0,  0, 0,
       0, 0, -1, 0,
       0, 1,  0, 0
     ], '90deg around X');
 
     m1.setRotate(90*c, [0, 1, 0]);
-    mfequals(m1.m, [
+    mfequal(m1.m, [
        0, 0, 1, 0,
        0, 1, 0, 0,
       -1, 0, 0, 0
     ], '90deg around Y');
 
     m1.setRotate(90*c, [0, 0, 1]);
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       0, -1, 0, 0,
       1,  0, 0, 0,
       0,  0, 1, 0
@@ -306,9 +306,9 @@ var m34_tests = {
 
     var v1 = new vecJS.V3([1, 1, 1]).normalize(),
         v2 = v1.clone();
-    mequals(v1.v, v2.v, 'setRotate does not change parameter');
+    mequal(v1.v, v2.v, 'setRotate does not change parameter');
     m1.setRotate(90*c, v1.v);
-    mfequals(m1.m, [
+    mfequal(m1.m, [
        0.333333, -0.244017,  0.910684, 0,
        0.910684,  0.333333, -0.244017, 0,
       -0.244017,  0.910684,  0.333333, 0
@@ -316,7 +316,7 @@ var m34_tests = {
 
     // even permutation
     m1.setRotate(120*c, v1.v);
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       0, 0, 1, 0,
       1, 0, 0, 0,
       0, 1, 0, 0
@@ -329,28 +329,28 @@ var m34_tests = {
 
     m1b = m1.setRotateX(0);
     equal(m1, m1b, 'setRotateX returns this');
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       1, 0, 0, 0,
       0, 1, 0, 0,
       0, 0, 1, 0
     ], 'no rotation values');
 
     m1.setRotateX(90*c);
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       1, 0,  0, 0,
       0, 0, -1, 0,
       0, 1,  0, 0
     ], '90deg around X');
 
     m1.setRotateX(180*c);
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       1,  0,  0, 0,
       0, -1,  0, 0,
       0,  0, -1, 0
     ], '180deg around X');
 
     m1.setRotateX(360*c);
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       1, 0, 0, 0,
       0, 1, 0, 0,
       0, 0, 1, 0
@@ -363,28 +363,28 @@ var m34_tests = {
 
     m1b = m1.setRotateY(0);
     equal(m1, m1b, 'setRotateY returns this');
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       1, 0, 0, 0,
       0, 1, 0, 0,
       0, 0, 1, 0
     ], 'no rotation values');
 
     m1.setRotateY(90*c);
-    mfequals(m1.m, [
+    mfequal(m1.m, [
        0, 0, 1, 0,
        0, 1, 0, 0,
       -1, 0, 0, 0
     ], '90deg around Y');
 
     m1.setRotateY(180*c);
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       -1, 0,  0, 0,
        0, 1,  0, 0,
        0, 0, -1, 0
     ], '180deg around Y');
 
     m1.setRotateY(360*c);
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       1, 0, 0, 0,
       0, 1, 0, 0,
       0, 0, 1, 0
@@ -397,28 +397,28 @@ var m34_tests = {
 
     m1b = m1.setRotateZ(0);
     equal(m1, m1b, 'setRotateZ returns this');
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       1, 0, 0, 0,
       0, 1, 0, 0,
       0, 0, 1, 0
     ], 'no rotation values');
 
     m1.setRotateZ(90*c);
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       0, -1, 0, 0,
       1,  0, 0, 0,
       0,  0, 1, 0
     ], '90deg around Z');
 
     m1.setRotateZ(180*c);
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       -1,  0, 0, 0,
        0, -1, 0, 0,
        0,  0, 1, 0
     ], '180deg around Z');
 
     m1.setRotateZ(360*c);
-    mfequals(m1.m, [
+    mfequal(m1.m, [
       1, 0, 0, 0,
       0, 1, 0, 0,
       0, 0, 1, 0
@@ -431,7 +431,7 @@ var m34_tests = {
 
   'toString': function () {
     var m = new vecJS.M34([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
-    equals(m.toString(), 'M34\n1  2  3  4\n5  6  7  8\n9  10  11  12', 'arbitrary matrix');
+    equal(m.toString(), 'M34\n1  2  3  4\n5  6  7  8\n9  10  11  12', 'arbitrary matrix');
   }
 };
 

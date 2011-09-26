@@ -5,7 +5,7 @@
  * @param {String=} message
  * @param {Number=} precision
  */
-function fequals (actual, expected, message, precision) {
+function fequal (actual, expected, message, precision) {
   precision = precision || vecJS.precision;
   QUnit.push(Math.abs(expected - actual) < precision, actual, expected, message);
 }
@@ -16,7 +16,7 @@ function fequals (actual, expected, message, precision) {
  * @param {!Object} expected
  * @param {String=} message
  */
-function mequals (actual, expected, message) {
+function mequal (actual, expected, message) {
   var l, l1 = actual.length, l2 = expected.length;
   QUnit.push(l1 == l2, l1, l2, message + ' - array lengths');
   for (l = 0; l < l1; l++) {
@@ -31,7 +31,7 @@ function mequals (actual, expected, message) {
  * @param {String=} message
  * @param {Number=} precision
  */
-function mfequals (actual, expected, message, precision) {
+function mfequal (actual, expected, message, precision) {
   var l,
     l1 = (typeof actual.length === 'number') ? actual.length : actual.length(),
     l2 = (typeof expected.length === 'number') ? expected.length : expected.length();
