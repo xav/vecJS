@@ -46,6 +46,10 @@ var v3_tests = {
     //TODO: loadTranslation
   },
 
+  'loadScale': function() {
+    //TODO: loadScale
+  },
+
   'add': function () {
     var v1 = new vecJS.V3([10, 20, 30]), v1b,
       v2 = new vecJS.V3([1, 2, 3]);

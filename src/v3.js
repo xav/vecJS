@@ -91,6 +91,22 @@ vecJS.V3.prototype = {
   },
 
   /**
+   * Load the scaling part of the specified matrix into this instance.
+   *
+   * @param m {!(vecJS.M34|vecJS.M44)} m The matrix containing the scaling values.
+   *
+   * @return {!vecJS.V3} This instance.
+   */
+  loadScale: function (m) {
+    var v = this.v;
+    m = m.m;
+    v[0] = m[0];
+    v[1] = m[5];
+    v[2] = m[10];
+    return this;
+  },
+
+  /**
   * Add the specified vector to this one and assign the result to this instance.
   *
   * @param {!vecJS.V3} v The vector to add to this instance.
