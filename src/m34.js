@@ -339,7 +339,7 @@ vecJS.M34 = function M34(arr) {
     /**
      * Rotate the current transformation matrix around an arbitrary axis.
      * If rotating around a primary axis (X,Y,Z) one of the specialized rotation
-     * functions should be used instead for performance
+     * functions should be used instead for better performances.
      * 
      * @param {number} theta The rotation angle in radians.
      * @param {!Array} arr The axis to rotate around (should be a unit vector)

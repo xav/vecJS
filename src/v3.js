@@ -68,10 +68,26 @@ vecJS.V3.prototype = {
   /**
   * Create a clone of the vector instance.
   *
-  * @return {!vecJS.V3} A new vector instance wich is a copy of this one.
+  * @return {!vecJS.V3} A new vector instance which is a copy of this one.
   */
   clone: function () {
     return new vecJS.V3(this.v);
+  },
+
+  /**
+   * Load the translation part of the specified matrix into this instance.
+   *
+   * @param {!(vecJS.M34|vecJS.M44)} m The matrix containing the translation values.
+   *
+   * @return {!vecJS.V3} This instance.
+   */
+  loadTranslation: function (m) {
+    var v = this.v;
+    m = m.m;
+    v[0] = m[3];
+    v[1] = m[7];
+    v[2] = m[11];
+    return this;
   },
 
   /**

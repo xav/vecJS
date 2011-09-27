@@ -42,6 +42,10 @@ var v3_tests = {
     mequal(v2.v, [1, 2, 3], 'clone values');
   },
 
+  'loadTranslation': function () {
+    //TODO: loadTranslation
+  },
+
   'add': function () {
     var v1 = new vecJS.V3([10, 20, 30]), v1b,
       v2 = new vecJS.V3([1, 2, 3]);
