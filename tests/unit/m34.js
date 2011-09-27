@@ -351,7 +351,24 @@ var m34_tests = {
   },
 
   'setScale': function () {
-    //TODO: setScale
+    var m1 = new vecJS.M34([
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ]), m1b,
+    v1 = new vecJS.V3([10, 20, 30]),
+    v2 = v1.clone();
+
+    m1b = m1.setScale(v1.v);
+
+    equal(m1, m1b, 'setScale return this');
+    mequal(v1.v, v2.v, 'setScale does not modify parameter');
+
+    mfequal(m1.m, [
+      10,  0,  0, 0,
+       0, 20,  0, 0,
+       0,  0, 30, 0
+    ], 'setScale values');
   },
 
   'setRotate': function () {
