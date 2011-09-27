@@ -351,27 +351,24 @@ vecJS.M34 = function M34(arr) {
           vx = arr[0], vy = arr[1], vz = arr[2],
           s = Math.sin(theta), c = Math.cos(theta),
           t = 1 - c,
-          a00 = m[0], a01 = m[1], a02 = m[2],  a03 = m[3],
-          a10 = m[4], a11 = m[5], a12 = m[6],  a13 = m[7],
-          a20 = m[8], a21 = m[9], a22 = m[10], a23 = m[11],
-          b00 = vx*vx*t + c,    b01 = vy*vx*t + vz*s, b02 = vz*vx*t - vy*s,
-          b10 = vx*vy*t - vz*s, b11 = vy*vy*t + c,    b12 = vz*vy*t + vx*s,
-          b20 = vx*vz*t + vy*s, b21 = vy*vz*t - vx*s, b22 = vz*vz*t + c;
+          a00 = m[0], a01 = m[1], a02 = m[2],
+          a10 = m[4], a11 = m[5], a12 = m[6],
+          a20 = m[8], a21 = m[9], a22 = m[10],
+          b00  = c + vx*vx*t,     b01  = vx*vy*t - vz*s,  b02  = vx*vz*t + vy*s,
+          b10  = vx*vy*t + vz*s,  b11  = c + vy*vy*t,     b12  = vy*vz*t - vx*s,
+          b20  = vx*vz*t - vy*s,  b21  = vy*vx*t + vx*s,  b22 = c + vz*vz*t;
 
-      m[0]  = a00*b00 + a10*b01 + a20*b02;
-      m[1]  = a01*b00 + a11*b01 + a21*b02;
-      m[2]  = a02*b00 + a12*b01 + a22*b02;
-      m[3]  = a03*b00 + a13*b01 + a23*b02;
+      m[0]  = a00*b00 + a01*b10 + a02*b20;
+      m[1]  = a00*b01 + a01*b11 + a02*b21;
+      m[2]  = a00*b02 + a01*b12 + a02*b22;
 
-      m[4]  = a00*b10 + a10*b11 + a20*b12;
-      m[5]  = a01*b10 + a11*b11 + a21*b12;
-      m[6]  = a02*b10 + a12*b11 + a22*b12;
-      m[7]  = a03*b10 + a13*b11 + a23*b12;
+      m[4]  = a10*b00 + a11*b10 + a12*b20;
+      m[5]  = a10*b01 + a11*b11 + a12*b21;
+      m[6]  = a10*b02 + a11*b12 + a12*b22;
 
-      m[8]  = a00*b20 + a10*b21 + a20*b22;
-      m[9]  = a01*b20 + a11*b21 + a21*b22;
-      m[10] = a02*b20 + a12*b21 + a22*b22;
-      m[11] = a03*b20 + a13*b21 + a23*b22;
+      m[8]  = a20*b00 + a21*b10 + a22*b20;
+      m[9]  = a20*b01 + a21*b11 + a22*b21;
+      m[10] = a20*b02 + a21*b12 + a22*b22;
 
       return this;
     },

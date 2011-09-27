@@ -248,7 +248,24 @@ var m34_tests = {
   },
 
   'rotate': function () {
-    //TODO: rotate
+    var m1 = new vecJS.M34([
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ]), m1b,
+    v1 = new vecJS.V3([1, 1, 1]).normalize(),
+    v2 = v1.clone();
+
+    m1b = m1.rotate(120*(Math.PI/180), v1.v);
+
+    equal(m1, m1b, 'rotate return this');
+    mequal(v1.v, v2.v, 'rotate does not modify parameter');
+
+    mfequal(m1.m, [
+       2,  3, 1,  4,
+       6,  7, 5,  8,
+      10, 11, 9, 12
+    ], 'rotate values');
   },
 
   'rotateX': function () {
