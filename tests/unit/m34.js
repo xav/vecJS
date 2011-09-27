@@ -323,7 +323,31 @@ var m34_tests = {
   },
 
   'setTranslate': function () {
-    //TODO: setTranslate
+    var m1 = new vecJS.M34([
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ]), m1b,
+    v1 = new vecJS.V3([10, 20, 30]),
+    v2 = v1.clone();
+
+    m1b = m1.setTranslate(v1.v);
+
+    equal(m1, m1b, 'setTranslate return this');
+    mequal(v1.v, v2.v, 'setTranslate does not modify parameter');
+
+    mfequal(m1.m, [
+      1,  2,  3, 10,
+      5,  6,  7, 20,
+      9, 10, 11, 30
+    ], 'setTranslate values (no overwrite)');
+
+    m1b = m1.setTranslate([40, 50, 60], true);
+    mfequal(m1.m, [
+      1, 0, 0, 40,
+      0, 1, 0, 50,
+      0, 0, 1, 60
+    ], 'setTranslate values (overwrite)');
   },
 
   'setScale': function () {

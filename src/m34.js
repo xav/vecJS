@@ -450,15 +450,22 @@ vecJS.M34 = function M34(arr) {
     * Set this matrix to a pure translation matrix.
     *
     * @param {!Array} arr The x,y,z translation values.
+    * @param {Boolean} overwriteRotation Set to <c>true</c> to set the rotation part to an identity matrix
     *
     * @return {!vecJS.M34} This instance.
     */
-    setTranslate: function (arr) {
-      return this.set([
-        1, 0, 0, arr[0],
-        0, 1, 0, arr[1],
-        0, 0, 1, arr[2]
-      ]);
+    setTranslate: function (arr, overwriteRotation) {
+      var m = this.m;
+      m[3]  = arr[0];
+      m[7]  = arr[1];
+      m[11] = arr[2];
+
+      if (overwriteRotation) {
+        m[0] = m[5] = m[10] = 1;
+        m[1] = m[2] = m[4] = m[6] = m[8] = m[9] = 0;
+      }
+
+      return this;
     },
     /**
     * Set this matrix to a pure scaling matrix.
