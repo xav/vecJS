@@ -3,17 +3,56 @@
 <head>
   <title>Math libraries benchmark</title>
   <style>
-    th {
-      padding: 0 10px 0 0;
+    body {
+      background: #fff;
+      color: #222;
+      font: 12px/20px 'Helvetica Neue', Arial, sans-serif;
+      margin: 0;
+      padding: 0;
     }
-    td {
-      padding: 0 10px 0 0;
+    ul {
+      list-style:none;
+      padding:0;
+      margin:0 0 10px 0;
+    }
+    h2 {
+      font-size: 18px;
+      font-weight: normal;
+      line-height: 20px;
+      margin: 20px 0;
+      padding: 0;
+    }
+    #test_selector {
+      margin-bottom:20px;
+      padding:0 20px;
+    }
+    #log {
+      padding:0 20px;
+      border-top:1px solid #ccc;
+    }
+    #log table {
+      width:600px;
+      border: none;
+      border-top: 1px solid #ccc;
+      border-left: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+    }
+    #log thead {
+      background: #f0f0f0;
+    }
+    #log th,
+    #log td {
+      border: none;
+      border-bottom: 1px solid #ccc;
+      margin: 0;
+      padding: 10px;
+      text-align: left;
     }
   </style>
 </head>
 <body>
-  <form>
-    <h2>Select which tests you want to run</h2>
+  <form id="test_selector">
+    <h2>Select which tests to run</h2>
     <ul>
       <li><input type="checkbox" id="run_multiplication"        checked name="run_multiplication"><label for="run_multiplication">Multiplication</label> </li>
       <li><input type="checkbox" id="run_translation"           checked name="run_translation"><label for="run_translation">Translation</label> </li>
@@ -34,7 +73,7 @@
 
   <script id="entry-template" type="text/x-handlebars-template">
     <h2>{{title}}</h2>
-    <table>
+    <table border="1" cellpadding="10" cellspacing="0" >
       <thead>
         <tr>
           <th></th>
