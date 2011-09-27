@@ -269,15 +269,57 @@ var m34_tests = {
   },
 
   'rotateX': function () {
-    //TODO: rotateX
+    var m1 = new vecJS.M34([
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ]), m1b;
+
+    m1b = m1.rotateX(90*(Math.PI/180));
+
+    equal(m1, m1b, 'rotateX return this');
+
+    mfequal(m1.m, [
+      1,  3,  -2, 4.000,
+      5,  7,  -6, 8.000,
+      9, 11, -10, 12.000
+    ], 'rotateX values');
   },
 
   'rotateY': function () {
-    //TODO: rotateY
+    var m1 = new vecJS.M34([
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ]), m1b;
+
+    m1b = m1.rotateY(90*(Math.PI/180));
+
+    equal(m1, m1b, 'rotateY return this');
+
+    mfequal(m1.m, [
+       -3,  2, 1,  4.000,
+       -7,  6, 5,  8.000,
+      -11, 10, 9, 12.000
+    ], 'rotateY values');
   },
 
   'rotateZ': function () {
-    //TODO: rotateZ
+    var m1 = new vecJS.M34([
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ]), m1b;
+
+    m1b = m1.rotateZ(90*(Math.PI/180));
+
+    equal(m1, m1b, 'rotateZ return this');
+
+    mfequal(m1.m, [
+       2, -1,  3, 4.000,
+       6, -5,  7, 8.000,
+      10, -9, 11, 12.000
+    ], 'rotateZ values');
   },
 
   'setTranslate': function () {
