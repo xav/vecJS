@@ -228,7 +228,7 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  mulM34: function (m) {
+  mulM: function (m) {
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2];
 
@@ -246,7 +246,7 @@ vecJS.V3.prototype = {
    *
   * @return {!vecJS.V3} This instance.
    */
-  mulQuat: function (q) {
+  mulQ: function (q) {
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2],
         qx = q[0], qy = q[1], qz = q[2], qw = q[3],

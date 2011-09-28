@@ -151,7 +151,7 @@ var v3_tests = {
     mequal(v1.v, [1, 2, 3], 'divScalar values');
   },
 
-  'mulM34': function () {
+  'mulM': function () {
     var m1 = new vecJS.M34([
       1,  2,  3,  4,
       5,  6,  7,  8,
@@ -159,27 +159,27 @@ var v3_tests = {
     ]),
     v1 = new vecJS.V3([1, 2, 3]), v1b;
 
-    v1b = v1.mulM34(m1.m);
+    v1b = v1.mulM(m1.m);
 
-    equal(v1, v1b, 'mulM34 return this');
+    equal(v1, v1b, 'mulM return this');
     mequal(m1.m, [
       1,  2,  3,  4,
       5,  6,  7,  8,
       9, 10, 11, 12
-    ], 'mulM34 does not change parameter')
-    mequal(v1.v, [18, 46, 74], 'mulM34 values');
+    ], 'mulM does not change parameter')
+    mequal(v1.v, [18, 46, 74], 'mulM values');
   },
 
-  'mulQuat': function () {
+  'mulQ': function () {
     var q1 = new vecJS.Q().fromEuler([90*(Math.PI/180), 0, 0]),
         q2 = q1.clone(),
         v1 = new vecJS.V3([1, 2, 3]), v1b;
 
-    v1b = v1.mulQuat(q1.q);
+    v1b = v1.mulQ(q1.q);
 
-    equal(v1, v1b, 'mulQuat return this');
-    mequal(q1.q, q2.q, 'mulQuat does not modify parameter');
-    mfequal(v1.v, [1, -3, 2], 'mulQuat with 90deg around X');
+    equal(v1, v1b, 'mulQ return this');
+    mequal(q1.q, q2.q, 'mulQ does not modify parameter');
+    mfequal(v1.v, [1, -3, 2], 'mulQ with 90deg around X');
   },
 
   'cross': function () {
