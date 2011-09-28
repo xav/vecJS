@@ -568,21 +568,22 @@ vecJS.M34 = function M34(arr) {
     * Create a look-at rotation matrix with the given eye position, focal point, and up axis and assign it to this instance.
     *
     * @param {!vecJS.V3} eye Position of the viewer
-    * @param {!vecJS.V3} center Point the viewer is looking at
+    * @param {!vecJS.V3} target Point the viewer is looking at
     * @param {!vecJS.V3} up Pointing "up"
     *
     * @return {!vecJS.M34} This instance.
     */
-    lookAt: function (eye, center, up) {
+    lookAt: function (eye, target, up) {
       var m = this.m;
 
-      _vz.copy(eye).sub(center).normalize();
-      _vx.copy(up).cross(_vz).normalize();
-      _vy.copy(_vz).cross(_vx).normalize();
+      _vz.set(eye.v).sub(target).normalize();
+      _vx.set(up.v).cross(_vz).normalize();
+      _vy.set(_vz.v).cross(_vx).normalize();
       
       m[0] = _vx.x; m[1] = _vx.y; m[2] = _vx.z; m[3]  = -_vx.dot(eye);
       m[4] = _vy.x; m[5] = _vy.y; m[6] = _vy.z; m[7]  = -_vy.dot(eye);
       m[8] = _vz.x; m[9] = _vz.y; m[9] = _vz.z; m[10] = -_vz.dot(eye);
+      
       return this;
     },
 
