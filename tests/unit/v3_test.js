@@ -43,7 +43,22 @@ var v3_tests = {
   },
 
   'loadTranslation': function () {
-    //TODO: loadTranslation
+    var v1 = new vecJS.V3(), v1b,
+        m1 = new vecJS.M34([
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ]);
+
+    v1b = v1.loadTranslation(m1.m);
+
+    equal(v1, v1b, 'loadTranslation return this');
+    mequal(m1.m, [
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ], 'loadTranslation does not modify object');
+    mequal(v1.v, [4, 8, 12], 'loadTranslation values');
   },
 
   'loadScale': function() {
@@ -55,7 +70,7 @@ var v3_tests = {
       v2 = new vecJS.V3([1, 2, 3]);
 
     v1b = v1.add(v2.v);
-    notEqual(v1, v2, 'add does not overwrite object');
+    notEqual(v1, v2, 'add does not overwrite object'); //TODO: Replace this pattern with v1.v and v2.v on all files
     equal(v1, v1b, 'add return this');
 
     mequal(v1.v, [11, 22, 33], 'add values');
@@ -137,11 +152,42 @@ var v3_tests = {
   },
 
   'mulM34': function () {
-    //TODO: mulM34
+    var m1 = new vecJS.M34([
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ]),
+    v1 = new vecJS.V3([1, 2, 3]), v1b;
+
+    v1b = v1.mulM34(m1.m);
+
+    equal(v1, v1b, 'mulM34 return this');
+    mequal(m1.m, [
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ], 'mulM34 does not change parameter')
+    mequal(v1.v, [18, 46, 74], 'mulM34 values');
   },
 
   'mulM44': function () {
-    //TODO: mulM44
+    var m1 = new vecJS.M44([
+       1,  2,  3,  4,
+       5,  6,  7,  8,
+       9, 10, 11, 12,
+      13, 14, 15, 16
+    ]),
+    v1 = new vecJS.V3([1, 2, 3]), v1b;
+
+    v1b = v1.mulM34(m1.m);
+
+    equal(v1, v1b, 'mulM34 return this');
+    mequal(m1.m, [
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ], 'mulM34 does not change parameter')
+    mequal(v1.v, [18, 46, 74], 'mulM34 values');
   },
 
   'mulQuat': function () {
