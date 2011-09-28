@@ -235,7 +235,7 @@ vecJS.V3.prototype = {
     v[0] = vx*m[0] + vy*m[1] + vz*m[2]  + m[3];
     v[1] = vx*m[4] + vy*m[5] + vz*m[6]  + m[7];
     v[2] = vx*m[8] + vy*m[9] + vz*m[10] + m[11];
-    
+
     return this;
   },
   /**
@@ -275,9 +275,9 @@ vecJS.V3.prototype = {
         iw = -qx*vx - qy*vy - qz*vz;
 
     // result * inverse quat
-    v[0] = ix*qw + iw*-qx + iy*-qz - iz*-qy;
-    v[1] = iy*qw + iw*-qy + iz*-qx - ix*-qz;
-    v[2] = iz*qw + iw*-qz + ix*-qy - iy*-qx;
+    v[0] = ix*qw - iw*qx - iy*qz + iz*qy;
+    v[1] = iy*qw - iw*qy - iz*qx + ix*qz;
+    v[2] = iz*qw - iw*qz - ix*qy + iy*qx;
 
     return this;
   },
@@ -420,7 +420,7 @@ vecJS.V3.prototype = {
 
   /**
    * Check if this instance is a unit-length vector.
-   * 
+   *
    * Should be a bit faster than checking if length == 1, since there is no square root.
    * vecJC Precision (@PRECISION) is used, so the vector length does not have to be exactly 1,
    * but something close enough.
