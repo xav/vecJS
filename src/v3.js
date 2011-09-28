@@ -238,23 +238,6 @@ vecJS.V3.prototype = {
 
     return this;
   },
-  /**
-  * Multiply the specified matrix with this vector and assign the result to this instance.
-  *
-  * @param {!Array.<Number>} m The matrix to multiply ({@link vecJS.M44#m}).
-  *
-  * @return {!vecJS.V3} This instance.
-  */
-  mulM44: function (m) {
-    var v = this.v,
-        vx = v[0], vy = v[1], vz = v[2],
-        d = 1 / (m[12] * vx + m[13] * vy + m[14] * vz + m[15]);
-
-    v[0] = (vx*m[0] + vy*m[1] + vz*m[2]  + m[3] ) * d;
-    v[1] = (vx*m[4] + vy*m[5] + vz*m[6]  + m[7] ) * d;
-    v[2] = (vx*m[8] + vy*m[9] + vz*m[10] + m[11]) * d;
-    return this;
-  },
 
   /**
    * Multiply the specified quaternion with this vector and assign the result to this instance.

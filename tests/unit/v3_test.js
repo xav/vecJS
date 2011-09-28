@@ -170,26 +170,6 @@ var v3_tests = {
     mequal(v1.v, [18, 46, 74], 'mulM34 values');
   },
 
-  'mulM44': function () {
-    var m1 = new vecJS.M44([
-       1,  2,  3,  4,
-       5,  6,  7,  8,
-       9, 10, 11, 12,
-      13, 14, 15, 16
-    ]),
-    v1 = new vecJS.V3([1, 2, 3]), v1b;
-
-    v1b = v1.mulM34(m1.m);
-
-    equal(v1, v1b, 'mulM34 return this');
-    mequal(m1.m, [
-      1,  2,  3,  4,
-      5,  6,  7,  8,
-      9, 10, 11, 12
-    ], 'mulM34 does not change parameter')
-    mequal(v1.v, [18, 46, 74], 'mulM34 values');
-  },
-
   'mulQuat': function () {
     var q1 = new vecJS.Q().fromEuler([90*(Math.PI/180), 0, 0]),
         q2 = q1.clone(),
