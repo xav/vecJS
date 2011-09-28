@@ -5,22 +5,46 @@ var m34_tests = {
     var m1 = new vecJS.M34();
     ok(m1, 'M34 constructor');
 
-    mequal(m1.m, [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 'empty constructor');
+    mequal(m1.m, [
+      0, 0, 0, 0,
+      0, 0, 0, 0,
+      0, 0, 0, 0
+    ], 'empty constructor');
 
-    var m2 = new vecJS.M34([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
-    mequal(m2.m, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 'values in constructor');
+    var m2 = new vecJS.M34([
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ]);
+    mequal(m2.m, [
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ], 'values in constructor');
   },
 
   'set': function () {
     var m1 = new vecJS.M34(), m1b;
-    m1b = m1.set([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]);
+    m1b = m1.set([
+      1, 2, 3, 4,
+      5, 6, 7, 8,
+      9, 10, 11, 12
+    ]);
 
     equal(m1, m1b, 'set return this');
-    mequal(m1.m, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 'set values');
+    mequal(m1.m, [
+      1, 2, 3, 4,
+      5, 6, 7, 8,
+      9, 10, 11, 12
+    ], 'set values');
   },
 
   'copyTo': function () {
-    var m1 = new vecJS.M34([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]), m1b,
+    var m1 = new vecJS.M34([
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ]), m1b,
         m2 = new vecJS.M34();
 
     m1b = m1.copyTo(m2);
@@ -28,19 +52,39 @@ var m34_tests = {
     notEqual(m1, m2, 'copyTo does not overwrite object');
     equal(m1, m1b, 'copyTo return this');
 
-    mequal(m1.m, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 'copy does not modify self');
-    mequal(m2.m, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 'copyTo values');
+    mequal(m1.m, [
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ], 'copy does not modify self');
+    mequal(m2.m, [
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ], 'copyTo values');
   },
 
   'clone': function () {
-    var m1 = new vecJS.M34([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]),
+    var m1 = new vecJS.M34([
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ]),
       m2 = m1.clone();
 
     notEqual(m1, m2, 'clone does not return this');
     notEqual(m1.m, m2.m, 'clone does not return the same object');
 
-    mequal(m1.m, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 'clone does not modify object');
-    mequal(m2.m, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], 'clone values');
+    mequal(m1.m, [
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ], 'clone does not modify object');
+    mequal(m2.m, [
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ], 'clone values');
   },
 
   'fromQuat': function () {
