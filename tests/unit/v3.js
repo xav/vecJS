@@ -22,7 +22,7 @@ var v3_tests = {
     var v1 = new vecJS.V3([1, 2, 3]), v1b,
       v2 = new vecJS.V3();
 
-    v1b = v1.copyTo(v2);
+    v1b = v1.copyTo(v2.v);
 
     notEqual(v1, v2, 'copyTo does not overwrite object');
     equal(v1, v1b, 'copyTo return this');
@@ -54,7 +54,7 @@ var v3_tests = {
     var v1 = new vecJS.V3([10, 20, 30]), v1b,
       v2 = new vecJS.V3([1, 2, 3]);
 
-    v1b = v1.add(v2);
+    v1b = v1.add(v2.v);
     notEqual(v1, v2, 'add does not overwrite object');
     equal(v1, v1b, 'add return this');
 
@@ -67,7 +67,7 @@ var v3_tests = {
       v2 = new vecJS.V3([10, 20, 30]),
       v3 = new vecJS.V3([1, 2, 3]);
 
-    v1b = v1.assignAdd(v2, v3);
+    v1b = v1.assignAdd(v2.v, v3.v);
     notEqual(v1, v2, 'assignAdd does not overwrite object');
     notEqual(v1, v3, 'assignAdd does not overwrite object');
     equal(v1, v1b, 'assignAdd return this');
@@ -81,7 +81,7 @@ var v3_tests = {
     var v1 = new vecJS.V3([10, 20, 30]), v1b,
       v2 = new vecJS.V3([1, 2, 3]);
 
-    v1b = v1.sub(v2);
+    v1b = v1.sub(v2.v);
     notEqual(v1, v2, 'sub does not overwrite object');
     equal(v1, v1b, 'sub return this');
 
@@ -94,7 +94,7 @@ var v3_tests = {
       v2 = new vecJS.V3([10, 20, 30]),
       v3 = new vecJS.V3([1, 2, 3]);
 
-    v1b = v1.assignSub(v2, v3);
+    v1b = v1.assignSub(v2.v, v3.v);
     notEqual(v1, v2, 'assignSub does not overwrite object');
     notEqual(v1, v3, 'assignSub does not overwrite object');
     equal(v1, v1b, 'assignSub return this');
@@ -149,7 +149,7 @@ var v3_tests = {
         q2 = q1.clone(),
         v1 = new vecJS.V3([1, 2, 3]), v1b;
 
-    v1b = v1.mulQuat(q1);
+    v1b = v1.mulQuat(q1.q);
 
     equal(v1, v1b, 'mulQuat return this');
     mequal(q1.q, q2.q, 'mulQuat does not modify parameter');
@@ -160,7 +160,7 @@ var v3_tests = {
     var v1 = new vecJS.V3([1, 2, 3]), v1b,
       v2 = new vecJS.V3([3, 2, 1]);
 
-    v1b = v1.cross(v2);
+    v1b = v1.cross(v2.v);
     notEqual(v1, v2, 'cross does not overwrite object');
     equal(v1, v1b, 'cross return this');
 
@@ -173,7 +173,7 @@ var v3_tests = {
       v2 = new vecJS.V3([1, 2, 3]),
       v3 = new vecJS.V3([3, 2, 1]);
 
-    v1b = v1.assignCross(v2, v3);
+    v1b = v1.assignCross(v2.v, v3.v);
     notEqual(v1, v2, 'assignCross does not overwrite object 1');
     notEqual(v1, v3, 'assignCross does not overwrite object 2');
     equal(v1, v1b, 'assignCross return this');
@@ -198,7 +198,7 @@ var v3_tests = {
       v2 = new vecJS.V3([10, 100, 1000]),
       v3 = new vecJS.V3([20, 200, 2000]);
 
-    v1b = v1.lerp(v2, v3, 0.5);
+    v1b = v1.lerp(v2.v, v3.v, 0.5);
     notEqual(v1, v2, 'lerp does not overwrite object');
     notEqual(v1, v3, 'lerp does not overwrite object');
     equal(v1, v1b, 'lerp return this');
@@ -236,7 +236,7 @@ var v3_tests = {
     var v1 = new vecJS.V3([10, 11, 12]),
       v2 = new vecJS.V3([20, 21, 22]);
 
-    equal(v1.distance(v2), Math.sqrt(300), 'distance between vectors');
+    equal(v1.distance(v2.v), Math.sqrt(300), 'distance between vectors');
 
     mequal(v1.v, [10, 11, 12], 'distance does not modify object');
     mequal(v2.v, [20, 21, 22], 'distance does not modify parameter');
@@ -246,7 +246,7 @@ var v3_tests = {
     var v1 = new vecJS.V3([10, 11, 12]),
       v2 = new vecJS.V3([20, 21, 22]);
 
-    equal(v1.squaredDistance(v2), 300, 'squared distance between vectors');
+    equal(v1.squaredDistance(v2.v), 300, 'squared distance between vectors');
 
     mequal(v1.v, [10, 11, 12], 'squaredDistance does not modify object');
     mequal(v2.v, [20, 21, 22], 'squaredDistance does not modify parameter');

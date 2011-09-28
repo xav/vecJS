@@ -34,18 +34,18 @@
 *
 * @class An affine 4x4 matrix stored as a 3x4 matrix
 *
-* @param {Array=} arr Array containing values to initialize with.
+* @param {Array.<Number>=} m Array containing values to initialize with.
 *
 * @property {GLMatrixArray} m the matrix values.
 *
 * @constructor
 */
-vecJS.M34 = function M34(arr) {
-  var m = this.m = new GLMatrixArray(12);
-  if (arr) {
-    m[0]  = arr[0];  m[1]  = arr[1];  m[2]  = arr[2] ; m[3]  = arr[3];
-    m[4]  = arr[4];  m[5]  = arr[5];  m[6]  = arr[6] ; m[7]  = arr[7];
-    m[8]  = arr[8];  m[9]  = arr[9];  m[10] = arr[10]; m[11] = arr[11];
+vecJS.M34 = function M34(m) {
+  var a = this.m = new GLMatrixArray(12);
+  if (m) {
+    a[0]  = m[0];  a[1]  = m[1];  a[2]  = m[2] ; a[3]  = m[3];
+    a[4]  = m[4];  a[5]  = m[5];  a[6]  = m[6] ; a[7]  = m[7];
+    a[8]  = m[8];  a[9]  = m[9];  a[10] = m[10]; a[11] = m[11];
   }
 };
 
@@ -60,21 +60,21 @@ vecJS.M34 = function M34(arr) {
     /**
     * Set the current instance values.
     *
-    * @param {!Array} arr The new values.
+    * @param {!Array.<Number>} m The new values ({@link vecJS.M34#m}).
     *
     * @return {!vecJS.M34} This instance.
     */
-    set: function (arr) {
-      var m = this.m;
-      m[0]  = arr[0];  m[1]  = arr[1];  m[2]  = arr[2] ; m[3]  = arr[3];
-      m[4]  = arr[4];  m[5]  = arr[5];  m[6]  = arr[6] ; m[7]  = arr[7];
-      m[8]  = arr[8];  m[9]  = arr[9];  m[10] = arr[10]; m[11] = arr[11];
+    set: function (m) {
+      var a = this.m;
+      a[0]  = m[0];  a[1]  = m[1];  a[2]  = m[2] ; a[3]  = m[3];
+      a[4]  = m[4];  a[5]  = m[5];  a[6]  = m[6] ; a[7]  = m[7];
+      a[8]  = m[8];  a[9]  = m[9];  a[10] = m[10]; a[11] = m[11];
       return this;
     },
     /**
     * Copy this matrix instance to the specified one.
     *
-    * @param {!vecJS.M34} m The target matrix.
+    * @param {!Array.<Number>} m The target matrix ({@link vecJS.M34#m}).
     *
     * @return {!vecJS.M34} This instance.
     */
@@ -100,7 +100,7 @@ vecJS.M34 = function M34(arr) {
     /**
      * Set the matrix values from the specified quaternion.
      *
-     * @param {!vecJS.Q} q The source quaternion (assumed to be unit).
+     * @param {!Array.<Number>} q The source quaternion (assumed to be unit) ({@link vecJS.Q#q}).
      *
     * @return {!vecJS.M34} This instance.
      */
@@ -148,7 +148,7 @@ vecJS.M34 = function M34(arr) {
     /**
     * Multiply this matrix with the specified one and assign the result to this instance.
     *
-    * @param {!(vecJS.M34|vecJS.M44)} m The matrix to multiply with this instance.
+    * @param {!Array.<Number>} m The matrix to multiply with this instance ({@link vecJS.M34#m}).
     *
     * @return {!vecJS.M34} This instance.
     */
@@ -183,8 +183,8 @@ vecJS.M34 = function M34(arr) {
     /**
     * Multiply a and b and assign the result to this instance.
     *
-    * @param {!vecJS.M34} a The first term of the multiplication.
-    * @param {!vecJS.M34} b The second term of the multiplication.
+    * @param {!Array.<Number>} a The first term of the multiplication ({@link vecJS.M34#m}).
+    * @param {!Array.<Number>} b The second term of the multiplication ({@link vecJS.M34#m}).
     *
     * @return {!vecJS.M34} This instance.
     */
@@ -293,15 +293,15 @@ vecJS.M34 = function M34(arr) {
     *
     * This is equivalent to multiplying this matrix with a pure translation matrix.
     *
-    * @param {!Array} arr The x,y,z translation values.
+    * @param {!Array.<Number>} v The x,y,z translation values ({@link vecJS.V3#v}).
     *
     * @return {!vecJS.M34} This instance.
     */
-    translate: function (arr) {
+    translate: function (v) {
       var m = this.m,
-          dx = arr[0],
-          dy = arr[1],
-          dz = arr[2];
+          dx = v[0],
+          dy = v[1],
+          dz = v[2];
       m[3]  = m[0]*dx + m[1]*dy + m[2] *dz + m[3];
       m[7]  = m[4]*dx + m[5]*dy + m[6] *dz + m[7];
       m[11] = m[8]*dx + m[9]*dy + m[10]*dz + m[11];
@@ -312,15 +312,15 @@ vecJS.M34 = function M34(arr) {
     *
     * This is equivalent to multiplying this matrix with a pure scaling matrix.
     *
-    * @param {number} arr The x,y,z scaling factors.
+    * @param {number} v The x,y,z scaling factors ({@link vecJS.V3#v}).
     *
     * @return {!vecJS.M34} This instance.
     */
-    scale: function (arr) {
+    scale: function (v) {
       var m = this.m,
-          sx = arr[0],
-          sy = arr[1],
-          sz = arr[2];
+          sx = v[0],
+          sy = v[1],
+          sz = v[2];
       
       m[0]  *= sx;
       m[1]  *= sy;
@@ -342,13 +342,13 @@ vecJS.M34 = function M34(arr) {
      * functions should be used instead for better performances.
      * 
      * @param {number} theta The rotation angle in radians.
-     * @param {!Array} arr The axis to rotate around (should be a unit vector)
+     * @param {!Array.<Number>} v The axis to rotate around (assumed to be unit) ({@link vecJS.V3#v}).
      *
      * @return {!vecJS.M34} This instance.
      */
-    rotate: function (theta, arr) {
+    rotate: function (theta, v) {
       var m = this.m,
-          vx = arr[0], vy = arr[1], vz = arr[2],
+          vx = v[0], vy = v[1], vz = v[2],
           s = Math.sin(theta), c = Math.cos(theta),
           t = 1 - c,
           a00 = m[0], a01 = m[1], a02 = m[2],
@@ -449,16 +449,16 @@ vecJS.M34 = function M34(arr) {
     /**
     * Set this matrix to a pure translation matrix.
     *
-    * @param {!Array} arr The x,y,z translation values.
+    * @param {!Array.<Number>} v The x,y,z translation values ({@link vecJS.V3#v}).
     * @param {Boolean} overwriteRotation Set to <c>true</c> to set the rotation part to an identity matrix
     *
     * @return {!vecJS.M34} This instance.
     */
-    setTranslate: function (arr, overwriteRotation) {
+    setTranslate: function (v, overwriteRotation) {
       var m = this.m;
-      m[3]  = arr[0];
-      m[7]  = arr[1];
-      m[11] = arr[2];
+      m[3]  = v[0];
+      m[7]  = v[1];
+      m[11] = v[2];
 
       if (overwriteRotation) {
         m[0] = m[5] = m[10] = 1;
@@ -470,15 +470,15 @@ vecJS.M34 = function M34(arr) {
     /**
     * Set this matrix to a pure scaling matrix.
     *
-    * @param {!Array} arr The x,y,z scaling factors.
+    * @param {!Array.<Number>} v The x,y,z scaling factors ({@link vecJS.V3#v}).
     *
     * @return {!vecJS.M34} This instance.
     */
-    setScale: function (arr) {
+    setScale: function (v) {
       return this.set([
-        arr[0], 0,      0,      0,
-        0,      arr[1], 0,      0,
-        0,      0,      arr[2], 0
+        v[0], 0,    0,    0,
+        0,    v[1], 0,    0,
+        0,    0,    v[2], 0
       ]);
     },
     /**
@@ -487,14 +487,14 @@ vecJS.M34 = function M34(arr) {
      * functions should be used instead for performance
      *
      * @param {number} theta The rotation angle in radians.
-     * @param {!Array} arr The axis to rotate around (assumed to be a unit vector)
+     * @param {!Array.<Number>} v The axis to rotate around (assumed to be unit) ({@link vecJS.V3#v}).
      *
      * @return {!vecJS.M34} This instance.
      */
-    setRotate: function (theta, arr) {
+    setRotate: function (theta, v) {
       // From http://en.wikipedia.org/wiki/Rotation_matrix#Rotation_matrix_from_axis_and_angle
       var m = this.m,
-          vx = arr[0], vy = arr[1], vz = arr[2],
+          vx = v[0], vy = v[1], vz = v[2],
           s = Math.sin(theta), c = Math.cos(theta),
           t = 1 - c;
 
@@ -567,9 +567,9 @@ vecJS.M34 = function M34(arr) {
     /**
     * Create a look-at rotation matrix with the given eye position, focal point, and up axis and assign it to this instance.
     *
-    * @param {!vecJS.V3} eye Position of the viewer
-    * @param {!vecJS.V3} target Point the viewer is looking at
-    * @param {!vecJS.V3} up Pointing "up"
+    * @param {!Array.<Number>} eye Position of the viewer ({@link vecJS.V3#v}).
+    * @param {!Array.<Number>} target Point the viewer is looking at ({@link vecJS.V3#v}).
+    * @param {!Array.<Number>} up Direction of the "up" vector. ({@link vecJS.V3#v}).
     *
     * @return {!vecJS.M34} This instance.
     */
@@ -587,6 +587,9 @@ vecJS.M34 = function M34(arr) {
       return this;
     },
 
+    /**
+     * Return a string representation of the current instance.
+     */
     toString: function () {
       var m = this.m;
       return 'M34\n' +

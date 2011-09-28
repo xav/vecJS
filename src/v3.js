@@ -18,18 +18,18 @@
 /**
 * @class A 3 dimensional vector.
 *
-* @param {Array=} arr Array containing values to initialize with.
+* @param {Array.<Number>=} v The [x,y,z] values to initialize with.
 *
-* @property {GLMatrixArray} v the vector values.
+* @property {GLMatrixArray} v the vector [x,y,z] values.
 *
 * @constructor
 */
-vecJS.V3 = function V3(arr) {
-  var v = this.v = new GLMatrixArray(3);
-  if (arr) {
-    v[0] = arr[0];
-    v[1] = arr[1];
-    v[2] = arr[2];
+vecJS.V3 = function V3(v) {
+  var a = this.v = new GLMatrixArray(3);
+  if (v) {
+    a[0] = v[0];
+    a[1] = v[1];
+    a[2] = v[2];
   }
 };
 
@@ -39,26 +39,25 @@ vecJS.V3.prototype = {
   /**
   * Set the current instance values.
   *
-  * @param {!Array} arr The new values
+  * @param {!Array.<Number>} v The new values
   *
   * @return {!vecJS.V3} This instance.
   */
-  set: function (arr) {
-    var v = this.v;
-    v[0] = arr[0];
-    v[1] = arr[1];
-    v[2] = arr[2];
+  set: function (v) {
+    var a = this.v;
+    a[0] = v[0];
+    a[1] = v[1];
+    a[2] = v[2];
     return this;
   },
   /**
   * Copy this vector instance to the specified one.
   *
-  * @param {!vecJS.V3} v The target vector.
+  * @param {!Array.<Number>} v The target vector ({@link vecJS.V3#v}).
   *
   * @return {!vecJS.V3} This instance.
   */
   copyTo: function (v) {
-    v = v.v;
     var a = this.v;
     v[0] = a[0];
     v[1] = a[1];
@@ -77,13 +76,12 @@ vecJS.V3.prototype = {
   /**
    * Load the translation part of the specified matrix into this instance.
    *
-   * @param {!(vecJS.M34|vecJS.M44)} m The matrix containing the translation values.
+   * @param {!Array.<Number>} m The matrix containing the translation values ({@link vecJS.M34#m} or {@link vecJS.M44#m}).
    *
    * @return {!vecJS.V3} This instance.
    */
   loadTranslation: function (m) {
     var v = this.v;
-    m = m.m;
     v[0] = m[3];
     v[1] = m[7];
     v[2] = m[11];
@@ -93,7 +91,7 @@ vecJS.V3.prototype = {
   /**
    * Load the scaling part of the specified matrix into this instance.
    *
-   * @param m {!(vecJS.M34|vecJS.M44)} m The matrix containing the scaling values.
+   * @param m {!Array.<Number>} m The matrix containing the scaling values ({@link vecJS.M34#m} or {@link vecJS.M44#m}).
    *
    * @return {!vecJS.V3} This instance.
    */
@@ -109,12 +107,11 @@ vecJS.V3.prototype = {
   /**
   * Add the specified vector to this one and assign the result to this instance.
   *
-  * @param {!vecJS.V3} v The vector to add to this instance.
+  * @param {!Array.<Number>} v The vector to add to this instance ({@link vecJS.V3#v}).
   *
   * @return {!vecJS.V3} This instance.
   */
   add: function (v) {
-    v = v.v;
     var a = this.v;
     a[0] += v[0];
     a[1] += v[1];
@@ -124,12 +121,11 @@ vecJS.V3.prototype = {
   /**
   * Subtract the specified vector from this one and assign the result to this instance.
   *
-  * @param {!vecJS.V3} v The vector to subtract from this instance.
+  * @param {!Array.<Number>} v The vector to subtract from this instance ({@link vecJS.V3#v}).
   *
   * @return {!vecJS.V3} This instance.
   */
   sub: function (v) {
-    v = v.v;
     var a = this.v;
     a[0] -= v[0];
     a[1] -= v[1];
@@ -140,13 +136,12 @@ vecJS.V3.prototype = {
   /**
   * Add b to a and assign the result to this instance.
   *
-  * @param {!vecJS.V3} a The first term of the addition.
-  * @param {!vecJS.V3} b The second term of the addition.
+  * @param {!Array.<Number>} a The first term of the addition ({@link vecJS.V3#v}).
+  * @param {!Array.<Number>} b The second term of the addition ({@link vecJS.V3#v}).
   *
   * @return {!vecJS.V3} This instance.
   */
   assignAdd: function (a, b) {
-    a = a.v; b = b.v;
     var v = this.v;
     v[0] = a[0] + b[0];
     v[1] = a[1] + b[1];
@@ -156,13 +151,12 @@ vecJS.V3.prototype = {
   /**
   * Subtract b from a and assign the result to this instance.
   *
-  * @param {!vecJS.V3} a The first term of the subtraction.
-  * @param {!vecJS.V3} b The second term of the subtraction.
+  * @param {!Array.<Number>} a The first term of the subtraction ({@link vecJS.V3#v}).
+  * @param {!Array.<Number>} b The second term of the subtraction ({@link vecJS.V3#v}).
   *
   * @return {!vecJS.V3} This instance.
   */
   assignSub: function (a, b) {
-    a = a.v; b = b.v;
     var v = this.v;
     v[0] = a[0] - b[0];
     v[1] = a[1] - b[1];
@@ -230,12 +224,11 @@ vecJS.V3.prototype = {
   /**
   * Multiply the specified matrix with this vector and assign the result to this instance.
   *
-  * @param {!vecJS.M34} m The matrix to multiply.
+  * @param {!Array.<Number>} m The matrix to multiply ({@link vecJS.M34#m}).
   *
   * @return {!vecJS.V3} This instance.
   */
   mulM34: function (m) {
-    m = m.m;
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2];
 
@@ -248,12 +241,11 @@ vecJS.V3.prototype = {
   /**
   * Multiply the specified matrix with this vector and assign the result to this instance.
   *
-  * @param {!vecJS.M44} m The matrix to multiply.
+  * @param {!Array.<Number>} m The matrix to multiply ({@link vecJS.M44#m}).
   *
   * @return {!vecJS.V3} This instance.
   */
   mulM44: function (m) {
-    m = m.m;
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2],
         d = 1 / (m[12] * vx + m[13] * vy + m[14] * vz + m[15]);
@@ -267,12 +259,11 @@ vecJS.V3.prototype = {
   /**
    * Multiply the specified quaternion with this vector and assign the result to this instance.
    *
-   * @param {!vecJS.Q} q The quaternion to multiply.
+   * @param {!Array.<Number>} q The quaternion to multiply ({@link vecJS.Q#q}).
    *
   * @return {!vecJS.V3} This instance.
    */
   mulQuat: function (q) {
-    q = q.q;
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2],
         qx = q[0], qy = q[1], qz = q[2], qw = q[3],
@@ -294,12 +285,11 @@ vecJS.V3.prototype = {
   /**
   * Calculate the cross product of this vector and the specified one and assign the result to this instance.
   *
-  * @param {!vecJS.V3} v The second term of the cross product.
+  * @param {!Array.<Number>} v The second term of the cross product ({@link vecJS.V3#v}).
   *
   * @return {!vecJS.V3} This instance.
   */
   cross: function (v) {
-    v = v.v;
     var a = this.v,
         ax = a[0], ay = a[1], az = a[2],
         bx = v[0], by = v[1], bz = v[2];
@@ -314,13 +304,12 @@ vecJS.V3.prototype = {
   /**
   * Calculate the cross product of the two specified vectors and assign the result to this instance.
   *
-  * @param {!vecJS.V3} a The first term of the cross product.
-  * @param {!vecJS.V3} b The second term of the cross product.
+  * @param {!Array.<Number>} a The first term of the cross product ({@link vecJS.V3#v}).
+  * @param {!Array.<Number>} b The second term of the cross product ({@link vecJS.V3#v}).
   *
   * @return {!vecJS.V3} This instance.
   */
   assignCross: function (a, b) {
-    a = a.v; b = b.v;
     var v = this.v,
         ax = a[0], ay = a[1], az = a[2],
         bx = b[0], by = b[1], bz = b[2];
@@ -335,7 +324,7 @@ vecJS.V3.prototype = {
   /**
   * Calculate the dot product of this vector and the specified one.
   *
-  * @param {!vecJS.V3} v The second term of the dot product.
+  * @param {!Array.<Number>} v The second term of the dot product ({@link vecJS.V3#v}).
   *
   * @return {number} The result of the dot product.
   */
@@ -348,14 +337,13 @@ vecJS.V3.prototype = {
   /**
    * Performs a linear interpolation between a and b and assign the result to this instance.
    *
-   * @param {!vecJS.V3} a The first vector.
-   * @param {!vecJS.V3} b The second vector.
+   * @param {!Array.<Number>} a The first vector ({@link vecJS.V3#v}).
+   * @param {!Array.<Number>} b The second vector ({@link vecJS.V3#v}).
    * @param {number} l The interpolation amount between the two vectors.
    *
    * @return {!vecJS.V3} This instance.
    */
   lerp: function (a, b, l) {
-    a = a.v; b = b.v;
     var v = this.v,
         ax = a[0], ay = a[1], az = a[2];
 
@@ -405,12 +393,11 @@ vecJS.V3.prototype = {
   /**
   * Calculate the distance between the tip of this vector and the tip of the specified one.
   *
-  * @param {!vecJS.V3} v The other vector.
+  * @param {!Array.<Number>} v The other vector ({@link vecJS.V3#v}).
   *
   * @return {number} The distance between the tips of two vectors.
   */
   distance: function (v) {
-    v = v.v;
     var a = this.v,
         dx = a[0] - v[0],
         dy = a[1] - v[1],
@@ -420,12 +407,11 @@ vecJS.V3.prototype = {
   /**
   * Calculate the squared distance between the tip of this vector and the tip of the specified one.
   *
-  * @param {!vecJS.V3} v The other vector.
+  * @param {!Array.<Number>} v The other vector ({@link vecJS.V3#v}).
   *
   * @return {number} The squared distance between the tips of two vectors.
   */
   squaredDistance: function (v) {
-    v = v.v;
     var a = this.v,
         dx = a[0] - v[0],
         dy = a[1] - v[1],
@@ -448,6 +434,9 @@ vecJS.V3.prototype = {
     return Math.abs(1 - (vx*vx + vy*vy + vz*vz)) < @PRECISION;
   },
 
+  /**
+   * Return a string representation of the current instance.
+   */
   toString: function () {
     var v = this.v;
     return 'V3[' + disp_f(v[0]) + ', ' + disp_f(v[1]) + ', ' + disp_f(v[2]) + ']';

@@ -18,19 +18,19 @@
 /**
 * @class A 4 dimensional vector representing a quaternion.
 *
-* @param {Array=} arr Array containing the [x,y,z,w] values to initialize with.
+* @param {Array.<Number>=} q Array containing the [x,y,z,w] values to initialize with.
 *
 * @property {GLMatrixArray} q the quaternion [x,y,z,w] values.
 *
 * @constructor
 */
-vecJS.Q = function Q(arr) {
-  var q = this.q = new GLMatrixArray(4);
-  if (arr) {
-    q[0] = arr[0];
-    q[1] = arr[1];
-    q[2] = arr[2];
-    q[3] = arr[3];
+vecJS.Q = function Q(q) {
+  var a = this.q = new GLMatrixArray(4);
+  if (q) {
+    a[0] = q[0];
+    a[1] = q[1];
+    a[2] = q[2];
+    a[3] = q[3];
   }
 };
 
@@ -41,27 +41,26 @@ vecJS.Q = function Q(arr) {
     /**
     * Set the current instance values.
     *
-     * @param {!Array} arr The new [x,y,z,w] values
+     * @param {!Array} q The new [x,y,z,w] values ({@link vecJS.Q#q}).
     *
     * @return {!vecJS.Q} This instance.
     */
-    set: function (arr) {
-      var q = this.q;
-      q[0] = arr[0];
-      q[1] = arr[1];
-      q[2] = arr[2];
-      q[3] = arr[3];
+    set: function (q) {
+      var a = this.q;
+      a[0] = q[0];
+      a[1] = q[1];
+      a[2] = q[2];
+      a[3] = q[3];
       return this;
     },
     /**
     * Copy this quaternion to the specified one.
     *
-    * @param {!vecJS.Q} q The target quaternion.
+    * @param {!Array.<Number>} q The target quaternion ({@link vecJS.Q#q}).
     *
     * @return {!vecJS.Q} This instance.
     */
     copyTo: function (q) {
-      q = q.q;
       var a = this.q;
       q[0] = a[0];
       q[1] = a[1];
@@ -81,12 +80,11 @@ vecJS.Q = function Q(arr) {
     /**
      * Set the quaternion values from the specified matrix (3x4 or 4x4).
      *
-     * @param {!(vecJS.M34|vecJS.M44)}m The source quaternion
+     * @param {!Array.<Number>}m The rotation matrix to convert ({@link vecJS.M34#m} or {@link vecJS.M44#m}).
      *
      * @return {!vecJS.Q} This instance.
      */
     fromMatrix: function (m) {
-      m=m.m;
       var q = this.q,
           m00 = m[0], m01 = m[1], m02 = m[2],
           m10 = m[4], m11 = m[5], m12 = m[6],
@@ -137,18 +135,18 @@ vecJS.Q = function Q(arr) {
     /**
      * Set the quaternion values from 3 orthonormal local axes.
      *
-     * @param {!Array} arr The values of the [x,y,z] angles in radians.
+     * @param {!Array.<Number>} a The values of the [x,y,z] angles in radians.
      *
      * @return {!vecJS.Q} This instance.
      */
-    fromEuler: function (arr) {
+    fromEuler: function (a) {
       // qx = sin(x/2)*cos(y/2)*cos(z/2) - cos(x/2)*sin(y/2)*sin(z/2)
       // qy = cos(x/2)*sin(y/2)*cos(z/2) + sin(x/2)*cos(y/2)*sin(z/2)
       // qz = cos(x/2)*cos(y/2)*sin(z/2) - sin(x/2)*sin(y/2)*cos(z/2)
       // qw = cos(x/2)*cos(y/2)*cos(z/2) + sin(x/2)*sin(y/2)*sin(z/2)
       var q = this.q,
 
-          ax = arr[0]*0.5, ay = arr[1]*0.5, az = arr[2]*0.5,
+          ax = a[0]*0.5, ay = a[1]*0.5, az = a[2]*0.5,
           sx = Math.sin(ax), cx = Math.cos(ax),
           sy = Math.sin(ay), cy = Math.cos(ay),
           sz = Math.sin(az), cz = Math.cos(az),
@@ -168,12 +166,11 @@ vecJS.Q = function Q(arr) {
     /**
     * Add the specified quaternion to this one and assign the result to this instance.
     *
-    * @param {!vecJS.Q} q The quaternion to add to this instance.
+    * @param {!Array.<Number>} q The quaternion to add to this instance ({@link vecJS.Q#q}).
     *
     * @return {!vecJS.Q} This instance.
     */
     add: function (q) {
-      q = q.q;
       var a = this.q;
       a[0] += q[0];
       a[1] += q[1];
@@ -184,12 +181,11 @@ vecJS.Q = function Q(arr) {
     /**
     * Subtract the specified quaternion from this one and assign the result to this instance.
     *
-    * @param {!vecJS.Q} q The quaternion to subtract from this instance.
+    * @param {!Array.<Number>} q The quaternion to subtract from this instance ({@link vecJS.Q#q}).
     *
     * @return {!vecJS.Q} This instance.
     */
     sub: function (q) {
-      q = q.q;
       var a = this.q;
       a[0] -= q[0];
       a[1] -= q[1];
@@ -231,12 +227,11 @@ vecJS.Q = function Q(arr) {
     /**
      * Perform a quaternion multiplication and assign the result to this instance.
      *
-     * @param q
+     * @param q {!Array.<Number>} The multiplier ({@link vecJS.Q#q}).
      *
      * @return {!vecJS.Q} This instance.
      */
     mul: function (q) {
-      q = q.q;
       var a = this.q,
           ax = a[0], ay = a[1], az = a[2], aw = a[3],
           bx = q[0], by = q[1], bz = q[2], bw = q[3];
@@ -252,12 +247,11 @@ vecJS.Q = function Q(arr) {
     /**
     * Calculate the dot product of this quaternion and the specified one.
     *
-    * @param {!vecJS.Q} q The second term of the dot product.
+    * @param {!Array.<Number>} q The second term of the dot product ({@link vecJS.Q#q}).
     *
     * @return {number} The result of the dot product.
     */
     dot: function (q) {
-      q = q.q;
       var a = this.q;
       return a[0]*q[0] + a[1]*q[1] + a[2]*q[2] + a[3]*q[3];
     },
@@ -265,15 +259,13 @@ vecJS.Q = function Q(arr) {
     /**
      * Perform a spherical linear interpolation between a & b and assign the result to this instance
      *
-     * @param {!vecJS.Q} a The start quaternion.
-     * @param {!vecJS.Q} b The end quaternion.
+     * @param {!Array.<Number>} a The start quaternion ({@link vecJS.Q#q}).
+     * @param {!Array.<Number>} b The end quaternion ({@link vecJS.Q#q}).
      * @param {Number} t The interpolation amount between the two quaternions (between 0 and 1).
      * @param {Boolean} shortest When true, the slerp interpolation will always use the "shortest path"
-     * between the Quaternions' orientations, by "flipping" the source Quaternion if needed
+     *    between the Quaternions' orientations, by "flipping" the source Quaternion if needed
      */
     slerp: function (a, b, t, shortest) {
-      a = a.q;
-      b = b.q;
       var q = this.q,
           ax = a[0], ay = a[1], az = a[2], aw = a[3],
           bx = b[0], by = b[1], bz = b[2], bw = b[3],
@@ -311,16 +303,16 @@ vecJS.Q = function Q(arr) {
      *
      * Use {@link vecJS.Q#squadTangent} to define the Quaternion tangents tgA and tgB.
      *
-     * @param {!vecJS.Q} a The start quaternion.
-     * @param {!vecJS.Q} tgA The first tangent.
-     * @param {!vecJS.Q} tgB The second tangent.
-     * @param {!vecJS.Q} b The end quaternion.
+     * @param {!Array.<Number>} a The start quaternion ({@link vecJS.Q#q}).
+     * @param {!Array.<Number>} tgA The first tangent ({@link vecJS.Q#q}).
+     * @param {!Array.<Number>} tgB The second tangent ({@link vecJS.Q#q}).
+     * @param {!Array.<Number>} b The end quaternion ({@link vecJS.Q#q}).
      * @param {Number} t
      */
     squad: function (a, tgA, tgB, b, t) {
-      q1.slerp(a, b, t, true);
-      q2.slerp(tgA, tgB, t, false);
-      this.slerp(q1, q2, 2*t*(1-t), false);
+      _q1.slerp(a, b, t, true);
+      _q2.slerp(tgA, tgB, t, false);
+      this.slerp(_q1, _q2, 2*t*(1-t), false);
     },
 
     /**
@@ -328,16 +320,16 @@ vecJS.Q = function Q(arr) {
      *
      * Useful for smooth spline interpolation of Quaternion with {@link vecJS.Q#squad} and {@link vecJS.Q#slerp}.
      *
-     * @param before
-     * @param center
-     * @param after
+     * @param {!Array.<Number>} before ({@link vecJS.Q#q}).
+     * @param {!Array.<Number>} center ({@link vecJS.Q#q}).
+     * @param {!Array.<Number>} after ({@link vecJS.Q#q}).
      */
     squadTangent: function(before, center, after) {
       var q = this.q,
-          a = q1.q, b = q2.q;
+          a = _q1.q, b = _q2.q;
       
-      q1.set(center.q).mulScalar(-1).mul(before).normalize().log();
-      q2.set(center.q).mulScalar(-1).mul(after).normalize().log();
+      _q1.set(center).mulScalar(-1).mul(before).normalize().log();
+      _q2.set(center).mulScalar(-1).mul(after).normalize().log();
 
       q[0] = -0.25 * (a[0] + b[0]);
       q[1] = -0.25 * (a[1] + b[1]);
@@ -443,12 +435,15 @@ vecJS.Q = function Q(arr) {
       return Math.abs(1 - (qx*qx + qy*qy + qz*qz + qw*qw)) < @PRECISION;
     },
 
+    /**
+     * Return a string representation of the current instance.
+     */
     toString: function () {
       var q = this.q;
       return 'Q[' + disp_f(q[0]) + ', ' + disp_f(q[1]) + ', ' + disp_f(q[2]) + ', ' + disp_f(q[3]) + ']';
     }
   };
 
-  var q1 = new vecJS.Q(),
-      q2 = new vecJS.Q();
+  var _q1 = new vecJS.Q(),
+      _q2 = new vecJS.Q();
 })();

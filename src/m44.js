@@ -26,19 +26,19 @@
 *
 * @class An affine 4x4 matrix.
 *
-* @param {Array=} arr Array containing values to initialize with.
+* @param {Array.<Number>=} m Array containing values to initialize with ({@link vecJS.M44#m}).
 *
 * @property {GLMatrixArray} m the matrix values.
 *
 * @constructor
 */
-vecJS.M44 = function M44(arr) {
-  var m = this.m = new GLMatrixArray(16);
-  if (arr) {
-    m[0]  = arr[0];  m[1]  = arr[1];  m[2]  = arr[2] ; m[3]  = arr[3];
-    m[4]  = arr[4];  m[5]  = arr[5];  m[6]  = arr[6] ; m[7]  = arr[7];
-    m[8]  = arr[8];  m[9]  = arr[9];  m[10] = arr[10]; m[11] = arr[11];
-    m[12] = arr[12]; m[13] = arr[13]; m[14] = arr[14]; m[15] = arr[15];
+vecJS.M44 = function M44(m) {
+  var a = this.m = new GLMatrixArray(16);
+  if (m) {
+    a[0]  = m[0];  a[1]  = m[1];  a[2]  = m[2] ; a[3]  = m[3];
+    a[4]  = m[4];  a[5]  = m[5];  a[6]  = m[6] ; a[7]  = m[7];
+    a[8]  = m[8];  a[9]  = m[9];  a[10] = m[10]; a[11] = m[11];
+    a[12] = m[12]; a[13] = m[13]; a[14] = m[14]; a[15] = m[15];
   }
 };
 
@@ -53,28 +53,27 @@ vecJS.M44 = function M44(arr) {
     /**
     * Set the current instance values.
     *
-    * @param {!Array} arr The new values.
+    * @param {!Array.<Number>} m The new values ({@link vecJS.M44#m}).
     *
     * @return {!vecJS.M44} This instance.
     */
-    set: function (arr) {
-      var m = this.m;
-      m[0]  = arr[0];  m[1]  = arr[1];  m[2]  = arr[2] ; m[3]  = arr[3];
-      m[4]  = arr[4];  m[5]  = arr[5];  m[6]  = arr[6] ; m[7]  = arr[7];
-      m[8]  = arr[8];  m[9]  = arr[9];  m[10] = arr[10]; m[11] = arr[11];
-      m[12] = arr[12]; m[13] = arr[13]; m[14] = arr[14]; m[15] = arr[15];
+    set: function (m) {
+      var a = this.m;
+      a[0]  = m[0];  a[1]  = m[1];  a[2]  = m[2] ; a[3]  = m[3];
+      a[4]  = m[4];  a[5]  = m[5];  a[6]  = m[6] ; a[7]  = m[7];
+      a[8]  = m[8];  a[9]  = m[9];  a[10] = m[10]; a[11] = m[11];
+      a[12] = m[12]; a[13] = m[13]; a[14] = m[14]; a[15] = m[15];
       return this;
     },
     /**
     * Copy this matrix instance to the specified one.
     *
-    * @param {!vecJS.M44} m The target matrix.
+    * @param {!Array.<Number>} m The target matrix ({@link vecJS.M44#m}).
     *
     * @return {!vecJS.M44} This instance.
     */
     copyTo: function (m) {
       var a = this.m;
-      m = m.m;
 
       m[0]  = a[0];  m[1]  = a[1];  m[2]  = a[2] ; m[3]  = a[3];
       m[4]  = a[4];  m[5]  = a[5];  m[6]  = a[6] ; m[7]  = a[7];
@@ -95,7 +94,7 @@ vecJS.M44 = function M44(arr) {
     /**
      * Set the matrix values from the specified quaternion.
      *
-     * @param {!vecJS.Q} q The source quaternion.
+     * @param {!Array.<Number>} q The source quaternion ({@link vecJS.Q#q}).
      *
     * @return {!vecJS.M44} This instance.
      */
@@ -149,12 +148,11 @@ vecJS.M44 = function M44(arr) {
     /**
     * Multiply this matrix with the specified one and assign the result to this instance.
     *
-    * @param {!vecJS.M44} m The matrix to multiply with this instance.
+    * @param {!Array.<Number>} m The matrix to multiply with this instance ({@link vecJS.M44#m}).
     *
     * @return {!vecJS.M44} This instance.
     */
     mul: function (m) {
-      m = m.m;
       var a = this.m,
           a00 = a[0],  a01 = a[1],  a02 = a[2],  a03 = a[3],
           a10 = a[4],  a11 = a[5],  a12 = a[6],  a13 = a[7],
@@ -191,14 +189,12 @@ vecJS.M44 = function M44(arr) {
     /**
     * Multiply a and b and assign the result to this instance.
     *
-    * @param {!vecJS.M44} a The first term of the multiplication.
-    * @param {!vecJS.M44} b The second term of the multiplication.
+    * @param {!Array.<Number>} a The first term of the multiplication ({@link vecJS.M44#m}).
+    * @param {!Array.<Number>} b The second term of the multiplication ({@link vecJS.M44#m}).
     *
     * @return {!vecJS.M44} This instance.
     */
     assignMul: function (a, b) {
-      a = a.m;
-      b = b.m;
       var m = this.m,
           a00 = a[0],  a01 = a[1],  a02 = a[2],  a03 = a[3],
           a10 = a[4],  a11 = a[5],  a12 = a[6],  a13 = a[7],
@@ -303,9 +299,9 @@ vecJS.M44 = function M44(arr) {
     /**
     * Create a look-at rotation matrix with the given eye position, focal point, and up axis and assign it to this instance.
     *
-    * @param {!vecJS.V3} eye Position of the viewer
-    * @param {!vecJS.V3} center Point the viewer is looking at
-    * @param {!vecJS.V3} up Pointing "up"
+    * @param {!Array.<Number>} eye Position of the viewer ({@link vecJS.V3#v}).
+    * @param {!Array.<Number>} center Point the viewer is looking at ({@link vecJS.V3#v}).
+    * @param {!Array.<Number>} up Direction of the "up" vector. ({@link vecJS.V3#v}).
     *
     * @return {!vecJS.M44} This instance.
     */
@@ -402,6 +398,9 @@ vecJS.M44 = function M44(arr) {
       return this;
     },
 
+    /**
+     * Return a string representation of the current instance.
+     */
     toString: function () {
       var m = this.m;
 

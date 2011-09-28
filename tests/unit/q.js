@@ -23,7 +23,7 @@ var q_tests = {
     var q1 = new vecJS.Q([1, 2, 3, 4]), q1b,
       q2 = new vecJS.Q();
 
-    q1b = q1.copyTo(q2);
+    q1b = q1.copyTo(q2.q);
 
     notEqual(q1, q2, 'copyTo does not overwrite object');
     equal(q1, q1b, 'copyTo return this');
