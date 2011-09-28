@@ -565,29 +565,6 @@ vecJS.M34 = function M34(m) {
     },
 
     /**
-    * Create a look-at rotation matrix with the given eye position, focal point, and up axis and assign it to this instance.
-    *
-    * @param {!Array.<Number>} eye Position of the viewer ({@link vecJS.V3#v}).
-    * @param {!Array.<Number>} target Point the viewer is looking at ({@link vecJS.V3#v}).
-    * @param {!Array.<Number>} up Direction of the "up" vector. ({@link vecJS.V3#v}).
-    *
-    * @return {!vecJS.M34} This instance.
-    */
-    lookAt: function (eye, target, up) {
-      var m = this.m;
-
-      _vz.set(eye.v).sub(target).normalize();
-      _vx.set(up.v).cross(_vz).normalize();
-      _vy.set(_vz.v).cross(_vx).normalize();
-      
-      m[0] = _vx.x; m[1] = _vx.y; m[2] = _vx.z; m[3]  = -_vx.dot(eye);
-      m[4] = _vy.x; m[5] = _vy.y; m[6] = _vy.z; m[7]  = -_vy.dot(eye);
-      m[8] = _vz.x; m[9] = _vz.y; m[9] = _vz.z; m[10] = -_vz.dot(eye);
-      
-      return this;
-    },
-
-    /**
      * Return a string representation of the current instance.
      */
     toString: function () {
