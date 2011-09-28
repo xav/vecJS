@@ -187,7 +187,7 @@ var v3_tests = {
     var v1 = new vecJS.V3([1, 2, 3]),
       v2 = new vecJS.V3([3, 2, 1]);
 
-    equal(v1.dot(v2), 10, 'dot result.');
+    equal(v1.dot(v2.v), 10, 'dot result.');
 
     mequal(v1.v, [1, 2, 3], 'dot does not modify object');
     mequal(v2.v, [3, 2, 1], 'dot does not modify parameter');

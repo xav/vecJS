@@ -329,7 +329,6 @@ vecJS.V3.prototype = {
   * @return {number} The result of the dot product.
   */
   dot: function (v) {
-    v = v.v;
     var a = this.v;
     return a[0]*v[0] + a[1]*v[1] + a[2]*v[2];
   },
