@@ -297,25 +297,41 @@ vecJS.M44 = function M44(m) {
     },
 
     /**
-    * Create a look-at rotation matrix with the given eye position, focal point, and up axis and assign it to this instance.
+    * Create a look-at matrix with the given eye position, focal point, and up axis and assign it to this instance.
     *
     * @param {!Array.<Number>} eye Position of the viewer ({@link vecJS.V3#v}).
-    * @param {!Array.<Number>} center Point the viewer is looking at ({@link vecJS.V3#v}).
+    * @param {!Array.<Number>} at Point the viewer is looking at ({@link vecJS.V3#v}).
     * @param {!Array.<Number>} up Direction of the "up" vector. ({@link vecJS.V3#v}).
     *
     * @return {!vecJS.M44} This instance.
     */
-    lookAt: function (eye, center, up) {
-      var m = this.m;
-      
-      _vz.copy(eye).sub(center).normalize();
-      _vx.copy(up).cross(_vz).normalize();
-      _vy.copy(_vz).cross(_vx).normalize();
+    lookAt: function (eye, at, up) {
+      var m = this.m,
+          vx = _vx.v, vy = _vy.v, vz = _vz.v;
 
-      m[0]  = _vx.x; m[1]  = _vx.y; m[2]  = _vx.z; m[3]  = -_vx.dot(eye);
-      m[4]  = _vy.x; m[5]  = _vy.y; m[6]  = _vy.z; m[7]  = -_vy.dot(eye);
-      m[8]  = _vz.x; m[9]  = _vz.y; m[10] = _vz.z; m[11] = -_vz.dot(eye);
-      m[12] = 0;     m[13] = 0;     m[14] = 0;     m[15] = 1;
+      _vz.assignSub(at, eye).normalize();
+      _vx.assignCross(up, vz).normalize();
+      _vy.assignCross(vz, vy).normalize();
+
+      m[0] = vx[0];
+      m[1] = vx[1];
+      m[2] = vx[2];
+      m[3]  = 0;
+
+      m[4] = vy[0];
+      m[5] = vy[1];
+      m[6] = vy[2];
+      m[7]  = 0;
+
+      m[8] = vz[0];
+      m[9] = vz[1];
+      m[9] = vz[2];
+      m[10] = 0;
+
+      m[12] = -_vx.dot(eye);
+      m[13] = -_vy.dot(eye);
+      m[14] = -_vz.dot(eye);
+      m[15] = 1;
 
       return this;
     },

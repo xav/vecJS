@@ -145,8 +145,25 @@ var m44_tests = {
   },
 
   'lookAt': function () {
-    //TODO: lookAt
+    var m1 = new vecJS.M44(), m1b,
+        eye = new vecJS.V3([1, 2, 3]),
+        target = new vecJS.V3([4, 5, 6]),
+        up = new vecJS.V3([7, 8, 9]);
+
+    m1b = m1.lookAt(eye.v, target.v, up.v);
+    equal(m1, m1b, 'lookAt returns this');
+    mequal(eye.v, [1, 2, 3], 'lookAt does not modify eye parameter');
+    mequal(target.v, [4, 5, 6], 'lookAt does not modify center parameter');
+    mequal(up.v, [7, 8, 9], 'lookAt does not modify up parameter');
+
+    m1.lookAt(
+      [10, 0, 0],
+      [0, 0, 0],
+      [0, 1, 0]
+    );
+    //TODO: check lookAt values
   },
+
 
   'frustum': function () {
     //TODO: frustum
