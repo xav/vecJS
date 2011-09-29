@@ -24,7 +24,7 @@ var v4_tests = {
 
     v1b = v1.copyTo(v2.v);
 
-    notEqual(v1, v2, 'copyTo does not overwrite object');
+    notEqual(v1.v, v2.v, 'copyTo does not overwrite object');
     equal(v1, v1b, 'copyTo return this');
 
     mequal(v1.v, [1, 2, 3, 4], 'copyTo does not modify self');
@@ -47,7 +47,7 @@ var v4_tests = {
       v2 = new vecJS.V4([1, 2, 3, 4]);
 
     v1b = v1.add(v2.v);
-    notEqual(v1, v2, 'add does not overwrite object'); //TODO: Replace this pattern with v1.v and v2.v on all files
+    notEqual(v1.v, v2.v, 'add does not overwrite object');
     equal(v1, v1b, 'add return this');
 
     mequal(v1.v, [11, 22, 33, 44], 'add values');
@@ -60,8 +60,8 @@ var v4_tests = {
       v3 = new vecJS.V4([1, 2, 3, 4]);
 
     v1b = v1.assignAdd(v2.v, v3.v);
-    notEqual(v1, v2, 'assignAdd does not overwrite object');
-    notEqual(v1, v3, 'assignAdd does not overwrite object');
+    notEqual(v1.v, v2.v, 'assignAdd does not overwrite object');
+    notEqual(v1.v, v3.v, 'assignAdd does not overwrite object');
     equal(v1, v1b, 'assignAdd return this');
 
     mequal(v1.v, [11, 22, 33, 44], 'assignAdd values');
@@ -74,7 +74,7 @@ var v4_tests = {
       v2 = new vecJS.V4([1, 2, 3, 4]);
 
     v1b = v1.sub(v2.v);
-    notEqual(v1, v2, 'sub does not overwrite object');
+    notEqual(v1.v, v2.v, 'sub does not overwrite object');
     equal(v1, v1b, 'sub return this');
 
     mequal(v1.v, [9, 18, 27, 36], 'sub values');
@@ -87,8 +87,8 @@ var v4_tests = {
       v3 = new vecJS.V4([1, 2, 3, 4]);
 
     v1b = v1.assignSub(v2.v, v3.v);
-    notEqual(v1, v2, 'assignSub does not overwrite object');
-    notEqual(v1, v3, 'assignSub does not overwrite object');
+    notEqual(v1.v, v2.v, 'assignSub does not overwrite object');
+    notEqual(v1.v, v3.v, 'assignSub does not overwrite object');
     equal(v1, v1b, 'assignSub return this');
 
     mequal(v1.v, [9, 18, 27, 36], 'assignSub values');

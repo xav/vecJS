@@ -25,7 +25,7 @@ var q_tests = {
 
     q1b = q1.copyTo(q2.q);
 
-    notEqual(q1, q2, 'copyTo does not overwrite object');
+    notEqual(q1.q, q2.q, 'copyTo does not overwrite object');
     equal(q1, q1b, 'copyTo return this');
 
     mequal(q1.q, [1, 2, 3, 4], 'copy does not modify self');

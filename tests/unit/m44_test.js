@@ -55,7 +55,7 @@ var m44_tests = {
 
     m1b = m1.copyTo(m2.m);
 
-    notEqual(m1, m2, 'copyTo does not overwrite object');
+    notEqual(m1.m, m2.m, 'copyTo does not overwrite object');
     equal(m1, m1b, 'copyTo return this');
 
     mequal(m1.m, [
