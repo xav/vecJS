@@ -257,6 +257,84 @@ vecJS.Q = function Q(q) {
     },
 
     /**
+     * Calculate the local roll element of this quaternion.
+     * 
+     * @param {Boolean=} reprojectAxis By default the method returns the 'intuitive'
+     * result that is, if you projected the local Y of the quaternion onto the X and
+     * Y axes, the angle between them is returned. If set to false though, the
+     * result is the actual yaw that will be used to implement the quaternion,
+     * which is the shortest possible path to get to the same orientation and
+     * may involve less axial rotation.
+     *
+     * @return {number} The quaternion roll element.
+     */
+    getRoll: function (reprojectAxis) {
+      var q = this.q,
+          qx = q[0], qy = q[1], qz = q[2], qw = q[3],
+          ty, tz;
+
+      if (!reprojectAxis) {
+        return Math.atan2(2*(qx*qy + qw*qz), qw*qw + qx*qx - qy*qy - qz*qz);
+      }
+
+      ty = 2*qy;
+      tz = 2*qz;
+			return Math.atan2(ty*qx + tz*qw, 1 - (ty*qy + tz*qz));
+
+   },
+    /**
+     * Calculate the local pitch element of this quaternion.
+     *
+     * @param {Boolean=} reprojectAxis By default the method returns the 'intuitive'
+     * result that is, if you projected the local Z of the quaternion onto the X and
+     * Y axes, the angle between them is returned. If set to true though, the
+     * result is the actual yaw that will be used to implement the quaternion,
+     * which is the shortest possible path to get to the same orientation and
+     * may involve less axial rotation.
+     *
+     * @return {number} The quaternion pitch element.
+     */
+    getPitch: function (reprojectAxis) {
+      var q = this.q,
+          qx = q[0], qy = q[1], qz = q[2], qw = q[3],
+          tx, tz;
+
+      if (!reprojectAxis) {
+        return Math.atan2(2*(qy*qz + qw*qx), qw*qw - qx*qx - qy*qy + qz*qz);
+      }
+
+      tx = 2*qx;
+      tz = 2*qz;
+      return Math.atan2(tz*qy + tx*qw, 1 - (tx*qx + tz*qz));
+    },
+    /**
+     * Calculate the local yaw element of this quaternion.
+     * 
+     * @param {Boolean=} reprojectAxis By default the method returns the 'intuitive'
+     * result that is, if you projected the local Z of the quaternion onto the X and
+     * Z axes, the angle between them is returned. If set to true though, the
+     * result is the actual yaw that will be used to implement the quaternion,
+     * which is the shortest possible path to get to the same orientation and
+     * may involve less axial rotation.
+     *
+     * @return {number} The quaternion yaw element.
+     */
+    getYaw: function (reprojectAxis) {
+      var q = this.q,
+          qx = q[0], qy = q[1], qz = q[2], qw = q[3],
+          tx, ty, tz;
+
+      if (!reprojectAxis) {
+        return Math.asin(-2*(qx*qz - qw*qy));
+      }
+
+      tx = 2*qx;
+      ty = 2*qy;
+      tz = 2*qz;
+      return Math.atan2(tz*x + ty*qw, 1 - (tx*qx + ty*qy));
+    },
+
+    /**
      * Perform a spherical linear interpolation between a & b and assign the result to this instance
      *
      * @param {!Array.<Number>} a The start quaternion ({@link vecJS.Q#q}).

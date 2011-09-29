@@ -110,6 +110,18 @@ var q_tests = {
     //TODO: dot
   },
 
+  'getRoll': function () {
+    //TODO: getRoll
+  },
+
+  'getPitch': function () {
+    //TODO: getPitch
+  },
+
+  'getYaw': function () {
+    //TODO: getYaw
+  },
+
   'slerp': function () {
     //TODO: slerp
   },
