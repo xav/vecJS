@@ -16,7 +16,7 @@
  */
 
 /**
-* @class A 3 dimensional vector.
+* @class A 4 dimensional vector to use with homogenous coordinates.
 *
 * @param {Array.<Number>=} v The [x,y,z,w] values to initialize with.
 *
@@ -236,16 +236,6 @@ vecJS.V4.prototype = {
     v[3] = vx*m[12] + vy*m[13] + vz*m[14] + vw*m[15];
 
     return this;
-  },
-
-  /**
-   * Multiply the specified quaternion with this vector and assign the result to this instance.
-   *
-   * @param {!Array.<Number>} q The quaternion to multiply ({@link vecJS.Q#q}).
-   *
-  * @return {!vecJS.V4} This instance.
-   */
-  mulQ: function (q) {
   },
 
   /**

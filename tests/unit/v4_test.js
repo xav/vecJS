@@ -136,10 +136,6 @@ var v4_tests = {
     //TODO: mulM44
   },
 
-  'mulQ': function () {
-    //TODO: mulQ
-  },
-
   'cross': function () {
     //TODO: cross
   },
