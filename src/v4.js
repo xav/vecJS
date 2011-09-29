@@ -308,37 +308,6 @@ vecJS.V4.prototype = {
   },
 
   /**
-  * Calculate the distance between the tip of this vector and the tip of the specified one.
-  *
-  * @param {!Array.<Number>} v The other vector ({@link vecJS.V4#v}).
-  *
-  * @return {number} The distance between the tips of two vectors.
-  */
-  distance: function (v) {
-    var a = this.v,
-        dx = a[0] - v[0],
-        dy = a[1] - v[1],
-        dz = a[2] - v[2],
-        dw = a[3] - v[3];
-    return Math.sqrt(dx*dx + dy*dy + dz*dz + dw*dw);
-  },
-  /**
-  * Calculate the squared distance between the tip of this vector and the tip of the specified one.
-  *
-  * @param {!Array.<Number>} v The other vector ({@link vecJS.V4#v}).
-  *
-  * @return {number} The squared distance between the tips of two vectors.
-  */
-  squaredDistance: function (v) {
-    var a = this.v,
-        dx = a[0] - v[0],
-        dy = a[1] - v[1],
-        dz = a[2] - v[2],
-        dw = a[3] - v[3];
-    return dx*dx + dy*dy + dz*dz + dw*dw;
-  },
-
-  /**
    * Check if this instance is a unit-length vector.
    *
    * Should be a bit faster than checking if length == 1, since there is no square root.
