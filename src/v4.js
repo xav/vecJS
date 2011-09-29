@@ -210,7 +210,7 @@ vecJS.V4.prototype = {
   */
   mulM34: function (m) {
     var v = this.v,
-        vx = v[0], vy = v[1], vz = v[2];
+        vx = v[0], vy = v[1], vz = v[2], vw = v[3];
 
     v[0] = vx*m[0] + vy*m[1] + vz*m[2]  + vw*m[3];
     v[1] = vx*m[4] + vy*m[5] + vz*m[6]  + vw*m[7];

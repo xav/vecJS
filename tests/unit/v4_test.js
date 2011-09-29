@@ -109,7 +109,7 @@ var v4_tests = {
 
     v1b = v1.subScalar(3);
     equal(v1, v1b, 'subScalar return this');
-    mequal(v1.v, [7, 17, 27, 36], 'subScalar values');
+    mequal(v1.v, [7, 17, 27, 37], 'subScalar values');
   },
 
   'mulScalar': function () {
@@ -129,11 +129,43 @@ var v4_tests = {
   },
 
   'mulM34': function () {
-    //TODO: mulM34
+    var m1 = new vecJS.M34([
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ]),
+    v1 = new vecJS.V4([1, 2, 3, 4]), v1b;
+
+    v1b = v1.mulM34(m1.m);
+
+    equal(v1, v1b, 'mulM return this');
+    mequal(m1.m, [
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12
+    ], 'mulM does not change parameter')
+    mequal(v1.v, [30, 70, 110, 4], 'mulM values');
   },
 
   'mulM44': function () {
-    //TODO: mulM44
+    var m1 = new vecJS.M44([
+       1,  2,  3,  4,
+       5,  6,  7,  8,
+       9, 10, 11, 12,
+      13, 14, 15, 16
+    ]),
+    v1 = new vecJS.V4([1, 2, 3, 4]), v1b;
+
+    v1b = v1.mulM44(m1.m);
+
+    equal(v1, v1b, 'mulM return this');
+    mequal(m1.m, [
+       1,  2,  3,  4,
+       5,  6,  7,  8,
+       9, 10, 11, 12,
+      13, 14, 15, 16
+    ], 'mulM does not change parameter')
+    mequal(v1.v, [30, 70, 110, 150], 'mulM values');
   },
 
   'dot': function () {
@@ -178,4 +210,4 @@ var v4_tests = {
   }
 };
 
-run_test_set(v3_tests);
+run_test_set(v4_tests);
