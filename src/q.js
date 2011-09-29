@@ -135,7 +135,7 @@ vecJS.Q = function Q(q) {
     /**
      * Set the quaternion values from 3 orthonormal local axes.
      *
-     * @param {!Array.<Number>} a The values of the [x,y,z] angles in radians.
+     * @param {!Array.<Number>} a The values of the [roll,pitch,yaw] ([x,y,z]) angles in radians.
      *
      * @return {!vecJS.Q} This instance.
      */
@@ -257,7 +257,7 @@ vecJS.Q = function Q(q) {
     },
 
     /**
-     * Calculate the local roll element of this quaternion.
+     * Calculate the local roll (x) element of this quaternion.
      * 
      * @param {Boolean=} reprojectAxis By default the method returns the 'intuitive'
      * result that is, if you projected the local Y of the quaternion onto the X and
@@ -283,7 +283,7 @@ vecJS.Q = function Q(q) {
 
    },
     /**
-     * Calculate the local pitch element of this quaternion.
+     * Calculate the local pitch (y) element of this quaternion.
      *
      * @param {Boolean=} reprojectAxis By default the method returns the 'intuitive'
      * result that is, if you projected the local Z of the quaternion onto the X and
@@ -308,7 +308,7 @@ vecJS.Q = function Q(q) {
       return Math.atan2(tz*qy + tx*qw, 1 - (tx*qx + tz*qz));
     },
     /**
-     * Calculate the local yaw element of this quaternion.
+     * Calculate the local yaw (z) element of this quaternion.
      * 
      * @param {Boolean=} reprojectAxis By default the method returns the 'intuitive'
      * result that is, if you projected the local Z of the quaternion onto the X and
