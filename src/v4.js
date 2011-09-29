@@ -251,27 +251,6 @@ vecJS.V4.prototype = {
   },
 
   /**
-   * Performs a linear interpolation between a and b and assign the result to this instance.
-   *
-   * @param {!Array.<Number>} a The first vector ({@link vecJS.V4#v}).
-   * @param {!Array.<Number>} b The second vector ({@link vecJS.V4#v}).
-   * @param {number} l The interpolation amount between the two vectors.
-   *
-   * @return {!vecJS.V4} This instance.
-   */
-  lerp: function (a, b, l) {
-    var v = this.v,
-        ax = a[0], ay = a[1], az = a[2], aw = a[3];
-
-    v[0] = ax + l * (b[0] - ax);
-    v[1] = ay + l * (b[1] - ay);
-    v[2] = az + l * (b[2] - az);
-    v[2] = aw + l * (b[3] - aw);
-
-    return this;
-  },
-
-  /**
   * Normalize this vector and assign the resulting unit vector to this instance.
   *
   * @return {!vecJS.V4} This instance.

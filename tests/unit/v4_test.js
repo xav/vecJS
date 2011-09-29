@@ -169,31 +169,39 @@ var v4_tests = {
   },
 
   'dot': function () {
-    //TODO: dot
-  },
+    var v1 = new vecJS.V4([1, 2, 3, 4]),
+      v2 = new vecJS.V4([4, 3, 2, 1]);
 
-  'lerp': function () {
-    //TODO; lerp
+    equal(v1.dot(v2.v), 20, 'dot result.');
+
+    mequal(v1.v, [1, 2, 3, 4], 'dot does not modify object');
+    mequal(v2.v, [4, 3, 2, 1], 'dot does not modify parameter');
   },
 
   'length': function () {
-    //TODO: length
+    equal(new vecJS.V4().length(), 0, 'null quaternion length');
+    equal(new vecJS.V4([10, 0, 0, 0]).length(), 10, 'x quaternion length');
+    equal(new vecJS.V4([0, 10, 0, 0]).length(), 10, 'y quaternion length');
+    equal(new vecJS.V4([0, 0, 10, 0]).length(), 10, 'z quaternion length');
+    equal(new vecJS.V4([0, 0, 0, 10]).length(), 10, 'z quaternion length');
+    equal(new vecJS.V4([10, 10, 10, 10]).length(), Math.sqrt(400), 'arbitrary quaternion length');
   },
 
   'squaredLength': function () {
-    //TODO:
+    equal(new vecJS.V4().squaredLength(), 0, 'null quaternion squared length');
+    equal(new vecJS.V4([10, 0, 0, 0]).squaredLength(), 100, 'x quaternion squared length');
+    equal(new vecJS.V4([0, 10, 0, 0]).squaredLength(), 100, 'y quaternion squared length');
+    equal(new vecJS.V4([0, 0, 10, 0]).squaredLength(), 100, 'z quaternion squared length');
+    equal(new vecJS.V4([0, 0, 0, 10]).squaredLength(), 100, 'z quaternion squared length');
+    equal(new vecJS.V4([10, 10, 10, 10]).squaredLength(), 400, 'arbitrary quaternion squared length');
   },
 
   'normalize': function () {
-    //TODO:
-  },
+    var v1 = new vecJS.V4([10, 100, 1000, 10000]), v1b;
 
-  'distance': function () {
-    //TODO:
-  },
-
-  'squaredDistance': function () {
-    //TODO:
+    v1b = v1.normalize();
+    equal(v1, v1b, 'normalize return this');
+    ok(Math.abs(1 - v1.length()) < 1e-6, 'normalize makes unit vector');
   },
 
   'isUnit': function () {
