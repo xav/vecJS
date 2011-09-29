@@ -136,14 +136,6 @@ var v4_tests = {
     //TODO: mulM44
   },
 
-  'cross': function () {
-    //TODO: cross
-  },
-
-  'assignCross': function () {
-    //TODO: assignCross
-  },
-
   'dot': function () {
     //TODO: dot
   },

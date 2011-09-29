@@ -239,27 +239,6 @@ vecJS.V4.prototype = {
   },
 
   /**
-  * Calculate the cross product of this vector and the specified one and assign the result to this instance.
-  *
-  * @param {!Array.<Number>} v The second term of the cross product ({@link vecJS.V4#v}).
-  *
-  * @return {!vecJS.V4} This instance.
-  */
-  cross: function (v) {
-  },
-
-  /**
-  * Calculate the cross product of the two specified vectors and assign the result to this instance.
-  *
-  * @param {!Array.<Number>} a The first term of the cross product ({@link vecJS.V4#v}).
-  * @param {!Array.<Number>} b The second term of the cross product ({@link vecJS.V4#v}).
-  *
-  * @return {!vecJS.V4} This instance.
-  */
-  assignCross: function (a, b) {
-  },
-
-  /**
   * Calculate the dot product of this vector and the specified one.
   *
   * @param {!Array.<Number>} v The second term of the dot product ({@link vecJS.V4#v}).
