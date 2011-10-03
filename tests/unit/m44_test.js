@@ -263,7 +263,30 @@ var m44_tests = {
   },
 
   'invert': function () {
-    //TODO: invert
+    var m1 = new vecJS.M44([
+       1, 0, 1,  0,
+       2, 1, 5,  7,
+       0, 5, 2, -6,
+      -1, 2, 1,  0
+    ]), m1b,
+    m2 = m1.clone();
+
+    m1b = m1.invert();
+    equal(m1, m1b, 'invert return this');
+    mfequal(m1.m, [
+      -2 - 11/18,  2/3,  7/9, -2 - 5/18,
+      -3 -  1/9,   2/3,  7/9, -1 - 7/9,
+       3 + 11/18, -2/3, -7/9,  2 + 5/18,
+      -1 -  7/18,  1/3,  2/9, -13/18
+    ], 'invert values');
+
+    m1.mul(m2.m);
+    mfequal(m1.m, [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+    ], 'm*inv(m) = identity');
   },
 
   'lookAt': function () {
