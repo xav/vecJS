@@ -1,7 +1,7 @@
 module('M44');
 
 var m44_tests = {
-  "constructor": function () {
+  'constructor': function () {
     var i,j;
 
     var m1 = new vecJS.M44();
@@ -98,8 +98,47 @@ var m44_tests = {
     ], 'clone values');
   },
 
-  'fromQuat': function () {
-    //TODO: fromQuat
+  'fromQ': function () {
+    var q1 = new vecJS.Q([1, 2, 3, 4]),
+        q2 = q1.clone(),
+        m1 = new vecJS.M44(), m1b,
+        c = Math.PI / 180;
+
+    m1b = m1.fromQ(q1);
+    equal(m1, m1b, 'fromQ return this');
+    mequal(q1.q, q2.q, 'fromQ does no modify parameter');
+
+    m1.fromQ(q1.set([0, 0, 0, 1]).q);
+    mfequal(m1.m, [
+      1, 0, 0, 0,
+      0, 1, 0, 0,
+      0, 0, 1, 0,
+      0, 0, 0, 1
+    ], 'identity quaternion');
+
+    m1.fromQ(q1.fromEuler([90*c, 0, 0]).q);
+    mfequal(m1.m, [
+      1, 0,  0, 0,
+      0, 0, -1, 0,
+      0, 1,  0, 0,
+      0, 0,  0, 1
+    ], '90deg around X');
+
+    m1.fromQ(q1.fromEuler([0, 90*c, 0]).q);
+    mfequal(m1.m, [
+       0, 0, 1, 0,
+       0, 1, 0, 0,
+      -1, 0, 0, 0,
+       0, 0, 0, 1
+    ], '90deg around Y');
+
+    m1.fromQ(q1.fromEuler([0, 0, 90*c]).q);
+    mfequal(m1.m, [
+      0, -1, 0, 0,
+      1,  0, 0, 0,
+      0,  0, 1, 0,
+      0,  0, 0, 1
+    ], '90deg around Z');
   },
 
   'identity': function () {
