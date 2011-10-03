@@ -117,13 +117,6 @@ var q_tests = {
     mequal(q1.q, [1, 2, 3, 4], 'divScalar values');
   },
 
-/*
-q = [1, 2, 4, 10];
-r = [-3, 4, -5, 7];
-t = [-1111, 111, -11, 1];
-u = [91, -82, 7.3, -6.4];
- */
-
   'mul': function () {
     var q1 = new vecJS.Q([1, 2, 4, 10]), q1b,
         q2 = new vecJS.Q([-3, 4, -5, 7]);
@@ -179,8 +172,21 @@ u = [91, -82, 7.3, -6.4];
     mfequal(q1.q, [0.093768, 0.187536, 0.375073, 0], 'log values for l = 1');
   },
 
+/*
+q = [1, 2, 4, 10];
+r = [-3, 4, -5, 7];
+t = [-1111, 111, -11, 1];
+u = [91, -82, 7.3, -6.4];
+ */
+
   'exp': function () {
-    //TODO: exp
+    var q1 = new vecJS.Q([1, 2, 4, 10]), q1b;
+    q1b = q1.exp();
+    equal(q1, q1b, 'exp return this');
+    mfequal(q1.q, [-0.216381, -0.432763, -0.865527, -0.129449], 'exp values for len >= 1');
+
+    q1 = new vecJS.Q([0.2, 0.1, 0.3, 0.9]).exp();
+    mfequal(q1.q, [0.195366, 0.097683, 0.293049, 0.930813], 'exp values for l < 1');
   },
 
   'length': function () {

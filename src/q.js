@@ -458,8 +458,8 @@ vecJS.Q = function Q(q) {
      */
     exp: function() {
       var q = this.q,
-          qx = q[0], qy = q[1], qz = q[2], qw = q[3],
-          l = qx*qx + qy*qy + qz*qz + qw*qw,
+          qx = q[0], qy = q[1], qz = q[2],
+          l = qx*qx + qy*qy + qz*qz,
           c;
 
       if (l < @PRECISION) {
