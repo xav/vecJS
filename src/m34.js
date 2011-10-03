@@ -105,7 +105,6 @@ vecJS.M34 = function M34(m) {
     * @return {!vecJS.M34} This instance.
      */
     fromQ: function (q) {
-      q = q.q;
       var x = q[0], y = q[1], z = q[2], w = q[3],
           x2 = x + x, y2 = y + y, z2 = z + z,
           xx = x*x2, xy = x*y2, xz = x*z2,
@@ -153,7 +152,6 @@ vecJS.M34 = function M34(m) {
     * @return {!vecJS.M34} This instance.
     */
     mul: function (m) {
-      m = m.m;
       var a = this.m,
           a00 = a[0], a01 = a[1], a02 = a[2],  a03 = a[3],
           a10 = a[4], a11 = a[5], a12 = a[6],  a13 = a[7],
@@ -189,7 +187,6 @@ vecJS.M34 = function M34(m) {
     * @return {!vecJS.M34} This instance.
     */
     assignMul: function (a, b) {
-      a = a.m; b = b.m;
       var m = this.m,
           a00 = a[0], a01 = a[1], a02 = a[2],  a03 = a[3],
           a10 = a[4], a11 = a[5], a12 = a[6],  a13 = a[7],

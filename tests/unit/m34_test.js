@@ -93,32 +93,32 @@ var m34_tests = {
         m1 = new vecJS.M34(), m1b,
         c = Math.PI / 180;
 
-    m1b = m1.fromQ(q1);
+    m1b = m1.fromQ(q1.q);
     equal(m1, m1b, 'fromQ return this');
     mequal(q1.q, q2.q, 'fromQ does no modify parameter');
 
-    m1.fromQ(q1.set([0, 0, 0, 1]));
+    m1.fromQ(q1.set([0, 0, 0, 1]).q);
     mfequal(m1.m, [
       1, 0, 0, 0,
       0, 1, 0, 0,
       0, 0, 1, 0
     ], 'identity quaternion');
 
-    m1.fromQ(q1.fromEuler([90*c, 0, 0]));
+    m1.fromQ(q1.fromEuler([90*c, 0, 0]).q);
     mfequal(m1.m, [
       1, 0,  0, 0,
       0, 0, -1, 0,
       0, 1,  0, 0
     ], '90deg around X');
 
-    m1.fromQ(q1.fromEuler([0, 90*c, 0]));
+    m1.fromQ(q1.fromEuler([0, 90*c, 0]).q);
     mfequal(m1.m, [
        0, 0, 1, 0,
        0, 1, 0, 0,
       -1, 0, 0, 0
     ], '90deg around Y');
 
-    m1.fromQ(q1.fromEuler([0, 0, 90*c]));
+    m1.fromQ(q1.fromEuler([0, 0, 90*c]).q);
     mfequal(m1.m, [
       0, -1, 0, 0,
       1,  0, 0, 0,
@@ -155,7 +155,7 @@ var m34_tests = {
           9, 10, 11, 12
         ]);
 
-    m1b = m1.mul(m2);
+    m1b = m1.mul(m2.m);
     equal(m1, m1b, 'mul return this');
     mequal(m2.m, [
       1,  2,  3,  4,
@@ -183,7 +183,7 @@ var m34_tests = {
           9, 10, 11, 12
         ]);
 
-    m1b = m1.assignMul(m2, m3);
+    m1b = m1.assignMul(m2.m, m3.m);
     equal(m1, m1b, 'assignMul return this');
     mequal(m2.m, [
       12, 11, 10, 9,
@@ -251,7 +251,7 @@ var m34_tests = {
       -0.28,  0.16, -0.04, -0.16
     ], 'invert values');
 
-    m1.mul(m2);
+    m1.mul(m2.m);
     mfequal(m1.m, [
       1, 0, 0, 0,
       0, 1, 0, 0,
