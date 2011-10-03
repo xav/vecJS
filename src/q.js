@@ -340,7 +340,6 @@ vecJS.Q = function Q(q) {
      * @param {!Array.<Number>} a The start quaternion ({@link vecJS.Q#q}).
      * @param {!Array.<Number>} b The end quaternion ({@link vecJS.Q#q}).
      * @param {Number} t The interpolation amount between the two quaternions (between 0 and 1).
-     *    between the Quaternions' orientations, by "flipping" the source Quaternion if needed
      * @param {Boolean} shortest When true, the slerp interpolation will always use the "shortest path"
      *    between the Quaternions' orientations, by "flipping" the source Quaternion if needed
      */
