@@ -104,7 +104,7 @@ vecJS.M34 = function M34(m) {
      *
     * @return {!vecJS.M34} This instance.
      */
-    fromQuat: function (q) {
+    fromQ: function (q) {
       q = q.q;
       var x = q[0], y = q[1], z = q[2], w = q[3],
           x2 = x + x, y2 = y + y, z2 = z + z,

@@ -87,38 +87,38 @@ var m34_tests = {
     ], 'clone values');
   },
 
-  'fromQuat': function () {
+  'fromQ': function () {
     var q1 = new vecJS.Q([1, 2, 3, 4]),
         q2 = q1.clone(),
         m1 = new vecJS.M34(), m1b,
         c = Math.PI / 180;
 
-    m1b = m1.fromQuat(q1);
-    equal(m1, m1b, 'fromQuat return this');
-    mequal(q1.q, q2.q, 'fromQuat does no modify parameter');
+    m1b = m1.fromQ(q1);
+    equal(m1, m1b, 'fromQ return this');
+    mequal(q1.q, q2.q, 'fromQ does no modify parameter');
 
-    m1.fromQuat(q1.set([0, 0, 0, 1]));
+    m1.fromQ(q1.set([0, 0, 0, 1]));
     mfequal(m1.m, [
       1, 0, 0, 0,
       0, 1, 0, 0,
       0, 0, 1, 0
     ], 'identity quaternion');
 
-    m1.fromQuat(q1.fromEuler([90*c, 0, 0]));
+    m1.fromQ(q1.fromEuler([90*c, 0, 0]));
     mfequal(m1.m, [
       1, 0,  0, 0,
       0, 0, -1, 0,
       0, 1,  0, 0
     ], '90deg around X');
 
-    m1.fromQuat(q1.fromEuler([0, 90*c, 0]));
+    m1.fromQ(q1.fromEuler([0, 90*c, 0]));
     mfequal(m1.m, [
        0, 0, 1, 0,
        0, 1, 0, 0,
       -1, 0, 0, 0
     ], '90deg around Y');
 
-    m1.fromQuat(q1.fromEuler([0, 0, 90*c]));
+    m1.fromQ(q1.fromEuler([0, 0, 90*c]));
     mfequal(m1.m, [
       0, -1, 0, 0,
       1,  0, 0, 0,
