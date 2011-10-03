@@ -340,6 +340,7 @@ vecJS.Q = function Q(q) {
      * @param {!Array.<Number>} a The start quaternion ({@link vecJS.Q#q}).
      * @param {!Array.<Number>} b The end quaternion ({@link vecJS.Q#q}).
      * @param {Number} t The interpolation amount between the two quaternions (between 0 and 1).
+     *    between the Quaternions' orientations, by "flipping" the source Quaternion if needed
      * @param {Boolean} shortest When true, the slerp interpolation will always use the "shortest path"
      *    between the Quaternions' orientations, by "flipping" the source Quaternion if needed
      */
@@ -347,30 +348,29 @@ vecJS.Q = function Q(q) {
       var q = this.q,
           ax = a[0], ay = a[1], az = a[2], aw = a[3],
           bx = b[0], by = b[1], bz = b[2], bw = b[3],
-          cosAngle =  ax*bx + ay*by + az*bz + aw*bw,
-          angle, sinAngle,
-          c1, c2;
+          e = 1,
+          dot = ax*bx + ay*by + az*bz + aw*bw,
+          theta, sinTheta,
+          c1 = 1 - t,
+          c2 = t;
 
-      if ((1 - Math.abs(cosAngle)) < 0.01) {
-        c1 = 1 - t;
-        c2 = t;
-      } else {
+      if (dot < 0) {
+        if (shortest) { e = -1 };
+        dot = -dot;
+      }
+      if (1 - dot > 0.001) {
         // Spherical interpolation
-        angle = Math.acos(cosAngle);
-        sinAngle = Math.sin(angle);
-        c1 = Math.sin(angle * (1 - t)) / sinAngle;
-        c2 = Math.sin(angle * t) / sinAngle;
+        theta = Math.acos(dot);
+        sinTheta = Math.sin(theta);
+        c1 = Math.sin(theta * c1) / sinTheta;
+        c2 = Math.sin(theta * c2) / sinTheta;
       }
 
-      // Use the shortest path
-      if (shortest && (cosAngle < 0)) {
-        c1 = -c1;
-      }
-
+      c2 *= e;
       q[0] = c1*ax + c2*bx;
       q[1] = c1*ay + c2*by;
-      q[2] = c1*az + c2*az;
-      q[3] = c1*aw + c2*aw;
+      q[2] = c1*az + c2*bz;
+      q[3] = c1*aw + c2*bw;
 
       return this;
     },

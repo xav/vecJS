@@ -150,7 +150,16 @@ var q_tests = {
   },
 
   'slerp': function () {
-    //TODO: slerp
+    var q1 = new vecJS.Q(), q1b,
+        q2 = new vecJS.Q([1, 2, 4, 10]),
+        q3 = new vecJS.Q([-3, 4, -5, 7]);
+
+    q1b = q1.slerp(q2.q, q3.q, 0.3);
+
+    equal(q1, q1b, 'slerp return this');
+    mfequal(q1.q, [-0.2, 2.6, 1.3, 9.1], 'slerp values');
+
+    //TODO: test shortest path
   },
 
   'squad': function () {
@@ -171,13 +180,6 @@ var q_tests = {
     q1 = new vecJS.Q([1/11, 2/11, 4/11, 10/11]).log();
     mfequal(q1.q, [0.093768, 0.187536, 0.375073, 0], 'log values for l = 1');
   },
-
-/*
-q = [1, 2, 4, 10];
-r = [-3, 4, -5, 7];
-t = [-1111, 111, -11, 1];
-u = [91, -82, 7.3, -6.4];
- */
 
   'exp': function () {
     var q1 = new vecJS.Q([1, 2, 4, 10]), q1b;
