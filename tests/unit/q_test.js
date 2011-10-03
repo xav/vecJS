@@ -117,12 +117,31 @@ var q_tests = {
     mequal(q1.q, [1, 2, 3, 4], 'divScalar values');
   },
 
+/*
+q = [1, 2, 4, 10];
+r = [-3, 4, -5, 7];
+t = [-1111, 111, -11, 1];
+u = [91, -82, 7.3, -6.4];
+ */
+
   'mul': function () {
-    //TODO: mul
+    var q1 = new vecJS.Q([1, 2, 4, 10]), q1b,
+        q2 = new vecJS.Q([-3, 4, -5, 7]);
+
+    q1b = q1.mul(q2.q);
+
+    equal(q1, q1b, 'mul return this');
+    mequal(q1.q, [3, 61, -32, 85], 'mul values');
   },
 
   'dot': function () {
-    //TODO: dot
+    var q1 = new vecJS.Q([1, 2, 4, 10]),
+        q2 = new vecJS.Q([-3, 4, -5, 7]);
+
+    equal(q1.dot(q2.q), 55, 'dot result.');
+
+    mequal(q1.q, [1, 2, 4, 10], 'dot does not modify object');
+    mequal(q2.q, [-3, 4, -5, 7], 'dot does not modify parameter');
   },
 
   'getRoll': function () {
@@ -150,7 +169,14 @@ var q_tests = {
   },
 
   'log': function () {
-    //TODO: log
+    var q1 = new vecJS.Q([1, 2, 4, 10]), q1b;
+
+    q1b = q1.log();
+    equal(q1, q1b, 'log return this');
+    mequal(q1.q, [1, 2, 4, 0], 'log values for len > 1');
+
+    q1 = new vecJS.Q([1/11, 2/11, 4/11, 10/11]).log();
+    mfequal(q1.q, [0.093768, 0.187536, 0.375073, 0], 'log values for l = 1');
   },
 
   'exp': function () {

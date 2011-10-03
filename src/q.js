@@ -430,16 +430,22 @@ vecJS.Q = function Q(q) {
           l = qx*qx + qy*qy + qz*qz + qw*qw,
           c;
 
-      if (l < @PRECISION) {
+      if (l > 1 + @PRECISION) {
         q[3] = 0;
         return this;
       }
 
-      c = Math.acos(q[3]) / Math.sqrt(l);
-      q[0] *= c;
-      q[1] *= c;
-      q[2] *= c;
-      q[3] = 0;
+       if (l > 1 - @PRECISION) {
+         l = Math.sqrt(qx*qx + qy*qy + qz*qz);
+         c = Math.atan2(l, qw) / l;
+         q[0] *= c;
+         q[1] *= c;
+         q[2] *= c;
+         q[3] = 0;
+         return this;
+       }
+
+      console.debug(l, '<', 1 - @PRECISION);
 
       return this;
     },
@@ -457,6 +463,9 @@ vecJS.Q = function Q(q) {
           c;
 
       if (l < @PRECISION) {
+        q[0] = 0;
+        q[1] = 0;
+        q[2] = 0;
         q[3] = 1;
         return this;
       }
