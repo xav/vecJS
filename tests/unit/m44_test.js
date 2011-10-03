@@ -301,8 +301,6 @@ var m44_tests = {
     mequal(at.v,  [-2, 13, -9], 'lookAtLH does not modify center parameter');
     mequal(up.v,  [1, -3, 7], 'lookAtLH does not modify up parameter');
 
-    console.debug(m1.toString());
-
     mfequal(m1.m, [
       -0.822465, -0.409489, -0.394803, 0,
       -0.555856,  0.431286,  0.710645, 0,
@@ -312,24 +310,6 @@ var m44_tests = {
   },
   
   'lookAtRH': function () {
-/*
-eye [8, -5, 5.75]
-at [-2, 13, -9]
-axis [1, -3, 7]
-
-RH
-0.822465, -0.409489,  0.394803f, 0,
-0.555856,  0.431286, -0.710645f, 0,
-0.120729,  0.803935,  0.582335f, 0,
--4.494634, 0.809719, -10.060076, 1
-
-LH
--0.822465, -0.409489, -0.394803, 0,
--0.555856,  0.431286,  0.710645, 0,
--0.120729,  0.803935, -0.582335, 0,
- 4.494634,  0.809719, 10.060076, 1
-
- */
     var m1 = new vecJS.M44(), m1b,
         eye = new vecJS.V3([8, -5, 5.75]),
         at = new vecJS.V3([-2, 13, -9]),
@@ -341,8 +321,6 @@ LH
     mequal(at.v,  [-2, 13, -9], 'lookAtRH does not modify center parameter');
     mequal(up.v,  [1, -3, 7], 'lookAtRH does not modify up parameter');
 
-    console.debug(m1.toString());
-
     mfequal(m1.m, [
       0.822465, -0.409489,  0.394803,  0,
       0.555856,  0.431286, -0.710645,  0,
@@ -351,12 +329,16 @@ LH
     ], 'lookAtRH values');
   },
 
-  'frustum': function () {
-    //TODO: frustum
+  'perspectiveFrustum': function () {
+    //TODO: perspectiveFrustum
   },
 
-  'perspective': function () {
-    //TODO: perspective
+  'perspectiveFov': function () {
+    var m1 = new vecJS.M44(), m1b;
+
+    m1b = m1.perspectiveFov(45*(Math.PI/180), 800/600, 1, 10);
+    equal(m1, m1b, 'perspectiveFov returns this');
+    //TODO: test perspectiveFov values
   },
 
   'orthogonal': function () {

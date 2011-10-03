@@ -375,7 +375,7 @@ vecJS.M44 = function M44(m) {
     },
 
     /**
-     * Create a frustum matrix with the given bounds and assign it to this instance.
+     * Create a general frustum perspective projection matrix with the given bounds and assign it to this instance.
      *
      * @param {number} left left bound of the frustum.
      * @param {number} right right bound of the frustum.
@@ -384,16 +384,32 @@ vecJS.M44 = function M44(m) {
      * @param {number} near near bound of the frustum.
      * @param {number} far far bound of the frustum.
      */
-    frustum: function(left, right, bottom, top, near, far) {
+    perspectiveFrustum: function(left, right, bottom, top, near, far) {
       var m = this.m,
           rl = (right - left),
           tb = (top - bottom),
-          fn = (far - near);
+          fn = (far - near),
+          nn = 2*n;
 
-      m[0] = (near*2) / rl;       m[1] = 0;                   m[2] = 0;                   m[3] = 0;
-      m[4] = 0;                   m[5] = (near*2) / tb;       m[6] = 0;                   m[7] = 0;
-      m[8] = (right + left) / rl; m[9] = (top + bottom) / tb; m[10] = -(far + near) / fn; m[11] = -1;
-      m[12] = 0;                  m[13] = 0;                  m[14] = -(far*near*2) / fn; m[15] = 0;
+      m[0] = nn / rl;
+      m[1] = 0;
+      m[2] = 0;
+      m[3] = 0;
+
+      m[4] = 0;
+      m[5] = nn / tb;
+      m[6] = 0;
+      m[7] = 0;
+
+      m[8] = (right + left) / rl;
+      m[9] = (top + bottom) / tb;
+      m[10] = -(far + near) / fn;
+      m[11] = -1;
+
+      m[12] = 0;
+      m[13] = 0;
+      m[14] = -(far*nn) / fn;
+      m[15] = 0;
 
       return this;
     },
@@ -401,27 +417,36 @@ vecJS.M44 = function M44(m) {
     /**
      * Create a perspective projection matrix from a camera aspect parameters and assign it to this instance.
     *
-    * @param {number} fov The field of view in degrees.
-    * @param {number} aspect The view aspect ratio (width / height).
-    * @param {number} near The z-position of the near clipping plane.
-    * @param {number} far The z-position of the far clipping plane.
+    * @param {number} fov Field of view in the y direction, in radians.
+    * @param {number} aspect Aspect ratio, defined as view space width divided by height.
+    * @param {number} near The z-value of the near view-plane.
+    * @param {number} far The z-value of the far view-plane.
     *
     * @returns {!vecJS.M44} This instance.
     */
-    perspective: function (fov, aspect, near, far) {
-      var ymax = near * Math.tan(fov * Math.PI / 360),
-          ymin = -ymax,
-          xmin = ymin * aspect,
-          xmax = ymax * aspect,
-          w = xmax - xmin,
-          h = ymax - ymin,
-          d = far - near,
-          m = this.m;
+    perspectiveFov: function (fov, aspect, near, far) {
+      var m = this.m,
+          f = 1 / Math.tan(fov / 2);
 
-      m[0]  = 2 * near / w;  m[1]  = 0;             m[2]  = (xmax + xmin) / w; m[3]  = 0;
-      m[4]  = 0;             m[5]  = 2 * near / h;  m[6]  = (ymax + ymin) / h; m[7]  = 0;
-      m[8]  = 0;             m[9]  = 0;             m[10] = -(far + near) / d; m[11] = -(2 * far * near) / d;
-      m[12] = 0;             m[13] = 0;             m[14] = -1;                m[15] = 0;
+      m[0]  = f / aspect;
+      m[1]  = 0;
+      m[2]  = 0;
+      m[3]  = 0;
+
+      m[4]  = 0;
+      m[5]  = f;
+      m[6]  = 0;
+      m[7]  = 0;
+
+      m[8]  = 0;
+      m[9]  = 0;
+      m[10] = -(far + near) / (far - near);
+      m[11] = -1;
+
+      m[12] = 0;
+      m[13] = 0;
+      m[14] = -2 * (far*near) / (far - near);
+      m[15] = 0;
 
       return this;
     },
