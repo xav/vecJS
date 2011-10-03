@@ -317,7 +317,7 @@ vecJS.M44 = function M44(m) {
     },
 
     /**
-    * Create a look-at matrix with the given eye position, focal point, and up axis and assign it to this instance.
+    * Create a left-hand look-at matrix with the given eye position, focal point, and up axis and assign it to this instance.
     *
     * @param {!Array.<Number>} eye Position of the viewer ({@link vecJS.V3#v}).
     * @param {!Array.<Number>} at Point the viewer is looking at ({@link vecJS.V3#v}).
@@ -325,28 +325,46 @@ vecJS.M44 = function M44(m) {
     *
     * @return {!vecJS.M44} This instance.
     */
-    lookAt: function (eye, at, up) {
+    lookAtLH: function (eye, at, up) {
       var m = this.m,
           vx = _vx.v, vy = _vy.v, vz = _vz.v;
 
       _vz.assignSub(at, eye).normalize();
       _vx.assignCross(up, vz).normalize();
-      _vy.assignCross(vz, vy).normalize();
+      _vy.assignCross(vz, vx);
 
-      m[0] = vx[0];
-      m[1] = vx[1];
-      m[2] = vx[2];
-      m[3]  = 0;
+      m[0] = vx[0]; m[1] = vy[0]; m[2]  = vz[0]; m[3]  = 0;
+      m[4] = vx[1]; m[5] = vy[1]; m[6]  = vz[1]; m[7]  = 0;
+      m[8] = vx[2]; m[9] = vy[2]; m[10] = vz[2]; m[11] = 0;
 
-      m[4] = vy[0];
-      m[5] = vy[1];
-      m[6] = vy[2];
-      m[7]  = 0;
+      m[12] = -_vx.dot(eye);
+      m[13] = -_vy.dot(eye);
+      m[14] = -_vz.dot(eye);
+      m[15] = 1;
 
-      m[8] = vz[0];
-      m[9] = vz[1];
-      m[9] = vz[2];
-      m[10] = 0;
+      return this;
+    },
+
+    /**
+    * Create a right-hand look-at matrix with the given eye position, focal point, and up axis and assign it to this instance.
+    *
+    * @param {!Array.<Number>} eye Position of the viewer ({@link vecJS.V3#v}).
+    * @param {!Array.<Number>} at Point the viewer is looking at ({@link vecJS.V3#v}).
+    * @param {!Array.<Number>} up Direction of the "up" vector. ({@link vecJS.V3#v}).
+    *
+    * @return {!vecJS.M44} This instance.
+    */
+    lookAtRH: function (eye, at, up) {
+      var m = this.m,
+          vx = _vx.v, vy = _vy.v, vz = _vz.v;
+
+      _vz.assignSub(eye, at).normalize();
+      _vx.assignCross(up, vz).normalize();
+      _vy.assignCross(vz, vx);
+
+      m[0] = vx[0]; m[1] = vy[0]; m[2]  = vz[0]; m[3]  = 0;
+      m[4] = vx[1]; m[5] = vy[1]; m[6]  = vz[1]; m[7]  = 0;
+      m[8] = vx[2]; m[9] = vy[2]; m[10] = vz[2]; m[11] = 0;
 
       m[12] = -_vx.dot(eye);
       m[13] = -_vy.dot(eye);
@@ -391,7 +409,7 @@ vecJS.M44 = function M44(m) {
     * @returns {!vecJS.M44} This instance.
     */
     perspective: function (fov, aspect, near, far) {
-      var ymax = near * Math.tan(fov * PI / 360),
+      var ymax = near * Math.tan(fov * Math.PI / 360),
           ymin = -ymax,
           xmin = ymin * aspect,
           xmax = ymax * aspect,

@@ -289,26 +289,67 @@ var m44_tests = {
     ], 'm*inv(m) = identity');
   },
 
-  'lookAt': function () {
+  'lookAtLH': function () {
     var m1 = new vecJS.M44(), m1b,
-        eye = new vecJS.V3([1, 2, 3]),
-        target = new vecJS.V3([4, 5, 6]),
-        up = new vecJS.V3([7, 8, 9]);
+        eye = new vecJS.V3([8, -5, 5.75]),
+        at = new vecJS.V3([-2, 13, -9]),
+        up = new vecJS.V3([1, -3, 7]);
 
-    m1b = m1.lookAt(eye.v, target.v, up.v);
-    equal(m1, m1b, 'lookAt returns this');
-    mequal(eye.v, [1, 2, 3], 'lookAt does not modify eye parameter');
-    mequal(target.v, [4, 5, 6], 'lookAt does not modify center parameter');
-    mequal(up.v, [7, 8, 9], 'lookAt does not modify up parameter');
+    m1b = m1.lookAtLH(eye.v, at.v, up.v);
+    equal(m1, m1b, 'lookAtLH returns this');
+    mequal(eye.v, [8, -5, 5.75], 'lookAtLH does not modify eye parameter');
+    mequal(at.v,  [-2, 13, -9], 'lookAtLH does not modify center parameter');
+    mequal(up.v,  [1, -3, 7], 'lookAtLH does not modify up parameter');
 
-    m1.lookAt(
-      [10, 0, 0],
-      [0, 0, 0],
-      [0, 1, 0]
-    );
-    //TODO: check lookAt values
+    console.debug(m1.toString());
+
+    mfequal(m1.m, [
+      -0.822465, -0.409489, -0.394803, 0,
+      -0.555856,  0.431286,  0.710645, 0,
+      -0.120729,  0.803935, -0.582335, 0,
+       4.494634,  0.809719, 10.060076, 1
+    ], 'lookAtLH values');
   },
+  
+  'lookAtRH': function () {
+/*
+eye [8, -5, 5.75]
+at [-2, 13, -9]
+axis [1, -3, 7]
 
+RH
+0.822465, -0.409489,  0.394803f, 0,
+0.555856,  0.431286, -0.710645f, 0,
+0.120729,  0.803935,  0.582335f, 0,
+-4.494634, 0.809719, -10.060076, 1
+
+LH
+-0.822465, -0.409489, -0.394803, 0,
+-0.555856,  0.431286,  0.710645, 0,
+-0.120729,  0.803935, -0.582335, 0,
+ 4.494634,  0.809719, 10.060076, 1
+
+ */
+    var m1 = new vecJS.M44(), m1b,
+        eye = new vecJS.V3([8, -5, 5.75]),
+        at = new vecJS.V3([-2, 13, -9]),
+        up = new vecJS.V3([1, -3, 7]);
+
+    m1b = m1.lookAtRH(eye.v, at.v, up.v);
+    equal(m1, m1b, 'lookAtRH returns this');
+    mequal(eye.v, [8, -5, 5.75], 'lookAtRH does not modify eye parameter');
+    mequal(at.v,  [-2, 13, -9], 'lookAtRH does not modify center parameter');
+    mequal(up.v,  [1, -3, 7], 'lookAtRH does not modify up parameter');
+
+    console.debug(m1.toString());
+
+    mfequal(m1.m, [
+      0.822465, -0.409489,  0.394803,  0,
+      0.555856,  0.431286, -0.710645,  0,
+      0.120729,  0.803935,  0.582335,  0,
+      -4.494634, 0.809719, -10.060076, 1
+    ], 'lookAtRH values');
+  },
 
   'frustum': function () {
     //TODO: frustum
@@ -329,7 +370,7 @@ var m44_tests = {
       9, 10, 11, 12,
      13, 14, 15, 16
     ]);
-    equal(m.toString(), 'M44\n1  2  3  4\n5  6  7  8\n9  10  11  12\n13  14  15  16', 'arbitrary matrix');
+    ok(m.toString(), 'arbitrary matrix');
   }
 };
 

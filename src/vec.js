@@ -18,17 +18,17 @@
 var vecJS,
     _vecJS = window.vecJS,
     _$V = window.$V,
-    PI = Math.PI,
-  /**
-   * Type of the arrays used internally in objects.
-   *
-   * Float32Array if available, otherwise, fallback to regular Array.
-   */
+    _plog = Math.log(@INV_PRECISION) / Math.LN10,
+    /**
+     * Type of the arrays used internally in objects.
+     *
+     * Float32Array if available, otherwise, fallback to regular Array.
+     */
     GLMatrixArray = (typeof Float32Array !== 'undefined') ? Float32Array : Array,
-  /**
-   * @ignore
-   */
-    disp_f = function(n) { return Math.round(n*@INV_PRECISION) * @PRECISION; };
+    /**
+     * @ignore
+     */
+    disp_f = function(n) { return (Math.round(n*@INV_PRECISION) * @PRECISION).toFixed(_plog); };
 
 /**
 * @namespace The vecJS namespace.
