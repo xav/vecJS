@@ -158,11 +158,73 @@ var m44_tests = {
   },
 
   'mul': function () {
-    //TODO: mul
+    var m1 = new vecJS.M44([
+          16, 15, 14, 13,
+          12, 11, 10, 9,
+          8,  7,  6,  5,
+          4,  3,  2,  1
+        ]),
+        m1b,
+        m2 = new vecJS.M44([
+           1,  2,  3,  4,
+           5,  6,  7,  8,
+           9, 10, 11, 12,
+          13, 14, 15, 16
+        ]);
+
+    m1b = m1.mul(m2.m);
+    equal(m1, m1b, 'mul return this');
+    mequal(m2.m, [
+       1,  2,  3,  4,
+       5,  6,  7,  8,
+       9, 10, 11, 12,
+      13, 14, 15, 16
+    ], 'mul does no modify parameter');
+
+    mfequal(m1.m, [
+      386, 444, 502, 560,
+      274, 316, 358, 400,
+      162, 188, 214, 240,
+       50,  60,  70,  80
+    ], 'mul values');
   },
 
   'assignMul': function () {
-    //TODO: assignMul
+    var m1 = new vecJS.M44(),m1b,
+        m2 = new vecJS.M44([
+          16, 15, 14, 13,
+          12, 11, 10, 9,
+          8,  7,  6,  5,
+          4,  3,  2,  1
+        ]),
+        m3 = new vecJS.M44([
+           1,  2,  3,  4,
+           5,  6,  7,  8,
+           9, 10, 11, 12,
+          13, 14, 15, 16
+        ]);
+
+    m1b = m1.assignMul(m2.m, m3.m);
+    equal(m1, m1b, 'assignMul return this');
+    mequal(m2.m, [
+      16, 15, 14, 13,
+      12, 11, 10, 9,
+      8,  7,  6,  5,
+      4,  3,  2,  1
+    ], 'mul does no modify parameter 1');
+    mequal(m3.m, [
+       1,  2,  3,  4,
+       5,  6,  7,  8,
+       9, 10, 11, 12,
+      13, 14, 15, 16
+    ], 'mul does no modify parameter 2');
+
+    mfequal(m1.m, [
+      386, 444, 502, 560,
+      274, 316, 358, 400,
+      162, 188, 214, 240,
+       50,  60,  70,  80
+    ], 'mul values');
   },
 
   'transpose': function () {
