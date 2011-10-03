@@ -44,7 +44,22 @@ var q_tests = {
   },
 
   'fromMatrix': function () {
-    //TODO: fromMatrix
+    var q1 = new vecJS.Q(), q1b,
+      m1 = new vecJS.M34([
+        0, 0, 1, 0,
+        1, 0, 0, 0,
+        0, 1, 0, 0
+      ]);
+
+    q1b = q1.fromMatrix(m1.m);
+    equal(q1, q1b, 'fromMatrix return this');
+    mequal(m1.m, [
+      0, 0, 1, 0,
+      1, 0, 0, 0,
+      0, 1, 0, 0
+    ], 'fromMatrix does not modify parameter');
+
+    mfequal(q1.q, [0.5, 0.5, 0.5, 0.5], 'fromMatrix values');
   },
 
   'fromEuler': function () {
