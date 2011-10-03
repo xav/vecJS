@@ -227,10 +227,6 @@ var m44_tests = {
     ], 'mul values');
   },
 
-  'transpose': function () {
-    //TODO: transpose
-  },
-
   'det': function () {
     var m1 = new vecJS.M44([
       1, 3,  8, 5,
@@ -238,7 +234,32 @@ var m44_tests = {
       1, 1,  1, 0,
       7, 3, 10, 2
     ]);
-    //TODO: equal(m1.det(), 88, 'det');
+    equal(m1.det(), 88, 'det');
+    mequal(m1.m, [
+      1, 3,  8, 5,
+      1, 3,  6, 1,
+      1, 1,  1, 0,
+      7, 3, 10, 2
+    ], 'det does no modify object');
+  },
+
+  'transpose': function () {
+    var m1 = new vecJS.M44([
+      1,  2,  3,  4,
+      5,  6,  7,  8,
+      9, 10, 11, 12,
+     13, 14, 15, 16
+    ]), m1b;
+
+    m1b = m1.transpose();
+
+    equal(m1, m1b, 'transpose return this');
+    mequal(m1.m, [
+      1, 5,  9, 13,
+      2, 6, 10, 14,
+      3, 7, 11, 15,
+      4, 8, 12, 16
+    ], 'transpose values');
   },
 
   'invert': function () {

@@ -229,6 +229,26 @@ vecJS.M44 = function M44(m) {
     },
 
     /**
+    * Calculate the determinant of this matrix.
+    *
+    * @return {number} The matrix determinant.
+    */
+    det: function () {
+    // based on http://www.euclideanspace.com/maths/algebra/matrix/functions/determinant/fourD/index.htm
+      var m = this.m,
+        m00 = m[0],  m01 = m[1],  m02 = m[2],  m03 = m[3],
+        m10 = m[4],  m11 = m[5],  m12 = m[6],  m13 = m[7],
+        m20 = m[8],  m21 = m[9],  m22 = m[10], m23 = m[11],
+        m30 = m[12], m31 = m[13], m32 = m[14], m33 = m[15];
+
+      return m03*m12*m21*m30 - m02*m13*m21*m30 - m03*m11*m22*m30 + m01*m13*m22*m30 +
+             m02*m11*m23*m30 - m01*m12*m23*m30 - m03*m12*m20*m31 + m02*m13*m20*m31 +
+             m03*m10*m22*m31 - m00*m13*m22*m31 - m02*m10*m23*m31 + m00*m12*m23*m31 +
+             m03*m11*m20*m32 - m01*m13*m20*m32 - m03*m10*m21*m32 + m00*m13*m21*m32 +
+             m01*m10*m23*m32 - m00*m11*m23*m32 - m02*m11*m20*m33 + m01*m12*m20*m33 +
+             m02*m10*m21*m33 - m00*m12*m21*m33 - m01*m10*m22*m33 + m00*m11*m22*m33;
+    },
+    /**
     * Set this instance to its transpose matrix.
     *
     * @return {!vecJS.M44} This instance.
