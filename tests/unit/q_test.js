@@ -100,7 +100,14 @@ var q_tests = {
   'sub': function () {
     //TODO: sub
   },
-  
+  'assignAdd': function () {
+    //TODO: assignAdd
+  },
+
+  'assignSub': function () {
+    //TODO: assignSub
+  },
+
   'mulScalar': function () {
     var q1 = new vecJS.Q([10, 20, 30, 40]), q1b;
 
@@ -219,7 +226,11 @@ var q_tests = {
   'toString': function () {
     var q = new vecJS.Q([1, 2, 3, 4]);
     ok(q.toString(), 'arbitrary quaternion');
-  }
+  },
+
+  'squadSetup': function () {
+    
+  },
 };
 
 run_test_set(q_tests);

@@ -192,6 +192,38 @@ vecJS.Q = function Q(q) {
       a[2] -= q[2];
       return this;
     },
+    /**
+    * Add b to a and assign the result to this instance.
+    *
+    * @param {!Array.<Number>} a The first term of the addition ({@link vecJS.Q#q}).
+    * @param {!Array.<Number>} b The second term of the addition ({@link vecJS.Q#q}).
+    *
+    * @return {!vecJS.Q} This instance.
+    */
+    assignAdd: function (a, b) {
+      var q = this.q;
+      q[0] = a[0] + b[0];
+      q[1] = a[1] + b[1];
+      q[2] = a[2] + b[2];
+      q[2] = a[3] + b[3];
+      return this;
+    },
+    /**
+    * Subtract b from a and assign the result to this instance.
+    *
+    * @param {!Array.<Number>} a The first term of the subtraction ({@link vecJS.Q#q}).
+    * @param {!Array.<Number>} b The second term of the subtraction ({@link vecJS.Q#q}).
+    *
+    * @return {!vecJS.Q} This instance.
+    */
+    assignSub: function (a, b) {
+      var q = this.q;
+      q[0] = a[0] - b[0];
+      q[1] = a[1] - b[1];
+      q[2] = a[2] - b[2];
+      q[2] = a[3] - b[3];
+      return this;
+    },
 
     /**
     * Multiply all the components of this instance by the specified number.
@@ -375,8 +407,8 @@ vecJS.Q = function Q(q) {
     },
 
     /**
-     * Perform a slerp interpolation of the two Quaternions a & b, at time t,
-     * using tangents tgA and tgB and assign the result to this instance.
+     * Interpolates between quaternions, using spherical quadrangle interpolation,
+     * and assign the resulting quaternion to this instance.
      *
      * Use {@link vecJS.Q#squadTangent} to define the Quaternion tangents tgA and tgB.
      *
@@ -387,9 +419,7 @@ vecJS.Q = function Q(q) {
      * @param {Number} t
      */
     squad: function (a, tgA, tgB, b, t) {
-      _q1.slerp(a, b, t, true);
-      _q2.slerp(tgA, tgB, t, false);
-      this.slerp(_q1, _q2, 2*t*(1-t), false);
+      this.slerp(_q1.slerp(a, b, t, true).q, _q2.slerp(tgA, tgB, t, false).q, 2*t*(1-t), false);
     },
 
     /**
@@ -444,8 +474,6 @@ vecJS.Q = function Q(q) {
          return this;
        }
 
-      console.debug(l, '<', 1 - @PRECISION);
-
       return this;
     },
     /**
@@ -489,6 +517,16 @@ vecJS.Q = function Q(q) {
           qx = q[0], qy = q[1], qz = q[2], qw = q[3];
       return Math.sqrt(qx*qx + qy*qy + qz*qz + qw*qw);
     },
+    /**
+    * Calculate the squared length of this vector.
+    *
+    * @return {number} The squared length of this vector.
+    */
+    squaredLength: function () {
+      var q = this.q,
+          qx = q[0], qy = q[1], qz = q[2], qw = q[3];
+      return qx*qx + qy*qy + qz*qz + qw*qw;
+    },
 
     /**
     * Normalize this quaternion and assign the resulting unit quaternion to this instance.
@@ -530,6 +568,45 @@ vecJS.Q = function Q(q) {
     }
   };
 
+/*
+q0 = |Q0 + Q1| < |Q0 - Q1| ? -Q0 : Q0
+q2 = |Q1 + Q2| < |Q1 - Q2| ? -Q2 : Q2
+q3 = |Q2 + Q3| < |Q2 - Q3| ? -Q3 : Q3
+*/
+  vecJS.Q.squadSetup = function (a, b, c, q0, q1, q2, q3) {
+    q0 = q0.clone();
+    q2 = q2.clone();
+    q3 = q3.clone();
+
+    if (_q1.assignAdd(q0.q, q1.q).squaredLength() > _q1.assignSub(q0.q, q1.q).squaredLength()) { q0.mulScalar(-1); }
+    if (_q1.assignAdd(q1.q, q2.q).squaredLength() > _q1.assignSub(q1.q, q2.q).squaredLength()) { q2.mulScalar(-1); }
+    if (_q1.assignAdd(q2.q, q3.q).squaredLength() > _q1.assignSub(q2.q, q3.q).squaredLength()) { q3.mulScalar(-1); }
+
+    _q1
+      .set(q1.q)
+      .exp()
+      .assignAdd(
+        _q1.clone().mulQ(q2.q).log().q,
+        _q1.clone().mulQ(q0.q).log().q
+      )
+      .mulScalar(-0.25)
+      .exp();
+
+    _q2
+      .set(q2.q)
+      .exp()
+      .assignAdd(
+        _q2.clone().mulQ(q3.q).log().q,
+        _q2.clone().mulQ(q1.q).log().q
+      )
+      .mulScalar(-0.25)
+      .exp();
+
+    a.set(q1.q).mulQ(_q1.q);    // A = q1 * e[-0.25 *( Ln[Exp(q1)*q2] + Ln[Exp(q1)*q0] ) ]
+    b.set(q2.q).mulQ(_q2.q);    // B = q2 * e[-0.25 *( Ln[Exp(q2)*q3] + Ln[Exp(q2)*q1] ) ]
+    c.set(q2.q);              // C = q2
+  };
+  
   var _q1 = new vecJS.Q(),
       _q2 = new vecJS.Q();
 })();
