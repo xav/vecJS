@@ -92,44 +92,44 @@ vecJS.Q = function Q(q) {
           d = m00 + m11 + m22 + 1,
           s;
 
-      if (d > @PRECISION) {
-        s = Math.sqrt(d) * 2;
-        q[0] = (m21 - m12) / s;
-        q[1] = (m02 - m20) / s;
-        q[2] = (m10 - m01) / s;
-        q[3] = 0.25 * s;
+      if (d > 1){
+        s = 0.5 / Math.sqrt(d);
+        q[0] = (m21 - m12) * s;
+        q[1] = (m02 - m20) * s;
+        q[2] = (m10 - m01) * s;
+        q[3] = 0.25 / s;
       } else {
         if (m00 > m11 && m00 > m22) {
           // 1st element of diagonal is the greatest value.
           // Find scale according to 1st element, and double it
-          s = Math.sqrt(1 + m00 - m11 - m22) * 2;
+          s = 0.5 / Math.sqrt(1 + m00 - m11 - m22);
 
-          q[0] = 0.25 * s;
-          q[1] = (m01 + m10) / s;
-          q[2] = (m20 + m02) / s;
-          q[3] = (m21 - m12) / s;
+          q[0] = 0.25  / s;
+          q[1] = (m10 + m01) * s;
+          q[2] = (m20 + m02) * s;
+          q[3] = (m21 - m12) * s;
         } else if (m11 > m22) {
           // 2nd element of diagonal is the greatest value.
           // Find scale according to 2nd element, and double it
-          s = Math.sqrt(1 + m11 - m00 - m22) * 2;
+          s = 0.5 / Math.sqrt(1 + m11 - m00 - m22);
 
-          q[0] = (m01 + m10) / s;
-          q[1] = 0.25 * s;
-          q[2] = (m12 + m21) / s;
-          q[3] = (m02 - m20) / s;
+          q[0] = (m10 + m01) * s;
+          q[1] = 0.25 / s;
+          q[2] = (m21 + m12) * s;
+          q[3] = (m02 - m20) * s;
         } else {
           // 3rd element of diagonal is the greatest value
           // Find scale according to 3rd element, and double it
-          s = Math.sqrt(1 + m22 - m00 - m11) * 2;
+          s = 0.5 / Math.sqrt(1 + m22 - m00 - m11);
 
-          q[0] = (m02 + m20) / s;
-          q[1] = (m12 + m21) / s;
-          q[2] = 0.25 * s;
-          q[3] = (m10 - m01) / s;
+          q[0] = (m20 + m02) * s;
+          q[1] = (m21 + m12) * s;
+          q[2] = 0.25 / s;
+          q[3] = (m10 - m01) * s;
         }
       }
 
-      return this.normalize();
+      return this;
     },
 
     /**

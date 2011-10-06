@@ -46,20 +46,110 @@ var q_tests = {
   'fromMatrix': function () {
     var q1 = new vecJS.Q(), q1b,
       m1 = new vecJS.M34([
-        0, 0, 1, 0,
         1, 0, 0, 0,
-        0, 1, 0, 0
+        0, 1, 0, 0,
+        0, 0, 1, 0
       ]);
 
     q1b = q1.fromMatrix(m1.m);
     equal(q1, q1b, 'fromMatrix return this');
     mequal(m1.m, [
-      0, 0, 1, 0,
       1, 0, 0, 0,
-      0, 1, 0, 0
+      0, 1, 0, 0,
+      0, 0, 1, 0
     ], 'fromMatrix does not modify parameter');
+    mfequal(q1.q, [0, 0, 0, 1], 'identity matrix');
 
-    mfequal(q1.q, [0.5, 0.5, 0.5, 0.5], 'fromMatrix values');
+    q1b = q1.fromMatrix([
+      10, 11,  19,  2,
+       5, 20, -21,  3,
+       7, 16,  30, -4
+    ]);
+    mfequal(q1.q, [2.368682, 0.768221, -0.384111, 3.905125], 'test when the trace is >0');
+
+    q1b = q1.fromMatrix([
+      -10,  11,  19, 2,
+        5, -60, -21, 3,
+        7,  16,  40, -4
+    ]);
+    mfequal(q1.q, [1.233905, -0.237290, 5.267827, -0.284747], 'test the case when the greater element is (2,2)');
+
+    q1b = q1.fromMatrix([
+      -10, 11,  19,  2,
+        5, 60, -21,  3,
+        7, 16, -80, -4
+    ]);
+    mfequal(q1.q, [0.651031, 6.144103, -0.203447, 0.488273], 'test the case when the greater element is (1,1)');
+
+    q1b = q1.fromMatrix([
+      -10, 11,  19,  2,
+        5, 10, -21,  3,
+        7, 16, -0.9, -4
+    ]);
+    mfequal(q1.q, [1.709495, 2.339872, -0.534217, 1.282122], 'test the case when the trace is near 0 in a matrix which is not a rotation');
+
+    q1b = q1.fromMatrix([
+      -10, 11,  19,    2,
+        5, 10, -21,    3,
+        7, 16, -0.51, -4
+    ]);
+    mfequal(q1.q, [1.724923, 2.318944, -0.539039, 1.293692], 'test the case when the trace is 0.49 in a matrix which is not a rotation');
+
+    q1b = q1.fromMatrix([
+      -10, 11,  19,    2,
+        5, 10, -21,    3,
+        7, 16, -0.49, -4
+    ]);
+    mfequal(q1.q, [1.725726, 2.317865, -0.539289, 1.294294], 'test the case when the trace is 0.51 in a matrix which is not a rotation');
+
+    q1b = q1.fromMatrix([
+      -10, 11,  19,    2,
+        5, 10, -21,    3,
+        7, 16, -0.01, -4
+    ]);
+    mfequal(q1.q, [1.745328, 2.291833, -0.545415, 1.308996], 'test the case when the trace is 0.99 in a matrix which is not a rotation');
+
+    q1b = q1.fromMatrix([
+      -10, 11,  19,  2,
+        5, 10, -21,  3,
+        7, 16,   0, -4
+    ]);
+    mfequal(q1.q, [1.745743, 2.291288, -0.545545, 1.309307], 'test the case when the trace is 1 in a matrix which is not a rotation');
+
+    q1b = q1.fromMatrix([
+      -10, 11,  19,   2,
+        5, 10, -21,   3,
+        7, 16, 0.01, -4
+    ]);
+    mfequal(q1.q, [18.408188, 5.970223, -2.985111, 0.502494], 'test the case when the trace is 11 in a matrix which is not a rotation');
+
+    q1b = q1.fromMatrix([
+      -10, 11,  19,  2,
+        5, 10, -21,  3,
+        7, 16, 0.5, -4
+    ]);
+    mfequal(q1.q, [15.105186, 4.898980, -2.449490, 0.612372], 'test the case when the trace is 1.5 in a matrix which is not a rotation');
+
+    q1b = q1.fromMatrix([
+      -10, 11,  19,   2,
+        5, 10, -21,   3,
+        7, 16, 0.70, -4
+    ]);
+    mfequal(q1.q, [14.188852, 4.601790, -2.300895, 0.651920], 'test the case when the trace is 1.7 in a matrix which is not a rotation');
+
+    q1b = q1.fromMatrix([
+      -10, 11,  19,   2,
+        5, 10, -21,   3,
+        7, 16, 0.99, -4
+    ]);
+    mfequal(q1.q, [13.114303, 4.253287, -2.126644, 0.705337], 'test the case when the trace is 1.99 in a matrix which is not a rotation');
+
+    q1b = q1.fromMatrix([
+      -10, 11,  19,  2,
+        5, 10, -21,  3,
+        7, 16,   2, -4
+    ]);
+    mfequal(q1.q, [10.680980, 3.464102, -1.732051, 0.866025], 'test the case when the trace is 2 in a matrix which is not a rotation');
   },
 
   'fromPitchYawRoll': function () {
