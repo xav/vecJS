@@ -62,35 +62,38 @@ var q_tests = {
     mfequal(q1.q, [0.5, 0.5, 0.5, 0.5], 'fromMatrix values');
   },
 
-  'fromEuler': function () {
+  'fromPitchYawRoll': function () {
     var q1 = new vecJS.Q(), q1b,
         c = Math.PI/180;
 
-    q1b = q1.fromEuler([0, 0, 0]);
-    equal(q1, q1b, 'fromEuler return this');
-    mequal(q1.q, [0, 0, 0, 1], 'fromEuler reference orientation');
+    q1b = q1.fromPitchYawRoll([0, 0, 0]);
+    equal(q1, q1b, 'fromPitchYawRoll return this');
+    mequal(q1.q, [0, 0, 0, 1], 'fromPitchYawRoll reference orientation');
 
-    q1b = q1.fromEuler([90*c, 0, 0]);
-    mfequal(q1.q, [0.707106, 0, 0, 0.707106], 'fromEuler 90deg around X');
-    q1b = q1.fromEuler([180*c, 0, 0]);
-    mfequal(q1.q, [1, 0, 0, 0], 'fromEuler 180deg around X');
+    q1.fromPitchYawRoll([90*c, 0, 0]);
+    mfequal(q1.q, [0.707106, 0, 0, 0.707106], 'fromPitchYawRoll 90deg Pitch');
+    q1.fromPitchYawRoll([180*c, 0, 0]);
+    mfequal(q1.q, [1, 0, 0, 0], 'fromPitchYawRoll 180deg Pitch');
 
-    q1b = q1.fromEuler([0, 90*c, 0]);
-    mfequal(q1.q, [0, 0.707106, 0, 0.707106], 'fromEuler 90deg around Y');
-    q1b = q1.fromEuler([0, 180*c, 0]);
-    mfequal(q1.q, [0, 1, 0, 0], 'fromEuler 180deg around Y');
+    q1.fromPitchYawRoll([0, 90*c, 0]);
+    mfequal(q1.q, [0, 0.707106, 0, 0.707106], 'fromPitchYawRoll 90deg Yaw');
+    q1.fromPitchYawRoll([0, 180*c, 0]);
+    mfequal(q1.q, [0, 1, 0, 0], 'fromPitchYawRoll 180deg Yaw');
 
-    q1b = q1.fromEuler([0, 0, 90*c]);
-    mfequal(q1.q, [0, 0, 0.707106, 0.707106], 'fromEuler 90deg around Z');
-    q1b = q1.fromEuler([0, 0, 180*c]);
-    mfequal(q1.q, [0, 0, 1, 0], 'fromEuler 180deg around Z');
+    q1.fromPitchYawRoll([0, 0, 90*c]);
+    mfequal(q1.q, [0, 0, 0.707106, 0.707106], 'fromPitchYawRoll 90deg Roll');
+    q1.fromPitchYawRoll([0, 0, 180*c]);
+    mfequal(q1.q, [0, 0, 1, 0], 'fromPitchYawRoll 180deg Roll');
 
-    q1b = q1.fromEuler([180*c, 180*c, 0]);
-    mfequal(q1.q, [0, 0, -1, 0], 'fromEuler 180deg around X&Y');
-    q1b = q1.fromEuler([0, 180*c, 180*c]);
-    mfequal(q1.q, [-1, 0, 0, 0], 'fromEuler 180deg around Y&Z');
-    q1b = q1.fromEuler([180*c, 0, 180*c]);
-    mfequal(q1.q, [0, 1, 0, 0], 'fromEuler 180deg around X&Z');
+    q1.fromPitchYawRoll([180*c, 180*c, 0]);
+    mfequal(q1.q, [0, 0, -1, 0], 'fromPitchYawRoll 180deg Pitch and Yaw');
+    q1.fromPitchYawRoll([0, 180*c, 180*c]);
+    mfequal(q1.q, [1, 0, 0, 0], 'fromPitchYawRoll 180deg Yaw and Roll');
+    q1.fromPitchYawRoll([180*c, 0, 180*c]);
+    mfequal(q1.q, [0, -1, 0, 0], 'fromPitchYawRoll 180deg Pitch and Roll');
+
+    q1.fromPitchYawRoll([Math.PI/11, Math.PI/4, Math.PI/3]);
+    mfequal(q1.q, [0.303261, 0.262299, 0.410073, 0.819190], 'fromPitchYawRoll arbitrary values');
   },
 
   'add': function () {

@@ -171,7 +171,7 @@ var v3_tests = {
   },
 
   'mulQ': function () {
-    var q1 = new vecJS.Q().fromEuler([90*(Math.PI/180), 0, 0]),
+    var q1 = new vecJS.Q().fromPitchYawRoll([90*(Math.PI/180), 0, 0]),
         q2 = q1.clone(),
         v1 = new vecJS.V3([1, 2, 3]), v1b;
 

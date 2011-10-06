@@ -104,21 +104,21 @@ var m34_tests = {
       0, 0, 1, 0
     ], 'identity quaternion');
 
-    m1.fromQ(q1.fromEuler([90*c, 0, 0]).q);
+    m1.fromQ(q1.fromPitchYawRoll([90*c, 0, 0]).q);
     mfequal(m1.m, [
       1, 0,  0, 0,
       0, 0, -1, 0,
       0, 1,  0, 0
     ], '90deg around X');
 
-    m1.fromQ(q1.fromEuler([0, 90*c, 0]).q);
+    m1.fromQ(q1.fromPitchYawRoll([0, 90*c, 0]).q);
     mfequal(m1.m, [
        0, 0, 1, 0,
        0, 1, 0, 0,
       -1, 0, 0, 0
     ], '90deg around Y');
 
-    m1.fromQ(q1.fromEuler([0, 0, 90*c]).q);
+    m1.fromQ(q1.fromPitchYawRoll([0, 0, 90*c]).q);
     mfequal(m1.m, [
       0, -1, 0, 0,
       1,  0, 0, 0,

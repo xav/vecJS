@@ -135,30 +135,29 @@ vecJS.Q = function Q(q) {
     /**
      * Set the quaternion values from 3 orthonormal local axes.
      *
-     * @param {!Array.<Number>} a The values of the [roll,pitch,yaw] ([x,y,z]) angles in radians.
+     * @param {!Array.<Number>} a The [pitch,yaw,roll] ([x,y,z]) angles in radians.
      *
      * @return {!vecJS.Q} This instance.
      */
-    fromEuler: function (a) {
-      // qx = sin(x/2)*cos(y/2)*cos(z/2) - cos(x/2)*sin(y/2)*sin(z/2)
-      // qy = cos(x/2)*sin(y/2)*cos(z/2) + sin(x/2)*cos(y/2)*sin(z/2)
-      // qz = cos(x/2)*cos(y/2)*sin(z/2) - sin(x/2)*sin(y/2)*cos(z/2)
-      // qw = cos(x/2)*cos(y/2)*cos(z/2) + sin(x/2)*sin(y/2)*sin(z/2)
+    fromPitchYawRoll: function (a) {
+      // qx = sin(yaw/2)*cos(pitch/2)*sin(roll/2) + cos(yaw/2)*sin(pitch/2)*cos(roll/2);
+      // qy = sin(yaw/2)*cos(pitch/2)*cos(roll/2) - cos(yaw/2)*sin(pitch/2)*sin(roll/2);
+      // qz = cos(yaw/2)*cos(pitch/2)*sin(roll/2) - sin(yaw/2)*sin(pitch/2)*cos(roll/2);
+      // qw = cos(yaw/2)*cos(pitch/2)*cos(roll/2) + sin(yaw/2)*sin(pitch/2)*sin(roll/2);
       var q = this.q,
-
-          ax = a[0]*0.5, ay = a[1]*0.5, az = a[2]*0.5,
-          sx = Math.sin(ax), cx = Math.cos(ax),
+          ap = a[0]*0.5, ay = a[1]*0.5, ar = a[2]*0.5,
+          sp = Math.sin(ap), cp = Math.cos(ap),
           sy = Math.sin(ay), cy = Math.cos(ay),
-          sz = Math.sin(az), cz = Math.cos(az),
-          cycz = cy * cz,
-          sycz = sy * cz,
-          cysz = cy * sz,
-          sysz = sy * sz;
+          sr = Math.sin(ar), cr = Math.cos(ar),
+          cycr = cy * cr,
+          sycr = sy * cr,
+          cysr = cy * sr,
+          sysr = sy * sr;
 
-      q[0] = sx*cycz - cx*sysz;
-      q[1] = cx*sycz + sx*cysz;
-      q[2] = cx*cysz - sx*sycz;
-      q[3] = cx*cycz + sx*sysz;
+      q[0] = sysr*cp + cycr*sp;
+      q[1] = sycr*cp - cysr*sp;
+      q[2] = cysr*cp - sycr*sp;
+      q[3] = cycr*cp + sysr*sp;
 
       return this.normalize();
     },
