@@ -419,7 +419,7 @@ vecJS.Q = function Q(q) {
      * @param {Number} t
      */
     squad: function (a, tgA, tgB, b, t) {
-      this.slerp(_q1.slerp(a, b, t, true).q, _q2.slerp(tgA, tgB, t, false).q, 2*t*(1-t), false);
+      return this.slerp(_q1.slerp(a, b, t, true).q, _q2.slerp(tgA, tgB, t, false).q, 2*t*(1-t), false);
     },
 
     /**
