@@ -170,7 +170,15 @@ var q_tests = {
   },
 
   'squad': function () {
-    //TODO: squad
+    var q1 = new vecJS.Q(), q1b,
+        a = new vecJS.Q([1, 2, 4, 10]),
+        tga = new vecJS.Q([-3, 4, -5, 7]),
+        tgb = new vecJS.Q([-1111, 111, -11, 1]),
+        b = new vecJS.Q([91, -82, 7.3, -6.4]);
+
+    q1b = q1.squad(a.q, tga.q, tgb.q, b.q, 0.3);
+    equal(q1, q1b, 'squad return this');
+    mfequal(q1.q, [-156.296005, 30.241998, -2.5022, 7.3576], 'squad values');
   },
 
   'squadTangent': function () {
