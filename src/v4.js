@@ -257,7 +257,7 @@ vecJS.V4.prototype = {
   */
   normalize: function () {
     var v = this.v,
-        vx = v[0], vy = v[1], vz = v[2], vw = v[3]
+        vx = v[0], vy = v[1], vz = v[2], vw = v[3],
         l = vx*vx + vy*vy + vz*vz + vw*vw;
     if (l == 1) {
       return this;
