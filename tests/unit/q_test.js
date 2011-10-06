@@ -251,15 +251,26 @@ var q_tests = {
 
   'slerp': function () {
     var q1 = new vecJS.Q(), q1b,
-        q2 = new vecJS.Q([1, 2, 4, 10]),
-        q3 = new vecJS.Q([-3, 4, -5, 7]);
+        q = new vecJS.Q([1, 2, 4, 10]),
+        r = new vecJS.Q([-3, 4, -5, 7]),
+        t = new vecJS.Q([-1111, 111, -11, 1]),
+        smallq  = new vecJS.Q([0.1, 0.2, 0.3, 0.4]),
+        smallr  = new vecJS.Q([0.5, 0.6, 0.7, 0.8]);
 
-    q1b = q1.slerp(q2.q, q3.q, 0.3);
-
+    q1b = q1.slerp(q.q, r.q, 0.3);
     equal(q1, q1b, 'slerp return this');
     mfequal(q1.q, [-0.2, 2.6, 1.3, 9.1], 'slerp values');
+    mequal(q.q, [1, 2, 4, 10], 'slerp does not modify parameter 1');
+    mequal(r.q, [-3, 4, -5, 7], 'slerp does not modify parameter 2');
 
-    //TODO: test shortest path
+    q1.slerp(q.q, t.q, 0.3, true);
+    equal(q1, q1b, 'slerp return this');
+    mfequal(q1.q, [334, -31.9, 6.1, 6.7], 'shortest path');
+    //TODO: test longest path
+
+    q1.slerp(smallq.q, smallr.q, 0.3);
+    equal(q1, q1b, 'slerp return this');
+    mfequal(q1.q, [0.239485, 0.346580, 0.453676, 0.560772], 'small values');
   },
 
   'squad': function () {
