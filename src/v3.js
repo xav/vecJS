@@ -53,6 +53,7 @@ vecJS.V3.prototype = {
   set: function (v) {
     /*@DEBUG*/
     if (!dbg.isArray(v)) { throw 'v is not an array'; }
+    if (v.length !== 3) { throw 'v has an invalid size (' + (v.length) + ').'; }
     /*/@DEBUG*/
     var a = this.v;
     a[0] = v[0];
@@ -70,6 +71,7 @@ vecJS.V3.prototype = {
   copyTo: function (v) {
     /*@DEBUG*/
     if (!dbg.isArray(v)) { throw 'v is not an array.'; }
+    if (v.length !== 3) { throw 'v has an invalid size (' + (v.length) + ').'; }
     /*/@DEBUG*/
     var a = this.v;
     v[0] = a[0];
@@ -96,6 +98,7 @@ vecJS.V3.prototype = {
   loadTranslation: function (m) {
     /*@DEBUG*/
     if (!dbg.isArray(m)) { throw 'm is not an array'; }
+    if (m.length !== 12 && m.length !== 16) { throw 'm has an invalid size (' + (m.length) + ').'; }
     /*/@DEBUG*/
     var v = this.v;
     v[0] = m[3];
@@ -114,6 +117,7 @@ vecJS.V3.prototype = {
   loadScale: function (m) {
     /*@DEBUG*/
     if (!dbg.isArray(m)) { throw 'm is not an array'; }
+    if (m.length !== 12 && m.length !== 16) { throw 'm has an invalid size (' + (m.length) + ').'; }
     /*/@DEBUG*/
     var v = this.v;
     m = m.m;
@@ -133,6 +137,7 @@ vecJS.V3.prototype = {
   add: function (v) {
     /*@DEBUG*/
     if (!dbg.isArray(v)) { throw 'v is not an array'; }
+    if (v.length !== 3) { throw 'v has an invalid size (' + (v.length) + ').'; }
     /*/@DEBUG*/
     var a = this.v;
     a[0] += v[0];
@@ -150,6 +155,7 @@ vecJS.V3.prototype = {
   sub: function (v) {
     /*@DEBUG*/
     if (!dbg.isArray(v)) { throw 'v is not an array'; }
+    if (v.length !== 3) { throw 'v has an invalid size (' + (v.length) + ').'; }
     /*/@DEBUG*/
     var a = this.v;
     a[0] -= v[0];
@@ -170,6 +176,8 @@ vecJS.V3.prototype = {
     /*@DEBUG*/
     if (!dbg.isArray(a)) { throw 'a is not an array'; }
     if (!dbg.isArray(b)) { throw 'b is not an array'; }
+    if (a.length !== 3) { throw 'a has an invalid size (' + (a.length) + ').'; }
+    if (b.length !== 3) { throw 'b has an invalid size (' + (b.length) + ').'; }
     /*/@DEBUG*/
     var v = this.v;
     v[0] = a[0] + b[0];
@@ -189,6 +197,8 @@ vecJS.V3.prototype = {
     /*@DEBUG*/
     if (!dbg.isArray(a)) { throw 'a is not an array'; }
     if (!dbg.isArray(b)) { throw 'b is not an array'; }
+    if (a.length !== 3) { throw 'a has an invalid size (' + (a.length) + ').'; }
+    if (b.length !== 3) { throw 'b has an invalid size (' + (b.length) + ').'; }
     /*/@DEBUG*/
     var v = this.v;
     v[0] = a[0] - b[0];
@@ -276,6 +286,7 @@ vecJS.V3.prototype = {
   mulM: function (m) {
     /*@DEBUG*/
     if (!dbg.isArray(m)) { throw 'm is not an array'; }
+    if (m.length !== 12) { throw 'm has an invalid size (' + (m.length) + ').'; }
     /*/@DEBUG*/
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2];
@@ -297,6 +308,7 @@ vecJS.V3.prototype = {
   mulQ: function (q) {
     /*@DEBUG*/
     if (!dbg.isArray(q)) { throw 'q is not an array'; }
+    if (q.length !== 4) { throw 'q has an invalid size (' + (q.length) + ').'; }
     /*/@DEBUG*/
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2],
@@ -320,13 +332,14 @@ vecJS.V3.prototype = {
    * Multiply the specified matrix with this vector, project the result back to w = 1,
    * and assign the result to this instance.
    *
-   * @param {!Array.<Number>} m The matrix to multiply ({@link vecJS.M34#m}).
+   * @param {!Array.<Number>} m The matrix to multiply ({@link vecJS.M44#m}).
    *
    * @return {!vecJS.V3} This instance.
    */
   mulCoord: function (m) {
     /*@DEBUG*/
     if (!dbg.isArray(m)) { throw 'm is not an array'; }
+    if (m.length !== 16) { throw 'm has an invalid size (' + (m.length) + ').'; }
     /*/@DEBUG*/
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2],
@@ -349,6 +362,7 @@ vecJS.V3.prototype = {
   cross: function (v) {
     /*@DEBUG*/
     if (!dbg.isArray(v)) { throw 'v is not an array'; }
+    if (v.length !== 3) { throw 'v has an invalid size (' + (v.length) + ').'; }
     /*/@DEBUG*/
     var a = this.v,
         ax = a[0], ay = a[1], az = a[2],
@@ -373,6 +387,8 @@ vecJS.V3.prototype = {
     /*@DEBUG*/
     if (!dbg.isArray(a)) { throw 'a is not an array'; }
     if (!dbg.isArray(b)) { throw 'b is not an array'; }
+    if (a.length !== 3) { throw 'a has an invalid size (' + (a.length) + ').'; }
+    if (b.length !== 3) { throw 'b has an invalid size (' + (b.length) + ').'; }
     /*/@DEBUG*/
     var v = this.v,
         ax = a[0], ay = a[1], az = a[2],
@@ -395,6 +411,7 @@ vecJS.V3.prototype = {
   dot: function (v) {
     /*@DEBUG*/
     if (!dbg.isArray(v)) { throw 'v is not an array'; }
+    if (v.length !== 3) { throw 'v has an invalid size (' + (v.length) + ').'; }
     /*/@DEBUG*/
     var a = this.v;
     return a[0]*v[0] + a[1]*v[1] + a[2]*v[2];
@@ -413,7 +430,9 @@ vecJS.V3.prototype = {
     /*@DEBUG*/
     if (!dbg.isArray(a)) { throw 'a is not an array'; }
     if (!dbg.isArray(b)) { throw 'b is not an array'; }
-    if (!(typeof l === 'number')) { throw 'l is not an number'; }
+    if (!dbg.isNumber(l)) { throw 'l is not an number'; }
+    if (a.length !== 3) { throw 'a has an invalid size (' + (a.length) + ').'; }
+    if (b.length !== 3) { throw 'b has an invalid size (' + (b.length) + ').'; }
     /*/@DEBUG*/
     var v = this.v,
         ax = a[0], ay = a[1], az = a[2];
@@ -471,6 +490,7 @@ vecJS.V3.prototype = {
   distance: function (v) {
     /*@DEBUG*/
     if (!dbg.isArray(v)) { throw 'v is not an array'; }
+    if (v.length !== 3) { throw 'v has an invalid size (' + (v.length) + ').'; }
     /*/@DEBUG*/
     var a = this.v,
         dx = a[0] - v[0],
@@ -488,6 +508,7 @@ vecJS.V3.prototype = {
   squaredDistance: function (v) {
     /*@DEBUG*/
     if (!dbg.isArray(v)) { throw 'v is not an array'; }
+    if (v.length !== 3) { throw 'v has an invalid size (' + (v.length) + ').'; }
     /*/@DEBUG*/
     var a = this.v,
         dx = a[0] - v[0],
