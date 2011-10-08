@@ -69,7 +69,7 @@ var dbg = {
     return a instanceof GLMatrixArray || a instanceof Array;
   },
   isNumber: function (n) {
-    return typeof s === 'number';
+    return typeof n === 'number';
   }
 };
 /*/@DEBUG*/
