@@ -25,6 +25,10 @@
 * @constructor
 */
 vecJS.V3 = function V3(v) {
+  /*DEBUG*/
+  if (v !== undefined && !(v instanceof GLMatrixArray || v instanceof Array)) { throw 'v is not an array: ' + typeof v; }
+  /*/DEBUG*/
+  
   if (this instanceof vecJS.V3) {
     var a = this.v = new GLMatrixArray(3);
     if (v) {
@@ -48,6 +52,10 @@ vecJS.V3.prototype = {
   * @return {!vecJS.V3} This instance.
   */
   set: function (v) {
+    /*DEBUG*/
+    if (!(v instanceof GLMatrixArray || v instanceof Array)) { throw 'v is not an array'; }
+    /*/DEBUG*/
+
     var a = this.v;
     a[0] = v[0];
     a[1] = v[1];
@@ -62,6 +70,10 @@ vecJS.V3.prototype = {
   * @return {!vecJS.V3} This instance.
   */
   copyTo: function (v) {
+    /*DEBUG*/
+    if (!(v instanceof GLMatrixArray || v instanceof Array)) { throw 'v is not an array.'; }
+    /*/DEBUG*/
+
     var a = this.v;
     v[0] = a[0];
     v[1] = a[1];
@@ -85,6 +97,10 @@ vecJS.V3.prototype = {
    * @return {!vecJS.V3} This instance.
    */
   loadTranslation: function (m) {
+    /*DEBUG*/
+    if (!(m instanceof GLMatrixArray || m instanceof Array)) { throw 'm is not an array'; }
+    /*/DEBUG*/
+
     var v = this.v;
     v[0] = m[3];
     v[1] = m[7];
@@ -100,6 +116,10 @@ vecJS.V3.prototype = {
    * @return {!vecJS.V3} This instance.
    */
   loadScale: function (m) {
+    /*DEBUG*/
+    if (!(m instanceof GLMatrixArray || m instanceof Array)) { throw 'm is not an array'; }
+    /*/DEBUG*/
+
     var v = this.v;
     m = m.m;
     v[0] = m[0];
@@ -116,6 +136,10 @@ vecJS.V3.prototype = {
   * @return {!vecJS.V3} This instance.
   */
   add: function (v) {
+    /*DEBUG*/
+    if (!(v instanceof GLMatrixArray || v instanceof Array)) { throw 'v is not an array'; }
+    /*/DEBUG*/
+
     var a = this.v;
     a[0] += v[0];
     a[1] += v[1];
@@ -130,6 +154,10 @@ vecJS.V3.prototype = {
   * @return {!vecJS.V3} This instance.
   */
   sub: function (v) {
+    /*DEBUG*/
+    if (!(v instanceof GLMatrixArray || v instanceof Array)) { throw 'v is not an array'; }
+    /*/DEBUG*/
+
     var a = this.v;
     a[0] -= v[0];
     a[1] -= v[1];
@@ -146,6 +174,11 @@ vecJS.V3.prototype = {
   * @return {!vecJS.V3} This instance.
   */
   assignAdd: function (a, b) {
+    /*DEBUG*/
+    if (!(a instanceof GLMatrixArray || a instanceof Array)) { throw 'a is not an array'; }
+    if (!(b instanceof GLMatrixArray || b instanceof Array)) { throw 'b is not an array'; }
+    /*/DEBUG*/
+
     var v = this.v;
     v[0] = a[0] + b[0];
     v[1] = a[1] + b[1];
@@ -161,6 +194,11 @@ vecJS.V3.prototype = {
   * @return {!vecJS.V3} This instance.
   */
   assignSub: function (a, b) {
+    /*DEBUG*/
+    if (!(a instanceof GLMatrixArray || a instanceof Array)) { throw 'a is not an array'; }
+    if (!(b instanceof GLMatrixArray || b instanceof Array)) { throw 'b is not an array'; }
+    /*/DEBUG*/
+
     var v = this.v;
     v[0] = a[0] - b[0];
     v[1] = a[1] - b[1];
@@ -176,6 +214,10 @@ vecJS.V3.prototype = {
   * @return {!vecJS.V3} This instance.
   */
   addScalar: function (s) {
+    /*DEBUG*/
+    if (!(typeof s === 'number')) { throw 's is not an number'; }
+    /*/DEBUG*/
+
     var v = this.v;
     v[0] += s;
     v[1] += s;
@@ -190,6 +232,10 @@ vecJS.V3.prototype = {
   * @return {!vecJS.V3} This instance.
   */
   subScalar: function (s) {
+    /*DEBUG*/
+    if (!(typeof s === 'number')) { throw 's is not an number'; }
+    /*/DEBUG*/
+
     var v = this.v;
     v[0] -= s;
     v[1] -= s;
@@ -204,6 +250,10 @@ vecJS.V3.prototype = {
   * @return {!vecJS.V3} This instance.
   */
   mulScalar: function (s) {
+    /*DEBUG*/
+    if (!(typeof s === 'number')) { throw 's is not an number'; }
+    /*/DEBUG*/
+
     var v = this.v;
     v[0] *= s;
     v[1] *= s;
@@ -218,6 +268,10 @@ vecJS.V3.prototype = {
   * @return {!vecJS.V3} This instance.
   */
   divScalar: function (s) {
+    /*DEBUG*/
+    if (!(typeof s === 'number')) { throw 's is not an number'; }
+    /*/DEBUG*/
+
     var v = this.v;
     v[0] /= s;
     v[1] /= s;
@@ -233,6 +287,10 @@ vecJS.V3.prototype = {
   * @return {!vecJS.V3} This instance.
   */
   mulM: function (m) {
+    /*DEBUG*/
+    if (!(m instanceof GLMatrixArray || m instanceof Array)) { throw 'm is not an array'; }
+    /*/DEBUG*/
+
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2];
 
@@ -251,6 +309,10 @@ vecJS.V3.prototype = {
   * @return {!vecJS.V3} This instance.
    */
   mulQ: function (q) {
+    /*DEBUG*/
+    if (!(q instanceof GLMatrixArray || q instanceof Array)) { throw 'q is not an array'; }
+    /*/DEBUG*/
+
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2],
         qx = q[0], qy = q[1], qz = q[2], qw = q[3],
@@ -278,6 +340,10 @@ vecJS.V3.prototype = {
    * @return {!vecJS.V3} This instance.
    */
   mulCoord: function (m) {
+    /*DEBUG*/
+    if (!(m instanceof GLMatrixArray || m instanceof Array)) { throw 'm is not an array'; }
+    /*/DEBUG*/
+
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2],
         w = vx*m[12] + vy*m[13] + vz*m[14] + m[15];
@@ -297,6 +363,10 @@ vecJS.V3.prototype = {
   * @return {!vecJS.V3} This instance.
   */
   cross: function (v) {
+    /*DEBUG*/
+    if (!(v instanceof GLMatrixArray || v instanceof Array)) { throw 'v is not an array'; }
+    /*/DEBUG*/
+
     var a = this.v,
         ax = a[0], ay = a[1], az = a[2],
         bx = v[0], by = v[1], bz = v[2];
@@ -317,6 +387,11 @@ vecJS.V3.prototype = {
   * @return {!vecJS.V3} This instance.
   */
   assignCross: function (a, b) {
+    /*DEBUG*/
+    if (!(a instanceof GLMatrixArray || a instanceof Array)) { throw 'a is not an array'; }
+    if (!(b instanceof GLMatrixArray || b instanceof Array)) { throw 'b is not an array'; }
+    /*/DEBUG*/
+
     var v = this.v,
         ax = a[0], ay = a[1], az = a[2],
         bx = b[0], by = b[1], bz = b[2];
@@ -336,6 +411,10 @@ vecJS.V3.prototype = {
   * @return {number} The result of the dot product.
   */
   dot: function (v) {
+    /*DEBUG*/
+    if (!(v instanceof GLMatrixArray || v instanceof Array)) { throw 'v is not an array'; }
+    /*/DEBUG*/
+
     var a = this.v;
     return a[0]*v[0] + a[1]*v[1] + a[2]*v[2];
   },
@@ -350,6 +429,12 @@ vecJS.V3.prototype = {
    * @return {!vecJS.V3} This instance.
    */
   lerp: function (a, b, l) {
+    /*DEBUG*/
+    if (!(a instanceof GLMatrixArray || a instanceof Array)) { throw 'a is not an array'; }
+    if (!(b instanceof GLMatrixArray || b instanceof Array)) { throw 'b is not an array'; }
+    if (!(typeof l === 'number')) { throw 'l is not an number'; }
+    /*/DEBUG*/
+
     var v = this.v,
         ax = a[0], ay = a[1], az = a[2];
 
@@ -404,6 +489,10 @@ vecJS.V3.prototype = {
   * @return {number} The distance between the tips of two vectors.
   */
   distance: function (v) {
+    /*DEBUG*/
+    if (!(v instanceof GLMatrixArray || v instanceof Array)) { throw 'v is not an array'; }
+    /*/DEBUG*/
+
     var a = this.v,
         dx = a[0] - v[0],
         dy = a[1] - v[1],
@@ -418,6 +507,10 @@ vecJS.V3.prototype = {
   * @return {number} The squared distance between the tips of two vectors.
   */
   squaredDistance: function (v) {
+    /*DEBUG*/
+    if (!(v instanceof GLMatrixArray || v instanceof Array)) { throw 'v is not an array'; }
+    /*/DEBUG*/
+
     var a = this.v,
         dx = a[0] - v[0],
         dy = a[1] - v[1],
