@@ -24,6 +24,7 @@ MODULES = ${SRC_DIR}/intro.js\
 	${SRC_DIR}/outro.js
 
 
+VJS_DBG = ${DIST_DIR}/vec.dbg.js
 VJS = ${DIST_DIR}/vec.js
 VJS_MIN = ${DIST_DIR}/vec.min.js
 VJS_DOC = ${DOC_DIR}/index.html
@@ -46,7 +47,7 @@ ${DIST_DIR}:
 
 vjs: ${VJS}
 
-${VJS}: ${MODULES} | ${DIST_DIR}
+${VJS_DBG}: ${MODULES} | ${DIST_DIR}
 	@@echo "Building" ${VJS}
 	@@echo "Precision:" ${PRECISION}
 
@@ -55,6 +56,11 @@ ${VJS}: ${MODULES} | ${DIST_DIR}
 		sed 's/@PRECISION/${PRECISION}/g' | \
 		sed 's/@INV_PRECISION/${INV_PRECISION}/g' | \
 		sed '/@license/,/\*\// d' | \
+		${VER} > ${VJS_DBG};
+
+${VJS}: ${VJS_DBG}
+	@@cat ${VJS_DBG} | \
+		sed '/*@DEBUG/,/\/@DEBUG/ d' | \
 		${VER} > ${VJS};
 
 min: vjs ${VJS_MIN}
