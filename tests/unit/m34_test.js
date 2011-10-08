@@ -47,7 +47,7 @@ var m34_tests = {
     ]), m1b,
         m2 = new vecJS.M34();
 
-    m1b = m1.copyTo(m2);
+    m1b = m1.copyTo(m2.m);
 
     notEqual(m1.m, m2.m, 'copyTo does not overwrite object');
     equal(m1, m1b, 'copyTo return this');

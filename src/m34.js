@@ -41,6 +41,10 @@
 * @constructor
 */
 vecJS.M34 = function M34(m) {
+  /*@DEBUG*/
+  if (m !== undefined && !dbg.isArray(m)) { throw 'v is not an array'; }
+  if (m !== undefined && m.length !== 12) { throw 'm has an invalid size (' + (m.length) + ').'; }
+  /*/@DEBUG*/
   if (this instanceof vecJS.M34) {
     var a = this.m = new GLMatrixArray(12);
     if (m) {
@@ -69,6 +73,10 @@ vecJS.M34 = function M34(m) {
     * @return {!vecJS.M34} This instance.
     */
     set: function (m) {
+      /*@DEBUG*/
+      if (!dbg.isArray(m)) { throw 'm is not an array'; }
+      if (m.length !== 12) { throw 'm has an invalid size (' + (m.length) + ').'; }
+      /*/@DEBUG*/
       var a = this.m;
       a[0]  = m[0];  a[1]  = m[1];  a[2]  = m[2] ; a[3]  = m[3];
       a[4]  = m[4];  a[5]  = m[5];  a[6]  = m[6] ; a[7]  = m[7];
@@ -83,8 +91,11 @@ vecJS.M34 = function M34(m) {
     * @return {!vecJS.M34} This instance.
     */
     copyTo: function (m) {
+      /*@DEBUG*/
+      if (!dbg.isArray(m)) { throw 'm is not an array'; }
+      if (m.length !== 12) { throw 'm has an invalid size (' + (m.length) + ').'; }
+      /*/@DEBUG*/
       var a = this.m;
-      m = m.m;
 
       m[0]  = a[0];  m[1]  = a[1];  m[2]  = a[2] ; m[3]  = a[3];
       m[4]  = a[4];  m[5]  = a[5];  m[6]  = a[6] ; m[7]  = a[7];
@@ -109,6 +120,10 @@ vecJS.M34 = function M34(m) {
     * @return {!vecJS.M34} This instance.
      */
     fromQ: function (q) {
+      /*@DEBUG*/
+      if (!dbg.isArray(q)) { throw 'q is not an array'; }
+      if (q.length !== 4) { throw 'q has an invalid size (' + (q.length) + ').'; }
+      /*/@DEBUG*/
       var x = q[0], y = q[1], z = q[2], w = q[3],
           x2 = x + x, y2 = y + y, z2 = z + z,
           xx = x*x2, xy = x*y2, xz = x*z2,
@@ -156,6 +171,10 @@ vecJS.M34 = function M34(m) {
     * @return {!vecJS.M34} This instance.
     */
     mul: function (m) {
+      /*@DEBUG*/
+      if (!dbg.isArray(m)) { throw 'm is not an array'; }
+      if (m.length !== 12) { throw 'm has an invalid size (' + (m.length) + ').'; }
+      /*/@DEBUG*/
       var a = this.m,
           a00 = a[0], a01 = a[1], a02 = a[2],  a03 = a[3],
           a10 = a[4], a11 = a[5], a12 = a[6],  a13 = a[7],
@@ -191,6 +210,12 @@ vecJS.M34 = function M34(m) {
     * @return {!vecJS.M34} This instance.
     */
     assignMul: function (a, b) {
+      /*@DEBUG*/
+      if (!dbg.isArray(a)) { throw 'a is not an array'; }
+      if (!dbg.isArray(b)) { throw 'b is not an array'; }
+      if (a.length !== 12) { throw 'a has an invalid size (' + (a.length) + ').'; }
+      if (b.length !== 12) { throw 'b has an invalid size (' + (b.length) + ').'; }
+      /*/@DEBUG*/
       var m = this.m,
           a00 = a[0], a01 = a[1], a02 = a[2],  a03 = a[3],
           a10 = a[4], a11 = a[5], a12 = a[6],  a13 = a[7],
@@ -264,6 +289,9 @@ vecJS.M34 = function M34(m) {
     * @return {!vecJS.M34} This instance.
     */
     invert: function (d) {
+      /*@DEBUG*/
+      if (d !== undefined && !dbg.isNumber(m)) { throw 'd is not a number'; }
+      /*/@DEBUG*/
       var m = this.m,
           m00 = m[0], m01 = m[1], m02 = m[2],  m03 = m[3],
           m10 = m[4], m11 = m[5], m12 = m[6],  m13 = m[7],
@@ -299,6 +327,10 @@ vecJS.M34 = function M34(m) {
     * @return {!vecJS.M34} This instance.
     */
     translate: function (v) {
+      /*@DEBUG*/
+      if (!dbg.isArray(v)) { throw 'v is not an array'; }
+      if (v.length !== 3) { throw 'v has an invalid size (' + (v.length) + ').'; }
+      /*/@DEBUG*/
       var m = this.m,
           dx = v[0],
           dy = v[1],
@@ -318,6 +350,10 @@ vecJS.M34 = function M34(m) {
     * @return {!vecJS.M34} This instance.
     */
     scale: function (v) {
+      /*@DEBUG*/
+      if (!dbg.isArray(v)) { throw 'v is not an array'; }
+      if (v.length !== 3) { throw 'v has an invalid size (' + (v.length) + ').'; }
+      /*/@DEBUG*/
       var m = this.m,
           sx = v[0],
           sy = v[1],
@@ -348,6 +384,11 @@ vecJS.M34 = function M34(m) {
      * @return {!vecJS.M34} This instance.
      */
     rotate: function (theta, v) {
+      /*@DEBUG*/
+      if (!dbg.isNumber(theta)) { throw 'theta is not a number'; }
+      if (!dbg.isArray(v)) { throw 'v is not an array'; }
+      if (v.length !== 3) { throw 'v has an invalid size (' + (v.length) + ').'; }
+      /*/@DEBUG*/
       var m = this.m,
           vx = v[0], vy = v[1], vz = v[2],
           s = Math.sin(theta), c = Math.cos(theta),
@@ -383,6 +424,9 @@ vecJS.M34 = function M34(m) {
     * @return {!vecJS.M34} This instance.
     */
     rotateX: function (theta) {
+      /*@DEBUG*/
+      if (!dbg.isNumber(theta)) { throw 'theta is not a number'; }
+      /*/@DEBUG*/
       var m = this.m,
           a01  = m[1], a02  = m[2],
           a11  = m[5], a12  = m[6],
@@ -407,6 +451,9 @@ vecJS.M34 = function M34(m) {
     * @return {!vecJS.M34} This instance.
     */
     rotateY: function (theta) {
+      /*@DEBUG*/
+      if (!dbg.isNumber(theta)) { throw 'theta is not a number'; }
+      /*/@DEBUG*/
       var m = this.m,
           a00  = m[0], a02  = m[2],
           a10  = m[4], a12  = m[6],
@@ -431,6 +478,9 @@ vecJS.M34 = function M34(m) {
     * @return {!vecJS.M34} This instance.
     */
     rotateZ: function (theta) {
+      /*@DEBUG*/
+      if (!dbg.isNumber(theta)) { throw 'theta is not a number'; }
+      /*/@DEBUG*/
       var m = this.m,
           a00  = m[0], a01  = m[1],
           a10  = m[4], a11  = m[5],
@@ -456,6 +506,10 @@ vecJS.M34 = function M34(m) {
     * @return {!vecJS.M34} This instance.
     */
     setTranslate: function (v, overwriteRotation) {
+      /*@DEBUG*/
+      if (!dbg.isArray(v)) { throw 'v is not an array'; }
+      if (v.length !== 3) { throw 'v has an invalid size (' + (v.length) + ').'; }
+      /*/@DEBUG*/
       var m = this.m;
       m[3]  = v[0];
       m[7]  = v[1];
@@ -476,6 +530,10 @@ vecJS.M34 = function M34(m) {
     * @return {!vecJS.M34} This instance.
     */
     setScale: function (v) {
+      /*@DEBUG*/
+      if (!dbg.isArray(v)) { throw 'v is not an array'; }
+      if (v.length !== 3) { throw 'v has an invalid size (' + (v.length) + ').'; }
+      /*/@DEBUG*/
       return this.set([
         v[0], 0,    0,    0,
         0,    v[1], 0,    0,
@@ -493,6 +551,11 @@ vecJS.M34 = function M34(m) {
      * @return {!vecJS.M34} This instance.
      */
     setRotate: function (theta, v) {
+      /*@DEBUG*/
+      if (!dbg.isNumber(theta)) { throw 'theta is not a number'; }
+      if (!dbg.isArray(v)) { throw 'v is not an array'; }
+      if (v.length !== 3) { throw 'v has an invalid size (' + (v.length) + ').'; }
+      /*/@DEBUG*/
       // From http://en.wikipedia.org/wiki/Rotation_matrix#Rotation_matrix_from_axis_and_angle
       var m = this.m,
           vx = v[0], vy = v[1], vz = v[2],
@@ -524,6 +587,9 @@ vecJS.M34 = function M34(m) {
     * @return {!vecJS.M34} This instance.
     */
     setRotateX: function (theta) {
+      /*@DEBUG*/
+      if (!dbg.isNumber(theta)) { throw 'theta is not a number'; }
+      /*/@DEBUG*/
       var c = Math.cos(theta),
           s = Math.sin(theta);
       return this.set([
@@ -540,6 +606,9 @@ vecJS.M34 = function M34(m) {
     * @return {!vecJS.M34} This instance.
     */
     setRotateY: function (theta) {
+      /*@DEBUG*/
+      if (!dbg.isNumber(theta)) { throw 'theta is not a number'; }
+      /*/@DEBUG*/
       var c = Math.cos(theta),
           s = Math.sin(theta);
       return this.set([
@@ -556,6 +625,9 @@ vecJS.M34 = function M34(m) {
     * @return {!vecJS.M34} This instance.
     */
     setRotateZ: function (theta) {
+      /*@DEBUG*/
+      if (!dbg.isNumber(theta)) { throw 'theta is not a number'; }
+      /*/@DEBUG*/
       var c = Math.cos(theta),
           s = Math.sin(theta);
       return this.set([
