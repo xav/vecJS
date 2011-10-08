@@ -70,7 +70,7 @@ var v3_tests = {
       v2 = new vecJS.V3([1, 2, 3]);
 
     v1b = v1.add(v2.v);
-    notEqual(v1.v, v2.v, 'add does not overwrite object'); //TODO: Replace this pattern with v1.v and v2.v on all files
+    notEqual(v1.v, v2.v, 'add does not overwrite object');
     equal(v1, v1b, 'add return this');
 
     mequal(v1.v, [11, 22, 33], 'add values');
@@ -182,6 +182,27 @@ var v3_tests = {
     mfequal(v1.v, [1, -3, 2], 'mulQ with 90deg around X');
   },
 
+  'mulCoord': function () {
+    var m1 = new vecJS.M44([
+      1, 5,  9, 13,
+      2, 6, 10, 14,
+      3, 7, 11, 15,
+      4, 8, 12, 16
+    ]),
+    v1 = new vecJS.V3([9, 6, 2]), v1b;
+
+    v1b = v1.mulCoord(m1.m);
+
+    equal(v1, v1b, 'mulCoord return this');
+    mequal(m1.m, [
+      1, 5,  9, 13,
+      2, 6, 10, 14,
+      3, 7, 11, 15,
+      4, 8, 12, 16
+    ], 'mulCoord does not change parameter')
+    mfequal(v1.v, [70.0/124, 88/124, 106/124], 'mulCoord values');
+  },
+  
   'cross': function () {
     var v1 = new vecJS.V3([1, 2, 3]), v1b,
       v2 = new vecJS.V3([3, 2, 1]);

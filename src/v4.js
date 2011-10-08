@@ -25,12 +25,16 @@
 * @constructor
 */
 vecJS.V4 = function V4(v) {
-  var a = this.v = new GLMatrixArray(4);
-  if (v) {
-    a[0] = v[0];
-    a[1] = v[1];
-    a[2] = v[2];
-    a[3] = v[3];
+  if (this instanceof vecJS.V4) {
+    var a = this.v = new GLMatrixArray(4);
+    if (v) {
+      a[0] = v[0];
+      a[1] = v[1];
+      a[2] = v[2];
+      a[3] = v[3];
+    }
+  } else {
+    return new vecJS.V4(v);
   }
 };
 
@@ -40,7 +44,7 @@ vecJS.V4.prototype = {
   /**
   * Set the current instance values.
   *
-  * @param {!Array.<Number>} v The new values
+  * @param {!Array.<Number>} v The new [x,y,z,w] values.
   *
   * @return {!vecJS.V4} This instance.
   */
@@ -50,6 +54,21 @@ vecJS.V4.prototype = {
     a[1] = v[1];
     a[2] = v[2];
     a[3] = v[3];
+    return this;
+  },
+  /**
+  * Set the current instance values from a [x,y,z] array.
+  *
+  * @param {!Array.<Number>} v The new [x,y,z] values.
+  *
+  * @return {!vecJS.V4} This instance.
+  */
+  set3: function (v) {
+    var a = this.v;
+    a[0] = v[0];
+    a[1] = v[1];
+    a[2] = v[2];
+    a[3] = 1;
     return this;
   },
   /**

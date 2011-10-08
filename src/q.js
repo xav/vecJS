@@ -25,12 +25,16 @@
 * @constructor
 */
 vecJS.Q = function Q(q) {
-  var a = this.q = new GLMatrixArray(4);
-  if (q) {
-    a[0] = q[0];
-    a[1] = q[1];
-    a[2] = q[2];
-    a[3] = q[3];
+  if (this instanceof vecJS.Q) {
+    var a = this.q = new GLMatrixArray(4);
+    if (q) {
+      a[0] = q[0];
+      a[1] = q[1];
+      a[2] = q[2];
+      a[3] = q[3];
+    }
+  } else {
+    return new vecJS.Q(q);
   }
 };
 

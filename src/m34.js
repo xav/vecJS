@@ -41,11 +41,15 @@
 * @constructor
 */
 vecJS.M34 = function M34(m) {
-  var a = this.m = new GLMatrixArray(12);
-  if (m) {
-    a[0]  = m[0];  a[1]  = m[1];  a[2]  = m[2] ; a[3]  = m[3];
-    a[4]  = m[4];  a[5]  = m[5];  a[6]  = m[6] ; a[7]  = m[7];
-    a[8]  = m[8];  a[9]  = m[9];  a[10] = m[10]; a[11] = m[11];
+  if (this instanceof vecJS.M34) {
+    var a = this.m = new GLMatrixArray(12);
+    if (m) {
+      a[0]  = m[0];  a[1]  = m[1];  a[2]  = m[2] ; a[3]  = m[3];
+      a[4]  = m[4];  a[5]  = m[5];  a[6]  = m[6] ; a[7]  = m[7];
+      a[8]  = m[8];  a[9]  = m[9];  a[10] = m[10]; a[11] = m[11];
+    }
+  } else {
+    return new vecJS.M34(m);
   }
 };
 

@@ -25,11 +25,15 @@
 * @constructor
 */
 vecJS.V3 = function V3(v) {
-  var a = this.v = new GLMatrixArray(3);
-  if (v) {
-    a[0] = v[0];
-    a[1] = v[1];
-    a[2] = v[2];
+  if (this instanceof vecJS.V3) {
+    var a = this.v = new GLMatrixArray(3);
+    if (v) {
+      a[0] = v[0];
+      a[1] = v[1];
+      a[2] = v[2];
+    }
+  } else {
+    return new vecJS.V3(v);
   }
 };
 
@@ -261,6 +265,27 @@ vecJS.V3.prototype = {
     v[0] = ix*qw - iw*qx - iy*qz + iz*qy;
     v[1] = iy*qw - iw*qy - iz*qx + ix*qz;
     v[2] = iz*qw - iw*qz - ix*qy + iy*qx;
+
+    return this;
+  },
+
+  /**
+   * Multiply the specified matrix with this vector, project the result back to w = 1,
+   * and assign the result to this instance.
+   *
+   * @param {!Array.<Number>} m The matrix to multiply ({@link vecJS.M34#m}).
+   *
+   * @return {!vecJS.V3} This instance.
+   */
+  mulCoord: function (m) {
+    var v = this.v,
+        vx = v[0], vy = v[1], vz = v[2],
+        w = vx*m[12] + vy*m[13] + vz*m[14] + m[15];
+    console.debug('w', w);
+    
+    v[0] = (vx*m[0]  + vy*m[1]  + vz*m[2]  + m[3] ) / w;
+    v[1] = (vx*m[4]  + vy*m[5]  + vz*m[6]  + m[7] ) / w;
+    v[2] = (vx*m[8]  + vy*m[9]  + vz*m[10] + m[11]) / w;
 
     return this;
   },
