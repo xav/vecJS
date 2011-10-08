@@ -27,6 +27,7 @@
 vecJS.V4 = function V4(v) {
   /*@DEBUG*/
   if (v !== undefined && !dbg.isArray(v)) { throw 'v is not an array: ' + typeof v; }
+  if (v !== undefined && v.length !== 4) { throw 'v has an invalid size (' + (v.length) + ').'; }
   /*/@DEBUG*/
   if (this instanceof vecJS.V4) {
     var a = this.v = new GLMatrixArray(4);
@@ -54,6 +55,7 @@ vecJS.V4.prototype = {
   set: function (v) {
     /*@DEBUG*/
     if (!dbg.isArray(v)) { throw 'v is not an array'; }
+    if (v.length !== 4) { throw 'v has an invalid size (' + (v.length) + ').'; }
     /*/@DEBUG*/
     var a = this.v;
     a[0] = v[0];
@@ -72,6 +74,7 @@ vecJS.V4.prototype = {
   set3: function (v) {
     /*@DEBUG*/
     if (!dbg.isArray(v)) { throw 'v is not an array'; }
+    if (v.length !== 4) { throw 'v has an invalid size (' + (v.length) + ').'; }
     /*/@DEBUG*/
     var a = this.v;
     a[0] = v[0];
@@ -90,6 +93,7 @@ vecJS.V4.prototype = {
   copyTo: function (v) {
     /*@DEBUG*/
     if (!dbg.isArray(v)) { throw 'v is not an array'; }
+    if (v.length !== 4) { throw 'v has an invalid size (' + (v.length) + ').'; }
     /*/@DEBUG*/
     var a = this.v;
     v[0] = a[0];
@@ -117,6 +121,7 @@ vecJS.V4.prototype = {
   add: function (v) {
     /*@DEBUG*/
     if (!dbg.isArray(v)) { throw 'v is not an array'; }
+    if (v.length !== 4) { throw 'v has an invalid size (' + (v.length) + ').'; }
     /*/@DEBUG*/
     var a = this.v;
     a[0] += v[0];
@@ -135,6 +140,7 @@ vecJS.V4.prototype = {
   sub: function (v) {
     /*@DEBUG*/
     if (!dbg.isArray(v)) { throw 'v is not an array'; }
+    if (v.length !== 4) { throw 'v has an invalid size (' + (v.length) + ').'; }
     /*/@DEBUG*/
     var a = this.v;
     a[0] -= v[0];
@@ -156,6 +162,8 @@ vecJS.V4.prototype = {
     /*@DEBUG*/
     if (!dbg.isArray(a)) { throw 'a is not an array'; }
     if (!dbg.isArray(b)) { throw 'b is not an array'; }
+    if (a.length !== 4) { throw 'a has an invalid size (' + (a.length) + ').'; }
+    if (b.length !== 4) { throw 'b has an invalid size (' + (b.length) + ').'; }
     /*/@DEBUG*/
     var v = this.v;
     v[0] = a[0] + b[0];
@@ -176,6 +184,8 @@ vecJS.V4.prototype = {
     /*@DEBUG*/
     if (!dbg.isArray(a)) { throw 'a is not an array'; }
     if (!dbg.isArray(b)) { throw 'b is not an array'; }
+    if (a.length !== 4) { throw 'a has an invalid size (' + (a.length) + ').'; }
+    if (b.length !== 4) { throw 'b has an invalid size (' + (b.length) + ').'; }
     /*/@DEBUG*/
     var v = this.v;
     v[0] = a[0] - b[0];
@@ -194,7 +204,7 @@ vecJS.V4.prototype = {
   */
   addScalar: function (s) {
     /*@DEBUG*/
-    if (!dbg.isNumber(s)) { throw 's is not aa number'; }
+    if (!dbg.isNumber(s)) { throw 's is not a number'; }
     /*/@DEBUG*/
     var v = this.v;
     v[0] += s;
@@ -212,7 +222,7 @@ vecJS.V4.prototype = {
   */
   subScalar: function (s) {
     /*@DEBUG*/
-    if (!dbg.isNumber(s)) { throw 's is not aa number'; }
+    if (!dbg.isNumber(s)) { throw 's is not a number'; }
     /*/@DEBUG*/
     var v = this.v;
     v[0] -= s;
@@ -230,7 +240,7 @@ vecJS.V4.prototype = {
   */
   mulScalar: function (s) {
     /*@DEBUG*/
-    if (!dbg.isNumber(s)) { throw 's is not aa number'; }
+    if (!dbg.isNumber(s)) { throw 's is not a number'; }
     /*/@DEBUG*/
     var v = this.v;
     v[0] *= s;
@@ -248,7 +258,7 @@ vecJS.V4.prototype = {
   */
   divScalar: function (s) {
     /*@DEBUG*/
-    if (!dbg.isNumber(s)) { throw 's is not aa number'; }
+    if (!dbg.isNumber(s)) { throw 's is not a number'; }
     /*/@DEBUG*/
     var v = this.v;
     v[0] /= s;
@@ -268,6 +278,7 @@ vecJS.V4.prototype = {
   mulM34: function (m) {
     /*@DEBUG*/
     if (!dbg.isArray(m)) { throw 'm is not an array'; }
+    if (m.length !== 12) { throw 'm has an invalid size (' + (m.length) + ').'; }
     /*/@DEBUG*/
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2], vw = v[3];
@@ -282,13 +293,14 @@ vecJS.V4.prototype = {
   /**
   * Multiply the specified matrix with this vector and assign the result to this instance.
   *
-  * @param {!Array.<Number>} m The matrix to multiply ({@link vecJS.M34#m}).
+  * @param {!Array.<Number>} m The matrix to multiply ({@link vecJS.M44#m}).
   *
   * @return {!vecJS.V4} This instance.
   */
   mulM44: function (m) {
     /*@DEBUG*/
     if (!dbg.isArray(m)) { throw 'm is not an array'; }
+    if (m.length !== 16) { throw 'm has an invalid size (' + (m.length) + ').'; }
     /*/@DEBUG*/
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2], vw = v[3];
@@ -311,6 +323,7 @@ vecJS.V4.prototype = {
   dot: function (v) {
     /*@DEBUG*/
     if (!dbg.isArray(v)) { throw 'v is not an array'; }
+    if (v.length !== 4) { throw 'v has an invalid size (' + (v.length) + ').'; }
     /*/@DEBUG*/
     var a = this.v;
     return a[0]*v[0] + a[1]*v[1] + a[2]*v[2] + a[3]*v[3];
