@@ -25,6 +25,9 @@
 * @constructor
 */
 vecJS.V4 = function V4(v) {
+  /*@DEBUG*/
+  if (v !== undefined && !dbg.isArray(v)) { throw 'v is not an array: ' + typeof v; }
+  /*/@DEBUG*/
   if (this instanceof vecJS.V4) {
     var a = this.v = new GLMatrixArray(4);
     if (v) {
@@ -49,6 +52,9 @@ vecJS.V4.prototype = {
   * @return {!vecJS.V4} This instance.
   */
   set: function (v) {
+    /*@DEBUG*/
+    if (!dbg.isArray(v)) { throw 'v is not an array'; }
+    /*/@DEBUG*/
     var a = this.v;
     a[0] = v[0];
     a[1] = v[1];
@@ -64,6 +70,9 @@ vecJS.V4.prototype = {
   * @return {!vecJS.V4} This instance.
   */
   set3: function (v) {
+    /*@DEBUG*/
+    if (!dbg.isArray(v)) { throw 'v is not an array'; }
+    /*/@DEBUG*/
     var a = this.v;
     a[0] = v[0];
     a[1] = v[1];
@@ -79,6 +88,9 @@ vecJS.V4.prototype = {
   * @return {!vecJS.V4} This instance.
   */
   copyTo: function (v) {
+    /*@DEBUG*/
+    if (!dbg.isArray(v)) { throw 'v is not an array'; }
+    /*/@DEBUG*/
     var a = this.v;
     v[0] = a[0];
     v[1] = a[1];
@@ -103,6 +115,9 @@ vecJS.V4.prototype = {
   * @return {!vecJS.V4} This instance.
   */
   add: function (v) {
+    /*@DEBUG*/
+    if (!dbg.isArray(v)) { throw 'v is not an array'; }
+    /*/@DEBUG*/
     var a = this.v;
     a[0] += v[0];
     a[1] += v[1];
@@ -118,6 +133,9 @@ vecJS.V4.prototype = {
   * @return {!vecJS.V4} This instance.
   */
   sub: function (v) {
+    /*@DEBUG*/
+    if (!dbg.isArray(v)) { throw 'v is not an array'; }
+    /*/@DEBUG*/
     var a = this.v;
     a[0] -= v[0];
     a[1] -= v[1];
@@ -135,6 +153,10 @@ vecJS.V4.prototype = {
   * @return {!vecJS.V4} This instance.
   */
   assignAdd: function (a, b) {
+    /*@DEBUG*/
+    if (!dbg.isArray(a)) { throw 'a is not an array'; }
+    if (!dbg.isArray(b)) { throw 'b is not an array'; }
+    /*/@DEBUG*/
     var v = this.v;
     v[0] = a[0] + b[0];
     v[1] = a[1] + b[1];
@@ -151,6 +173,10 @@ vecJS.V4.prototype = {
   * @return {!vecJS.V4} This instance.
   */
   assignSub: function (a, b) {
+    /*@DEBUG*/
+    if (!dbg.isArray(a)) { throw 'a is not an array'; }
+    if (!dbg.isArray(b)) { throw 'b is not an array'; }
+    /*/@DEBUG*/
     var v = this.v;
     v[0] = a[0] - b[0];
     v[1] = a[1] - b[1];
@@ -167,6 +193,9 @@ vecJS.V4.prototype = {
   * @return {!vecJS.V4} This instance.
   */
   addScalar: function (s) {
+    /*@DEBUG*/
+    if (!dbg.isNumber(s)) { throw 's is not aa number'; }
+    /*/@DEBUG*/
     var v = this.v;
     v[0] += s;
     v[1] += s;
@@ -182,6 +211,9 @@ vecJS.V4.prototype = {
   * @return {!vecJS.V4} This instance.
   */
   subScalar: function (s) {
+    /*@DEBUG*/
+    if (!dbg.isNumber(s)) { throw 's is not aa number'; }
+    /*/@DEBUG*/
     var v = this.v;
     v[0] -= s;
     v[1] -= s;
@@ -197,6 +229,9 @@ vecJS.V4.prototype = {
   * @return {!vecJS.V4} This instance.
   */
   mulScalar: function (s) {
+    /*@DEBUG*/
+    if (!dbg.isNumber(s)) { throw 's is not aa number'; }
+    /*/@DEBUG*/
     var v = this.v;
     v[0] *= s;
     v[1] *= s;
@@ -212,6 +247,9 @@ vecJS.V4.prototype = {
   * @return {!vecJS.V4} This instance.
   */
   divScalar: function (s) {
+    /*@DEBUG*/
+    if (!dbg.isNumber(s)) { throw 's is not aa number'; }
+    /*/@DEBUG*/
     var v = this.v;
     v[0] /= s;
     v[1] /= s;
@@ -228,6 +266,9 @@ vecJS.V4.prototype = {
   * @return {!vecJS.V4} This instance.
   */
   mulM34: function (m) {
+    /*@DEBUG*/
+    if (!dbg.isArray(m)) { throw 'm is not an array'; }
+    /*/@DEBUG*/
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2], vw = v[3];
 
@@ -246,6 +287,9 @@ vecJS.V4.prototype = {
   * @return {!vecJS.V4} This instance.
   */
   mulM44: function (m) {
+    /*@DEBUG*/
+    if (!dbg.isArray(m)) { throw 'm is not an array'; }
+    /*/@DEBUG*/
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2], vw = v[3];
 
@@ -265,6 +309,9 @@ vecJS.V4.prototype = {
   * @return {number} The result of the dot product.
   */
   dot: function (v) {
+    /*@DEBUG*/
+    if (!dbg.isArray(v)) { throw 'v is not an array'; }
+    /*/@DEBUG*/
     var a = this.v;
     return a[0]*v[0] + a[1]*v[1] + a[2]*v[2] + a[3]*v[3];
   },
