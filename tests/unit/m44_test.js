@@ -289,46 +289,26 @@ var m44_tests = {
     ], 'm*inv(m) = identity');
   },
 
-  'lookAtLH': function () {
+  'lookAt': function () {
     var m1 = new vecJS.M44(), m1b,
         eye = new vecJS.V3([8, -5, 5.75]),
         at = new vecJS.V3([-2, 13, -9]),
         up = new vecJS.V3([1, -3, 7]);
 
-    m1b = m1.lookAtLH(eye.v, at.v, up.v);
-    equal(m1, m1b, 'lookAtLH returns this');
-    mequal(eye.v, [8, -5, 5.75], 'lookAtLH does not modify eye parameter');
-    mequal(at.v,  [-2, 13, -9], 'lookAtLH does not modify center parameter');
-    mequal(up.v,  [1, -3, 7], 'lookAtLH does not modify up parameter');
+    m1b = m1.lookAt(eye.v, at.v, up.v);
+    equal(m1, m1b, 'lookAt returns this');
+    mequal(eye.v, [8, -5, 5.75], 'lookAt does not modify eye parameter');
+    mequal(at.v,  [-2, 13, -9], 'lookAt does not modify center parameter');
+    mequal(up.v,  [1, -3, 7], 'lookAt does not modify up parameter');
 
     mfequal(m1.m, [
-      -0.822465, -0.409489, -0.394803, 0,
-      -0.555856,  0.431286,  0.710645, 0,
-      -0.120729,  0.803935, -0.582335, 0,
-       4.494634,  0.809719, 10.060076, 1
-    ], 'lookAtLH values');
+      -0.822465, -0.555856, -0.120729,  4.494634,
+      -0.409489,  0.431286,  0.803935,  0.809719,
+      -0.394803,  0.710645, -0.582335, 10.060076,
+      0, 0, 0, 1
+    ], 'lookAt values');
   },
   
-  'lookAtRH': function () {
-    var m1 = new vecJS.M44(), m1b,
-        eye = new vecJS.V3([8, -5, 5.75]),
-        at = new vecJS.V3([-2, 13, -9]),
-        up = new vecJS.V3([1, -3, 7]);
-
-    m1b = m1.lookAtRH(eye.v, at.v, up.v);
-    equal(m1, m1b, 'lookAtRH returns this');
-    mequal(eye.v, [8, -5, 5.75], 'lookAtRH does not modify eye parameter');
-    mequal(at.v,  [-2, 13, -9], 'lookAtRH does not modify center parameter');
-    mequal(up.v,  [1, -3, 7], 'lookAtRH does not modify up parameter');
-
-    mfequal(m1.m, [
-      0.822465, -0.409489,  0.394803,  0,
-      0.555856,  0.431286, -0.710645,  0,
-      0.120729,  0.803935,  0.582335,  0,
-      -4.494634, 0.809719, -10.060076, 1
-    ], 'lookAtRH values');
-  },
-
   'perspectiveFrustum': function () {
     //TODO: perspectiveFrustum
   },
