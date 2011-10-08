@@ -62,3 +62,14 @@ vecJS.noConflict = function (removeAll) {
 
   return vecJS;
 };
+
+/*@DEBUG*/
+var dbg = {
+  isArray: function (a) {
+    return a instanceof GLMatrixArray || a instanceof Array;
+  },
+  isNumber: function (n) {
+    return typeof s === 'number';
+  }
+};
+/*/@DEBUG*/
