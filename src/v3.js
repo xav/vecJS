@@ -281,8 +281,7 @@ vecJS.V3.prototype = {
     var v = this.v,
         vx = v[0], vy = v[1], vz = v[2],
         w = vx*m[12] + vy*m[13] + vz*m[14] + m[15];
-    console.debug('w', w);
-    
+
     v[0] = (vx*m[0]  + vy*m[1]  + vz*m[2]  + m[3] ) / w;
     v[1] = (vx*m[4]  + vy*m[5]  + vz*m[6]  + m[7] ) / w;
     v[2] = (vx*m[8]  + vy*m[9]  + vz*m[10] + m[11]) / w;
