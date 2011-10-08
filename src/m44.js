@@ -33,6 +33,10 @@
 * @constructor
 */
 vecJS.M44 = function M44(m) {
+  /*@DEBUG*/
+  if (m !== undefined && !dbg.isArray(m)) { throw 'v is not an array'; }
+  if (m !== undefined && m.length !== 16) { throw 'm has an invalid size (' + (m.length) + ').'; }
+  /*/@DEBUG*/
   if (this instanceof vecJS.M44) {
     var a = this.m = new GLMatrixArray(16);
     if (m) {
@@ -62,6 +66,10 @@ vecJS.M44 = function M44(m) {
     * @return {!vecJS.M44} This instance.
     */
     set: function (m) {
+      /*@DEBUG*/
+      if (!dbg.isArray(m)) { throw 'm is not an array'; }
+      if (m.length !== 16) { throw 'm has an invalid size (' + (m.length) + ').'; }
+      /*/@DEBUG*/
       var a = this.m;
       a[0]  = m[0];  a[1]  = m[1];  a[2]  = m[2] ; a[3]  = m[3];
       a[4]  = m[4];  a[5]  = m[5];  a[6]  = m[6] ; a[7]  = m[7];
@@ -77,6 +85,10 @@ vecJS.M44 = function M44(m) {
     * @return {!vecJS.M44} This instance.
     */
     copyTo: function (m) {
+      /*@DEBUG*/
+      if (!dbg.isArray(m)) { throw 'm is not an array'; }
+      if (m.length !== 16) { throw 'm has an invalid size (' + (m.length) + ').'; }
+      /*/@DEBUG*/
       var a = this.m;
 
       m[0]  = a[0];  m[1]  = a[1];  m[2]  = a[2] ; m[3]  = a[3];
@@ -103,6 +115,10 @@ vecJS.M44 = function M44(m) {
     * @return {!vecJS.M44} This instance.
      */
     fromQ: function (q) {
+      /*@DEBUG*/
+      if (!dbg.isArray(q)) { throw 'q is not an array'; }
+      if (q.length !== 4) { throw 'q has an invalid size (' + (q.length) + ').'; }
+      /*/@DEBUG*/
       var x = q[0], y = q[1], z = q[2], w = q[3],
           x2 = x + x, y2 = y + y, z2 = z + z,
           xx = x*x2, xy = x*y2, xz = x*z2,
@@ -157,6 +173,10 @@ vecJS.M44 = function M44(m) {
     * @return {!vecJS.M44} This instance.
     */
     mul: function (m) {
+      /*@DEBUG*/
+      if (!dbg.isArray(m)) { throw 'm is not an array'; }
+      if (m.length !== 16) { throw 'm has an invalid size (' + (m.length) + ').'; }
+      /*/@DEBUG*/
       var a = this.m,
           a00 = a[0],  a01 = a[1],  a02 = a[2],  a03 = a[3],
           a10 = a[4],  a11 = a[5],  a12 = a[6],  a13 = a[7],
@@ -199,6 +219,12 @@ vecJS.M44 = function M44(m) {
     * @return {!vecJS.M44} This instance.
     */
     assignMul: function (a, b) {
+      /*@DEBUG*/
+      if (!dbg.isArray(a)) { throw 'a is not an array'; }
+      if (!dbg.isArray(b)) { throw 'b is not an array'; }
+      if (a.length !== 16) { throw 'a has an invalid size (' + (a.length) + ').'; }
+      if (b.length !== 16) { throw 'b has an invalid size (' + (b.length) + ').'; }
+      /*/@DEBUG*/
       var m = this.m,
           a00 = a[0],  a01 = a[1],  a02 = a[2],  a03 = a[3],
           a10 = a[4],  a11 = a[5],  a12 = a[6],  a13 = a[7],
@@ -330,6 +356,14 @@ vecJS.M44 = function M44(m) {
     * @return {!vecJS.M44} This instance.
     */
     lookAt: function (eye, at, up) {
+      /*@DEBUG*/
+      if (!dbg.isArray(eye)) { throw 'eye is not an array'; }
+      if (!dbg.isArray(at)) { throw 'at is not an array'; }
+      if (!dbg.isArray(up)) { throw 'up is not an array'; }
+      if (eye.length !== 3) { throw 'eye has an invalid size (' + (eye.length) + ').'; }
+      if (at.length !== 3) { throw 'at has an invalid size (' + (at.length) + ').'; }
+      if (up.length !== 3) { throw 'up has an invalid size (' + (up.length) + ').'; }
+      /*/@DEBUG*/
       var m = this.m,
           vx = _vx.v, vy = _vy.v, vz = _vz.v;
 
@@ -358,6 +392,14 @@ vecJS.M44 = function M44(m) {
      * @param {number} far far bound of the frustum.
      */
     perspectiveFrustum: function(left, right, bottom, top, near, far) {
+      /*@DEBUG*/
+      if (left !== undefined && !dbg.isNumber(left)) { throw 'left is not a number'; }
+      if (right !== undefined && !dbg.isNumber(right)) { throw 'right is not a number'; }
+      if (bottom !== undefined && !dbg.isNumber(bottom)) { throw 'bottom is not a number'; }
+      if (top !== undefined && !dbg.isNumber(top)) { throw 'top is not a number'; }
+      if (near !== undefined && !dbg.isNumber(near)) { throw 'near is not a number'; }
+      if (far !== undefined && !dbg.isNumber(far)) { throw 'far is not a number'; }
+      /*/@DEBUG*/
       var m = this.m,
           rl = (right - left),
           tb = (top - bottom),
@@ -398,6 +440,12 @@ vecJS.M44 = function M44(m) {
     * @returns {!vecJS.M44} This instance.
     */
     perspectiveFov: function (fov, aspect, near, far) {
+      /*@DEBUG*/
+      if (fov !== undefined && !dbg.isNumber(fov)) { throw 'fov is not a number'; }
+      if (aspect !== undefined && !dbg.isNumber(aspect)) { throw 'aspect is not a number'; }
+      if (near !== undefined && !dbg.isNumber(near)) { throw 'near is not a number'; }
+      if (far !== undefined && !dbg.isNumber(far)) { throw 'far is not a number'; }
+      /*/@DEBUG*/
       var m = this.m,
           f = 1 / Math.tan(fov / 2);
 
@@ -437,6 +485,14 @@ vecJS.M44 = function M44(m) {
      * @returns {!vecJS.M44} This instance.
      */
     orthogonal: function (left, right, bottom, top, near, far) {
+      /*@DEBUG*/
+      if (left !== undefined && !dbg.isNumber(left)) { throw 'left is not a number'; }
+      if (right !== undefined && !dbg.isNumber(right)) { throw 'right is not a number'; }
+      if (bottom !== undefined && !dbg.isNumber(bottom)) { throw 'bottom is not a number'; }
+      if (top !== undefined && !dbg.isNumber(top)) { throw 'top is not a number'; }
+      if (near !== undefined && !dbg.isNumber(near)) { throw 'near is not a number'; }
+      if (far !== undefined && !dbg.isNumber(far)) { throw 'far is not a number'; }
+      /*/@DEBUG*/
       var rl = (right - left),
           tb = (top - bottom),
           fn = (far - near),

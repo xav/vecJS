@@ -25,6 +25,10 @@
 * @constructor
 */
 vecJS.Q = function Q(q) {
+  /*@DEBUG*/
+  if (q !== undefined && !dbg.isArray(q)) { throw 'q is not an array'; }
+  if (q !== undefined && q.length !== 4) { throw 'q has an invalid size (' + (q.length) + ').'; }
+  /*/@DEBUG*/
   if (this instanceof vecJS.Q) {
     var a = this.q = new GLMatrixArray(4);
     if (q) {
@@ -50,6 +54,10 @@ vecJS.Q = function Q(q) {
     * @return {!vecJS.Q} This instance.
     */
     set: function (q) {
+      /*@DEBUG*/
+      if (!dbg.isArray(q)) { throw 'q is not an array'; }
+      if (q.length !== 4) { throw 'q has an invalid size (' + (q.length) + ').'; }
+      /*/@DEBUG*/
       var a = this.q;
       a[0] = q[0];
       a[1] = q[1];
@@ -65,6 +73,10 @@ vecJS.Q = function Q(q) {
     * @return {!vecJS.Q} This instance.
     */
     copyTo: function (q) {
+      /*@DEBUG*/
+      if (!dbg.isArray(q)) { throw 'q is not an array'; }
+      if (q.length !== 4) { throw 'q has an invalid size (' + (q.length) + ').'; }
+      /*/@DEBUG*/
       var a = this.q;
       q[0] = a[0];
       q[1] = a[1];
@@ -89,6 +101,10 @@ vecJS.Q = function Q(q) {
      * @return {!vecJS.Q} This instance.
      */
     fromMatrix: function (m) {
+      /*@DEBUG*/
+      if (!dbg.isArray(m)) { throw 'm is not an array'; }
+      if (m.length !== 12 && m.length != 16) { throw 'm has an invalid size (' + (m.length) + ').'; }
+      /*/@DEBUG*/
       var q = this.q,
           m00 = m[0], m01 = m[1], m02 = m[2],
           m10 = m[4], m11 = m[5], m12 = m[6],
@@ -144,6 +160,10 @@ vecJS.Q = function Q(q) {
      * @return {!vecJS.Q} This instance.
      */
     fromPitchYawRoll: function (a) {
+      /*@DEBUG*/
+      if (!dbg.isArray(a)) { throw 'a is not an array'; }
+      if (a.length !== 3) { throw 'a has an invalid size (' + (a.length) + ').'; }
+      /*/@DEBUG*/
       // qx = sin(yaw/2)*cos(pitch/2)*sin(roll/2) + cos(yaw/2)*sin(pitch/2)*cos(roll/2);
       // qy = sin(yaw/2)*cos(pitch/2)*cos(roll/2) - cos(yaw/2)*sin(pitch/2)*sin(roll/2);
       // qz = cos(yaw/2)*cos(pitch/2)*sin(roll/2) - sin(yaw/2)*sin(pitch/2)*cos(roll/2);
@@ -174,6 +194,10 @@ vecJS.Q = function Q(q) {
     * @return {!vecJS.Q} This instance.
     */
     add: function (q) {
+      /*@DEBUG*/
+      if (!dbg.isArray(q)) { throw 'q is not an array'; }
+      if (q.length !== 4) { throw 'q has an invalid size (' + (q.length) + ').'; }
+      /*/@DEBUG*/
       var a = this.q;
       a[0] += q[0];
       a[1] += q[1];
@@ -189,6 +213,10 @@ vecJS.Q = function Q(q) {
     * @return {!vecJS.Q} This instance.
     */
     sub: function (q) {
+      /*@DEBUG*/
+      if (!dbg.isArray(q)) { throw 'q is not an array'; }
+      if (q.length !== 4) { throw 'q has an invalid size (' + (q.length) + ').'; }
+      /*/@DEBUG*/
       var a = this.q;
       a[0] -= q[0];
       a[1] -= q[1];
@@ -204,6 +232,12 @@ vecJS.Q = function Q(q) {
     * @return {!vecJS.Q} This instance.
     */
     assignAdd: function (a, b) {
+      /*@DEBUG*/
+      if (!dbg.isArray(a)) { throw 'a is not an array'; }
+      if (!dbg.isArray(b)) { throw 'b is not an array'; }
+      if (a.length !== 4) { throw 'a has an invalid size (' + (a.length) + ').'; }
+      if (b.length !== 4) { throw 'b has an invalid size (' + (b.length) + ').'; }
+      /*/@DEBUG*/
       var q = this.q;
       q[0] = a[0] + b[0];
       q[1] = a[1] + b[1];
@@ -220,6 +254,12 @@ vecJS.Q = function Q(q) {
     * @return {!vecJS.Q} This instance.
     */
     assignSub: function (a, b) {
+      /*@DEBUG*/
+      if (!dbg.isArray(a)) { throw 'a is not an array'; }
+      if (!dbg.isArray(b)) { throw 'b is not an array'; }
+      if (a.length !== 4) { throw 'a has an invalid size (' + (a.length) + ').'; }
+      if (b.length !== 4) { throw 'b has an invalid size (' + (b.length) + ').'; }
+      /*/@DEBUG*/
       var q = this.q;
       q[0] = a[0] - b[0];
       q[1] = a[1] - b[1];
@@ -236,6 +276,9 @@ vecJS.Q = function Q(q) {
     * @return {!vecJS.Q} This instance.
     */
     mulScalar: function (s) {
+    /*@DEBUG*/
+    if (!dbg.isNumber(s)) { throw 's is not a number'; }
+    /*/@DEBUG*/
       var q = this.q;
       q[0] *= s;
       q[1] *= s;
@@ -251,6 +294,9 @@ vecJS.Q = function Q(q) {
     * @return {!vecJS.Q} This instance.
     */
     divScalar: function (s) {
+    /*@DEBUG*/
+    if (!dbg.isNumber(s)) { throw 's is not a number'; }
+    /*/@DEBUG*/
       var q = this.q;
       q[0] /= s;
       q[1] /= s;
@@ -267,6 +313,10 @@ vecJS.Q = function Q(q) {
      * @return {!vecJS.Q} This instance.
      */
     mul: function (q) {
+      /*@DEBUG*/
+      if (!dbg.isArray(q)) { throw 'q is not an array'; }
+      if (q.length !== 4) { throw 'q has an invalid size (' + (q.length) + ').'; }
+      /*/@DEBUG*/
       var a = this.q,
           ax = a[0], ay = a[1], az = a[2], aw = a[3],
           bx = q[0], by = q[1], bz = q[2], bw = q[3];
@@ -287,6 +337,10 @@ vecJS.Q = function Q(q) {
     * @return {number} The result of the dot product.
     */
     dot: function (q) {
+      /*@DEBUG*/
+      if (!dbg.isArray(q)) { throw 'q is not an array'; }
+      if (q.length !== 4) { throw 'q has an invalid size (' + (q.length) + ').'; }
+      /*/@DEBUG*/
       var a = this.q;
       return a[0]*q[0] + a[1]*q[1] + a[2]*q[2] + a[3]*q[3];
     },
@@ -379,6 +433,13 @@ vecJS.Q = function Q(q) {
      *    between the Quaternions' orientations, by "flipping" the source Quaternion if needed
      */
     slerp: function (a, b, t, shortest) {
+      /*@DEBUG*/
+      if (!dbg.isArray(a)) { throw 'a is not an array'; }
+      if (!dbg.isArray(b)) { throw 'b is not an array'; }
+      if (!dbg.isNumber(t)) { throw 't is not aa number'; }
+      if (a.length !== 4) { throw 'a has an invalid size (' + (a.length) + ').'; }
+      if (b.length !== 4) { throw 'b has an invalid size (' + (b.length) + ').'; }
+      /*/@DEBUG*/
       var q = this.q,
           ax = a[0], ay = a[1], az = a[2], aw = a[3],
           bx = b[0], by = b[1], bz = b[2], bw = b[3],
@@ -422,6 +483,17 @@ vecJS.Q = function Q(q) {
      * @param {Number} t
      */
     squad: function (a, tgA, tgB, b, t) {
+      /*@DEBUG*/
+      if (!dbg.isArray(a)) { throw 'a is not an array'; }
+      if (!dbg.isArray(tgA)) { throw 'tgA is not an array'; }
+      if (!dbg.isArray(tgB)) { throw 'tgB is not an array'; }
+      if (!dbg.isArray(b)) { throw 'b is not an array'; }
+      if (!dbg.isNumber(t)) { throw 't is not aa number'; }
+      if (a.length !== 4) { throw 'a has an invalid size (' + (a.length) + ').'; }
+      if (tgA.length !== 4) { throw 'tgA has an invalid size (' + (tgA.length) + ').'; }
+      if (tgB.length !== 4) { throw 'tgB has an invalid size (' + (tgB.length) + ').'; }
+      if (b.length !== 4) { throw 'b has an invalid size (' + (b.length) + ').'; }
+      /*/@DEBUG*/
       return this.slerp(_q1.slerp(a, b, t, true).q, _q2.slerp(tgA, tgB, t, false).q, 2*t*(1-t), false);
     },
 
@@ -435,6 +507,14 @@ vecJS.Q = function Q(q) {
      * @param {!Array.<Number>} after ({@link vecJS.Q#q}).
      */
     squadTangent: function(before, center, after) {
+      /*@DEBUG*/
+      if (!dbg.isArray(before)) { throw 'before is not an array'; }
+      if (!dbg.isArray(center)) { throw 'center is not an array'; }
+      if (!dbg.isArray(after)) { throw 'after is not an array'; }
+      if (before.length !== 4) { throw 'before has an invalid size (' + (before.length) + ').'; }
+      if (center.length !== 4) { throw 'center has an invalid size (' + (center.length) + ').'; }
+      if (after.length !== 4) { throw 'after has an invalid size (' + (after.length) + ').'; }
+      /*/@DEBUG*/
       var q = this.q,
           a = _q1.q, b = _q2.q;
       
@@ -577,6 +657,15 @@ q2 = |Q1 + Q2| < |Q1 - Q2| ? -Q2 : Q2
 q3 = |Q2 + Q3| < |Q2 - Q3| ? -Q3 : Q3
 */
   vecJS.Q.squadSetup = function (a, b, c, q0, q1, q2, q3) {
+    /*@DEBUG*/
+    if (!(a instanceof vecJS.Q)){ throw 'a is not a vecJS.Q'; }
+    if (!(b instanceof vecJS.Q)){ throw 'b is not a vecJS.Q'; }
+    if (!(c instanceof vecJS.Q)){ throw 'c is not a vecJS.Q'; }
+    if (!(q0 instanceof vecJS.Q)){ throw 'q0 is not a vecJS.Q'; }
+    if (!(q1 instanceof vecJS.Q)){ throw 'q1 is not a vecJS.Q'; }
+    if (!(q2 instanceof vecJS.Q)){ throw 'q2 is not a vecJS.Q'; }
+    if (!(q3 instanceof vecJS.Q)){ throw 'q3 is not a vecJS.Q'; }
+    /*/@DEBUG*/
     q0 = q0.clone();
     q2 = q2.clone();
     q3 = q3.clone();

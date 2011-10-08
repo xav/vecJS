@@ -26,7 +26,7 @@
 */
 vecJS.V3 = function V3(v) {
   /*@DEBUG*/
-  if (v !== undefined && !dbg.isArray(v)) { throw 'v is not an array: ' + typeof v; }
+  if (v !== undefined && !dbg.isArray(v)) { throw 'v is not an array'; }
   if (v !== undefined && v.length !== 3) { throw 'v has an invalid size (' + (v.length) + ').'; }
   /*/@DEBUG*/
   if (this instanceof vecJS.V3) {

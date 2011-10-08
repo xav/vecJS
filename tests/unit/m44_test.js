@@ -104,7 +104,7 @@ var m44_tests = {
         m1 = new vecJS.M44(), m1b,
         c = Math.PI / 180;
 
-    m1b = m1.fromQ(q1);
+    m1b = m1.fromQ(q1.q);
     equal(m1, m1b, 'fromQ return this');
     mequal(q1.q, q2.q, 'fromQ does no modify parameter');
 
