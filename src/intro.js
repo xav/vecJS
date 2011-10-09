@@ -1,5 +1,5 @@
 /** @preserve
- * vecJS vector and matrix math library v@VERSION
+ * vecJS vector and matrix math library r@VERSION
  * https://github.com/xav/vecJS
  *
  * Copyright (c) 2011, Xavier Basty

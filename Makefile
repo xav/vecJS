@@ -80,7 +80,7 @@ clean:
 	@@rm -rf ${DIST_DIR}
 
 helpHint:
-	@@echo "Try make help for a list of available targets"\
+	@@echo "Try 'make help' for a list of available targets."\
 
 help:
 	@@echo "Available targets:"
