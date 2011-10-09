@@ -367,13 +367,13 @@ vecJS.M44 = function M44(m) {
       var m = this.m,
           vx = _vx.v, vy = _vy.v, vz = _vz.v;
 
-      _vz.assignSub(at, eye).normalize();
+      _vz.assignSub(eye, at).normalize();
       _vx.assignCross(up, vz).normalize();
       _vy.assignCross(vz, vx);
 
-      m[0] = vx[0]; m[1] = vx[1]; m[2]  = vx[2]; m[3]  = -_vx.dot(eye);
+      m[0] = -vx[0]; m[1] = -vx[1]; m[2]  = -vx[2]; m[3]  = _vx.dot(eye);
       m[4] = vy[0]; m[5] = vy[1]; m[6]  = vy[2]; m[7]  = -_vy.dot(eye);
-      m[8] = vz[0]; m[9] = vz[1]; m[10] = vz[2]; m[11] = -_vz.dot(eye);
+      m[8] = -vz[0]; m[9] = -vz[1]; m[10] = -vz[2]; m[11] = _vz.dot(eye);
 
       m[12] = m[13] = m[14] = 0;
       m[15] = 1;
