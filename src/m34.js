@@ -93,7 +93,7 @@ vecJS.M34 = function M34(m) {
     copyTo: function (m) {
       /*@DEBUG*/
       if (!dbg.isArray(m)) { throw 'm is not an array'; }
-      if (m.length !== 12) { throw 'm has an invalid size (' + (m.length) + ').'; }
+      if (m.length !== 12 && m.length !== 16) { throw 'm has an invalid size (' + (m.length) + ').'; }
       /*/@DEBUG*/
       var a = this.m;
 
