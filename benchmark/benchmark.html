@@ -26,6 +26,10 @@
       margin-bottom:20px;
       padding:0 20px;
     }
+    #running {
+      font-style:italic;
+      padding:0 0 20px 30px;
+    }
     #log {
       padding:0 20px;
       border-top:1px solid #ccc;
@@ -53,19 +57,22 @@
 <body>
   <form id="test_selector">
     <h2>Select which tests to run</h2>
+    <input type="button" id="check_all" value="All">
+    <input type="button" id="check_none" value="None">
     <ul>
-      <li><input type="checkbox" id="run_multiplication"        checked name="run_multiplication"><label for="run_multiplication">Multiplication</label> </li>
-      <li><input type="checkbox" id="run_translation"           checked name="run_translation"><label for="run_translation">Translation</label> </li>
-      <li><input type="checkbox" id="run_scaling"               checked name="run_scaling"><label for="run_scaling">Scaling</label> </li>
-      <li><input type="checkbox" id="run_arbitrary_rotation"    checked name="run_arbitrary_rotation"><label for="run_arbitrary_rotation">Rotation (Arbitrary axis)</label> </li>
-      <li><input type="checkbox" id="run_x_rotation"            checked name="run_x_rotation"><label for="run_x_rotation">Rotation (X axis)</label> </li>
-      <li><input type="checkbox" id="run_transpose"             checked name="run_transpose"><label for="run_transpose">Transpose</label> </li>
-      <li><input type="checkbox" id="run_inverse"               checked name="run_inverse"><label for="run_inverse">Inverse</label> </li>
-      <li><input type="checkbox" id="run_vector_transformation" checked name="run_vector_transformation"><label for="run_vector_transformation">Vector Transformation</label> </li>
+      <li><input type="checkbox" id="run_multiplication"        class="selector" name="run_multiplication"><label for="run_multiplication">Multiplication</label> </li>
+      <li><input type="checkbox" id="run_translation"           class="selector" name="run_translation"><label for="run_translation">Translation</label> </li>
+      <li><input type="checkbox" id="run_scaling"               class="selector" name="run_scaling"><label for="run_scaling">Scaling</label> </li>
+      <li><input type="checkbox" id="run_arbitrary_rotation"    class="selector" name="run_arbitrary_rotation"><label for="run_arbitrary_rotation">Rotation (Arbitrary axis)</label> </li>
+      <li><input type="checkbox" id="run_x_rotation"            class="selector" name="run_x_rotation"><label for="run_x_rotation">Rotation (X axis)</label> </li>
+      <li><input type="checkbox" id="run_transpose"             class="selector" name="run_transpose"><label for="run_transpose">Transpose</label> </li>
+      <li><input type="checkbox" id="run_inverse"               class="selector" name="run_inverse"><label for="run_inverse">Inverse</label> </li>
+      <li><input type="checkbox" id="run_vector_transformation" class="selector" name="run_vector_transformation"><label for="run_vector_transformation">Vector Transformation</label> </li>
     </ul>
     <input type="button" id="run_tests" value="Run Tests">
     <input type="button" id="clear_log" value="Clear Log">
   </form>
+  <div id="running"></div>
   <div id="log">
   </div>
 
@@ -214,7 +221,7 @@
                   m2 = matrixRandom.vecJS(),
                   start = Date.now();
               for (var i = 0; i < count; ++i) {
-                m1.mul(m2);
+                m1.mul(m2.m);
               }
               return Date.now() - start;
             }
@@ -605,7 +612,7 @@
                   v1 = new vecJS.V3([1, 2, 3]),
                   start = Date.now();
               for (var i = 0; i < count; ++i) {
-                v1.mulM34(m1);
+                v1.mulM(m1.m);
               }
               return Date.now() - start;
             }
@@ -632,21 +639,58 @@
           }
         ]));
       };
-      
+
+      var testQueue;
       document.getElementById('run_tests').onclick = function () {
-        if (document.getElementById('run_multiplication').checked) { setTimeout(run_multiplication, 1); }
-        if (document.getElementById('run_translation').checked) { setTimeout(run_translation, 1); }
-        if (document.getElementById('run_scaling').checked) { setTimeout(run_scaling, 1); }
-        if (document.getElementById('run_arbitrary_rotation').checked) { setTimeout(run_arbitrary_rotation, 1); }
-        if (document.getElementById('run_x_rotation').checked) { setTimeout(run_x_rotation, 1); }
-        if (document.getElementById('run_transpose').checked) { setTimeout(run_transpose, 1); }
-        if (document.getElementById('run_inverse').checked) { setTimeout(run_inverse, 1); }
-        if (document.getElementById('run_vector_transformation').checked) { setTimeout(run_vector_transformation, 1); }
+        testQueue = [];
+        if (document.getElementById('run_multiplication').checked) { testQueue.push(run_multiplication); }
+        if (document.getElementById('run_translation').checked) { testQueue.push(run_translation); }
+        if (document.getElementById('run_scaling').checked) { testQueue.push(run_scaling); }
+        if (document.getElementById('run_arbitrary_rotation').checked) { testQueue.push(run_arbitrary_rotation); }
+        if (document.getElementById('run_x_rotation').checked) { testQueue.push(run_x_rotation); }
+        if (document.getElementById('run_transpose').checked) { testQueue.push(run_transpose); }
+        if (document.getElementById('run_inverse').checked) { testQueue.push(run_inverse); }
+        if (document.getElementById('run_vector_transformation').checked) { testQueue.push(run_vector_transformation); }
+
+        document.body.style.cursor = "wait";
+        document.getElementById('running').innerText = testQueue.length + ' test' + ((testQueue.length > 1) ? 's' : '') + ' left to run...';
+        setTimeout(unqueue, 10);
       };
+      function unqueue() {
+        var test = testQueue.shift();
+        if (test) {
+          try {
+            test.call();
+          } catch (ex) {
+            clearRunning(ex);
+            return;
+          }
+          document.getElementById('running').innerText = testQueue.length + ' test' + ((testQueue.length > 1) ? 's' : '') + ' left to run...';
+          setTimeout(unqueue, 10);
+        } else {
+          clearRunning();
+        }
+      }
+      function clearRunning(message) {
+        document.getElementById('running').innerText = message === undefined ? '' : message;
+        document.body.style.cursor = "default";
+      }
 
       document.getElementById('clear_log').onclick = function () {
         log.innerHTML = '';
-      }
+      };
+      document.getElementById('check_all').onclick = function () {
+        var selectors = document.getElementsByClassName('selector');
+        for (var si=0, sl = selectors.length; si < sl; si++) {
+          selectors[si].setAttribute('checked', 'checked');
+        }
+      };
+      document.getElementById('check_none').onclick = function () {
+        var selectors = document.getElementsByClassName('selector');
+        for (var si=0, sl = selectors.length; si < sl; si++) {
+          selectors[si].removeAttribute('checked');
+        }
+      };
     }) ();
   </script>
 </body>
