@@ -296,7 +296,7 @@ vecJS.M34 = function M34(m) {
           m00 = m[0], m01 = m[1], m02 = m[2],  m03 = m[3],
           m10 = m[4], m11 = m[5], m12 = m[6],  m13 = m[7],
           m20 = m[8], m21 = m[9], m22 = m[10], m23 = m[11];
-      d = 1 / (d || this.det());
+      d = 1 / (d || (- m02*m11*m20 + m01*m12*m20 + m02*m10*m21 - m00*m12*m21 - m01*m10*m22 + m00*m11*m22));
 
       // based on http://www.euclideanspace.com/maths/algebra/matrix/functions/inverse/fourD/index.htm
       m[0]  = d * (m11*m22 - m12*m21);
