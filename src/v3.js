@@ -284,7 +284,7 @@ vecJS.V3.prototype = {
   *
   * @return {!vecJS.V3} This instance.
   */
-  mulM: function (m) {
+  mulM34: function (m) {
     /*@DEBUG*/
     if (!dbg.isArray(m)) { throw 'm is not an array'; }
     if (m.length !== 12) { throw 'm has an invalid size (' + (m.length) + ').'; }
@@ -295,6 +295,30 @@ vecJS.V3.prototype = {
     v[0] = vx*m[0] + vy*m[1] + vz*m[2]  + m[3];
     v[1] = vx*m[4] + vy*m[5] + vz*m[6]  + m[7];
     v[2] = vx*m[8] + vy*m[9] + vz*m[10] + m[11];
+
+    return this;
+  },
+
+  /**
+   * Multiply the specified matrix with this vector, project the result back to w = 1,
+   * and assign the result to this instance.
+   *
+   * @param {!Array.<Number>} m The matrix to multiply ({@link vecJS.M44#m}).
+   *
+   * @return {!vecJS.V3} This instance.
+   */
+  mulM44: function (m) {
+    /*@DEBUG*/
+    if (!dbg.isArray(m)) { throw 'm is not an array'; }
+    if (m.length !== 16) { throw 'm has an invalid size (' + (m.length) + ').'; }
+    /*/@DEBUG*/
+    var v = this.v,
+        vx = v[0], vy = v[1], vz = v[2],
+        w = vx*m[12] + vy*m[13] + vz*m[14] + m[15];
+
+    v[0] = (vx*m[0]  + vy*m[1]  + vz*m[2]  + m[3] ) / w;
+    v[1] = (vx*m[4]  + vy*m[5]  + vz*m[6]  + m[7] ) / w;
+    v[2] = (vx*m[8]  + vy*m[9]  + vz*m[10] + m[11]) / w;
 
     return this;
   },
@@ -325,30 +349,6 @@ vecJS.V3.prototype = {
     v[0] = ix*qw - iw*qx - iy*qz + iz*qy;
     v[1] = iy*qw - iw*qy - iz*qx + ix*qz;
     v[2] = iz*qw - iw*qz - ix*qy + iy*qx;
-
-    return this;
-  },
-
-  /**
-   * Multiply the specified matrix with this vector, project the result back to w = 1,
-   * and assign the result to this instance.
-   *
-   * @param {!Array.<Number>} m The matrix to multiply ({@link vecJS.M44#m}).
-   *
-   * @return {!vecJS.V3} This instance.
-   */
-  mulCoord: function (m) {
-    /*@DEBUG*/
-    if (!dbg.isArray(m)) { throw 'm is not an array'; }
-    if (m.length !== 16) { throw 'm has an invalid size (' + (m.length) + ').'; }
-    /*/@DEBUG*/
-    var v = this.v,
-        vx = v[0], vy = v[1], vz = v[2],
-        w = vx*m[12] + vy*m[13] + vz*m[14] + m[15];
-
-    v[0] = (vx*m[0]  + vy*m[1]  + vz*m[2]  + m[3] ) / w;
-    v[1] = (vx*m[4]  + vy*m[5]  + vz*m[6]  + m[7] ) / w;
-    v[2] = (vx*m[8]  + vy*m[9]  + vz*m[10] + m[11]) / w;
 
     return this;
   },

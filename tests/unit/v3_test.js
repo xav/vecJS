@@ -151,7 +151,7 @@ var v3_tests = {
     mequal(v1.v, [1, 2, 3], 'divScalar values');
   },
 
-  'mulM': function () {
+  'mulM34': function () {
     var m1 = new vecJS.M34([
       1,  2,  3,  4,
       5,  6,  7,  8,
@@ -159,15 +159,36 @@ var v3_tests = {
     ]),
     v1 = new vecJS.V3([1, 2, 3]), v1b;
 
-    v1b = v1.mulM(m1.m);
+    v1b = v1.mulM34(m1.m);
 
-    equal(v1, v1b, 'mulM return this');
+    equal(v1, v1b, 'mulM34 return this');
     mequal(m1.m, [
       1,  2,  3,  4,
       5,  6,  7,  8,
       9, 10, 11, 12
-    ], 'mulM does not change parameter')
-    mequal(v1.v, [18, 46, 74], 'mulM values');
+    ], 'mulM34 does not change parameter')
+    mequal(v1.v, [18, 46, 74], 'mulM34 values');
+  },
+
+  'mulM44': function () {
+    var m1 = new vecJS.M44([
+      1, 5,  9, 13,
+      2, 6, 10, 14,
+      3, 7, 11, 15,
+      4, 8, 12, 16
+    ]),
+    v1 = new vecJS.V3([9, 6, 2]), v1b;
+
+    v1b = v1.mulM44(m1.m);
+
+    equal(v1, v1b, 'mulCoord return this');
+    mequal(m1.m, [
+      1, 5,  9, 13,
+      2, 6, 10, 14,
+      3, 7, 11, 15,
+      4, 8, 12, 16
+    ], 'mulCoord does not change parameter')
+    mfequal(v1.v, [70.0/124, 88/124, 106/124], 'mulCoord values');
   },
 
   'mulQ': function () {
@@ -182,27 +203,6 @@ var v3_tests = {
     mfequal(v1.v, [1, -3, 2], 'mulQ with 90deg around X');
   },
 
-  'mulCoord': function () {
-    var m1 = new vecJS.M44([
-      1, 5,  9, 13,
-      2, 6, 10, 14,
-      3, 7, 11, 15,
-      4, 8, 12, 16
-    ]),
-    v1 = new vecJS.V3([9, 6, 2]), v1b;
-
-    v1b = v1.mulCoord(m1.m);
-
-    equal(v1, v1b, 'mulCoord return this');
-    mequal(m1.m, [
-      1, 5,  9, 13,
-      2, 6, 10, 14,
-      3, 7, 11, 15,
-      4, 8, 12, 16
-    ], 'mulCoord does not change parameter')
-    mfequal(v1.v, [70.0/124, 88/124, 106/124], 'mulCoord values');
-  },
-  
   'cross': function () {
     var v1 = new vecJS.V3([1, 2, 3]), v1b,
       v2 = new vecJS.V3([3, 2, 1]);
