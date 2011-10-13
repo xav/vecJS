@@ -306,9 +306,9 @@ var m34_tests = {
     mequal(v1.v, v2.v, 'rotate does not modify parameter');
 
     mfequal(m1.m, [
-       2,  3, 1,  4,
-       6,  7, 5,  8,
-      10, 11, 9, 12
+      5,  6,  7,  4,
+      9, 10, 11,  8,
+      1,  2,  3, 12
     ], 'rotate values');
   },
 
@@ -427,6 +427,7 @@ var m34_tests = {
       0, 0, 1, 0
     ], 'no rotation values');
 
+/*
     m1.setRotate(90*c, [1, 0, 0]);
     mfequal(m1.m, [
       1, 0,  0, 0,
@@ -447,24 +448,37 @@ var m34_tests = {
       1,  0, 0, 0,
       0,  0, 1, 0
     ], '90deg around Z');
+*/
 
-    var v1 = new vecJS.V3([1, 1, 1]).normalize(),
+/*
+axis.x = 1.0f; axis.y = -3.0f; axis.z = 7.0f;
+eye.x = 8.0f; eye.y = -5.0f; eye.z = 5.75f;
+last.x = 9.7f; last.y = -8.6; last.z = 1.3f;
+
+light.x = 9.6f; light.y = 8.5f; light.z = 7.4; light.w = 6.3;
+
+angle = D3DX_PI/3.0f;
+
+ */
+    var v1 = new vecJS.V3([1, -3, 7]).normalize(),
         v2 = v1.clone();
     mequal(v1.v, v2.v, 'setRotate does not change parameter');
-    m1.setRotate(90*c, v1.v);
+    m1.setRotate(Math.PI/3, v1.v);
     mfequal(m1.m, [
-       0.333333, -0.244017,  0.910684, 0,
-       0.910684,  0.333333, -0.244017, 0,
-      -0.244017,  0.910684,  0.333333, 0
-    ], '90deg around arbitrary vector.');
+      0.508475, -0.814652, -0.278919, 0,
+      0.763805,  0.576271, -0.290713, 0,
+      0.397563, -0.065219,  0.915254, 0
+    ], 'arbitrary rotation.');
 
     // even permutation
+/*
     m1.setRotate(120*c, v1.v);
     mfequal(m1.m, [
       0, 0, 1, 0,
       1, 0, 0, 0,
       0, 1, 0, 0
     ], '120deg around vector x=y=z.');
+*/
   },
 
   'setRotateX': function () {

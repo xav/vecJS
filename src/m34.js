@@ -64,7 +64,7 @@ vecJS.M34 = function M34(m) {
 
   vecJS.M34.prototype = {
     constructor: vecJS.M34,
-    
+
     /**
     * Set the current instance values.
     *
@@ -308,7 +308,7 @@ vecJS.M34 = function M34(m) {
       m[5]  = d * (m00*m22 - m02*m20);
       m[6]  = d * (m02*m10 - m00*m12);
       m[7]  = d * (m02*m13*m20 - m03*m12*m20 + m03*m10*m22 - m00*m13*m22 - m02*m10*m23 + m00*m12*m23);
-      
+
       m[8]  = d * (m10*m21 - m11*m20);
       m[9]  = d * (m01*m20 - m00*m21);
       m[10] = d * (m00*m11 - m01*m10);
@@ -358,7 +358,7 @@ vecJS.M34 = function M34(m) {
           sx = v[0],
           sy = v[1],
           sz = v[2];
-      
+
       m[0]  *= sx;
       m[1]  *= sy;
       m[2]  *= sz;
@@ -377,7 +377,7 @@ vecJS.M34 = function M34(m) {
      * Rotate the current transformation matrix around an arbitrary axis.
      * If rotating around a primary axis (X,Y,Z) one of the specialized rotation
      * functions should be used instead for better performances.
-     * 
+     *
      * @param {number} theta The rotation angle in radians.
      * @param {!Array.<Number>} v The axis to rotate around (assumed to be unit) ({@link vecJS.V3#v}).
      *
@@ -562,6 +562,17 @@ vecJS.M34 = function M34(m) {
           s = Math.sin(theta), c = Math.cos(theta),
           t = 1 - c;
 
+      m[0]  = t*vx*vx + c;
+      m[1]  = t*vx*vy - s*vz;
+      m[2]  = t*vx*vz + s*vy;
+      m[4]  = t*vy*vx + s*vz;
+      m[5]  = t*vy*vy + c;
+      m[6]  = t*vy*vz - s*vx;
+      m[8]  = t*vz*vx - s*vy;
+      m[9]  = t*vz*vy + s*vx;
+      m[10] = t*vz*vz + c;
+
+      /*
       m[0]  = vx*vx*t + c;
       m[1]  = vy*vx*t + vz*s;
       m[2]  = vz*vx*t - vy*s;
@@ -573,6 +584,7 @@ vecJS.M34 = function M34(m) {
       m[8]  = vx*vz*t + vy*s;
       m[9]  = vy*vz*t - vx*s;
       m[10] = vz*vz*t + c;
+      */
 
       m[3] = m[7] = m[11] = 0;
 
