@@ -324,6 +324,30 @@ vecJS.V3.prototype = {
   },
 
   /**
+  * Multiply the rotation part of the specified matrix with this vector and assign the result to this instance.
+  *
+  * @param {!Array.<Number>} m The matrix to multiply ({@link vecJS.M34#m} or {@link vecJS.M44#m}).
+  *
+  * @return {!vecJS.V3} This instance.
+  */
+  rotate: function (m) {
+    /*@DEBUG*/
+    if (!dbg.isArray(m)) { throw 'm is not an array'; }
+    if (m.length !== 12 && m.length !== 16) { throw 'm has an invalid size (' + (m.length) + ').'; }
+    /*/@DEBUG*/
+    var v = this.v,
+        vx = v[0], vy = v[1], vz = v[2];
+
+    v[0] = vx*m[0] + vy*m[1] + vz*m[2];
+    v[1] = vx*m[4] + vy*m[5] + vz*m[6];
+    v[2] = vx*m[8] + vy*m[9] + vz*m[10];
+
+    return this;
+  },
+
+
+
+  /**
    * Multiply the specified quaternion with this vector and assign the result to this instance.
    *
    * @param {!Array.<Number>} q The quaternion to multiply ({@link vecJS.Q#q}).
